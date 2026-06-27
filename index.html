@@ -977,6 +977,7 @@
     document.getElementById('trad-result').style.display = 'none';
     fetch(BACKEND, {
       method: 'POST',
+      mode: 'cors',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ tipo: 'traduccion', texto: texto, deLang: langFrom, aLang: langTo })
     })
