@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MokiTalk</title>
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#FF6B35">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="MokiTalk">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MokiTalk</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FF6B35">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MokiTalk">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FFF8F0; min-height: 100vh; display: flex; flex-direction: column; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; flex-direction: column; color: white; }
     .screen { display: none; flex-direction: column; min-height: 100vh; }
     .screen.active { display: flex; }
-    .header { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
-    .moki-header-img { width: 44px; height: 44px; object-fit: contain; }
-    .header-info p { font-weight: 700; font-size: 17px; }
-    .header-info span { font-size: 12px; opacity: 0.85; }
-    .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-secondary { background: white; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
-    .btn-google { background: white; color: #1f2937; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
-    .input-field { width: 100%; border: 1.5px solid #ffe0cc; border-radius: 12px; padding: 13px 16px; font-size: 14px; outline: none; background: white; transition: border 0.2s; margin-bottom: 12px; }
-    .input-field:focus { border-color: #FF6B35; }
-    .divider { display: flex; align-items: center; gap: 12px; color: #9ca3af; font-size: 13px; margin-bottom: 12px; }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #ffe0cc; }
-    .switch-auth { text-align: center; font-size: 13px; color: #6b7280; margin-top: 8px; }
-    .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
-    .error-msg { background: #fee2e2; color: #dc2626; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
 
-    /* PANTALLA 1 */
-    .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; }
-    .moki-big { width: 160px; height: 160px; object-fit: contain; animation: bounce 2s infinite; margin-bottom: 16px; }
-    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-    .know-screen h1 { font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
-    .know-screen p { font-size: 15px; color: #6b7280; margin-bottom: 40px; line-height: 1.6; }
+    /* HEADER */
+    .header { background: rgba(0,0,0,0.9); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(255,107,53,0.2); }
+    .moki-header-img { width: 40px; height: 40px; object-fit: contain; }
+    .header-logo { font-weight: 800; font-size: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-nav { margin-left: auto; display: flex; gap: 16px; }
+    .header-nav span { font-size: 13px; color: rgba(255,255,255,0.7); cursor: pointer; }
+    .header-nav span:hover { color: #FF6B35; }
+
+    /* BUTTONS */
+    .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; }
+    .btn-secondary { background: transparent; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
+    .btn-google { background: white; color: #1f2937; border: none; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+    .input-field { width: 100%; border: 1.5px solid rgba(255,107,53,0.3); border-radius: 12px; padding: 13px 16px; font-size: 14px; outline: none; background: rgba(255,255,255,0.05); color: white; transition: border 0.2s; margin-bottom: 12px; }
+    .input-field::placeholder { color: rgba(255,255,255,0.4); }
+    .input-field:focus { border-color: #FF6B35; }
+    .divider { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.3); font-size: 13px; margin-bottom: 12px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+    .switch-auth { text-align: center; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+    .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
+    .error-msg { background: rgba(220,38,38,0.2); color: #fca5a5; border: 1px solid rgba(220,38,38,0.3); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
+
+    /* PANTALLA 1 — KNOW */
+    .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
+    .moki-big { width: 180px; height: 180px; object-fit: contain; animation: bounce 2s infinite; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(255,107,53,0.4)); }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .know-screen h1 { font-size: 32px; font-weight: 800; margin-bottom: 10px; background: linear-gradient(135deg, #FF6B35, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .know-screen p { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 44px; line-height: 1.7; max-width: 280px; }
 
     /* LANDING */
-    .landing-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
-    .landing-hero { text-align: center; padding: 16px 0; }
-    .landing-hero .moki-med { width: 120px; height: 120px; object-fit: contain; animation: bounce 2s infinite; }
-    .landing-hero h2 { font-size: 22px; font-weight: 700; color: #1f2937; margin: 12px 0 8px; }
-    .landing-hero p { font-size: 14px; color: #6b7280; line-height: 1.6; }
-    .features { display: flex; flex-direction: column; gap: 12px; }
-    .feature-card { background: white; border: 1px solid #ffe0cc; border-radius: 14px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
+    .landing-body { flex: 1; overflow-y: auto; background: #0a0a0a; }
+    .landing-hero { position: relative; height: 420px; overflow: hidden; }
+    .landing-hero-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+    .landing-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, #0a0a0a 100%); }
+    .landing-hero-content { position: absolute; bottom: 24px; left: 20px; right: 20px; }
+    .landing-hero-content h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+    .landing-hero-content p { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+    .landing-sections { padding: 0 16px 100px; }
+    .landing-section-title { font-size: 18px; font-weight: 700; margin: 28px 0 14px; }
+    .features-row { display: flex; flex-direction: column; gap: 10px; }
+    .feature-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.15); border-radius: 14px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
     .feature-icon { font-size: 28px; flex-shrink: 0; }
-    .feature-card h4 { font-size: 14px; font-weight: 600; color: #1f2937; margin-bottom: 3px; }
-    .feature-card p { font-size: 13px; color: #6b7280; line-height: 1.5; }
+    .feature-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .feature-card p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .landing-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to top, #0a0a0a 80%, transparent); }
 
     /* AUTH */
-    .auth-body { flex: 1; padding: 32px 24px; display: flex; flex-direction: column; }
-    .auth-body h2 { font-size: 22px; font-weight: 700; color: #1f2937; text-align: center; margin-bottom: 4px; }
-    .auth-body .subtitle { font-size: 14px; color: #6b7280; text-align: center; margin-bottom: 28px; }
+    .auth-body { flex: 1; padding: 32px 24px; display: flex; flex-direction: column; background: #0a0a0a; }
+    .auth-body h2 { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 4px; }
+    .auth-body .subtitle { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 28px; }
 
     /* TRANSICION */
-    .transition-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
-    .moki-transition { width: 180px; height: 180px; object-fit: contain; animation: pulse 1.5s infinite; }
+    .transition-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
+    .moki-transition { width: 180px; height: 180px; object-fit: contain; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 30px rgba(255,107,53,0.4)); }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-    .transition-screen h2 { font-size: 24px; font-weight: 700; color: #1f2937; }
-    .transition-screen p { font-size: 15px; color: #6b7280; line-height: 1.6; }
+    .transition-screen h2 { font-size: 24px; font-weight: 700; }
+    .transition-screen p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; }
     .dots { display: flex; gap: 8px; justify-content: center; }
     .dot { width: 10px; height: 10px; border-radius: 50%; background: #FF6B35; animation: dotbounce 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -68,82 +79,110 @@
     @keyframes dotbounce { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
     /* DASHBOARD */
-    .dashboard-body { flex: 1; overflow-y: auto; padding-bottom: 80px; }
-    .dashboard-header { background: linear-gradient(135deg, #FF6B35, #FF8C42); padding: 20px 20px 48px; color: white; position: relative; }
-    .dashboard-header h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-    .dashboard-header .dash-meta { font-size: 13px; opacity: 0.9; margin-bottom: 2px; }
-    .dashboard-header .dash-intereses { font-size: 12px; opacity: 0.75; }
-    .nivel-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; margin-top: 8px; }
-    .moki-dashboard { position: absolute; right: 16px; bottom: -24px; width: 88px; height: 88px; object-fit: contain; }
-    .dashboard-content { padding: 36px 16px 16px; display: flex; flex-direction: column; gap: 24px; }
-    .section-title { font-size: 16px; font-weight: 700; color: #1f2937; margin-bottom: 12px; }
-    .continue-card { background: white; border: 1px solid #ffe0cc; border-radius: 16px; padding: 16px; display: flex; gap: 14px; align-items: center; cursor: pointer; }
-    .continue-icon { width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #FF6B35, #FF8C42); display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
-    .continue-info h4 { font-size: 14px; font-weight: 600; color: #1f2937; margin-bottom: 3px; }
-    .continue-info p { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
-    .progress-bar { height: 4px; background: #ffe0cc; border-radius: 4px; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(135deg, #FF6B35, #FF8C42); border-radius: 4px; width: 35%; }
-    .netflix-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-    .netflix-row::-webkit-scrollbar { display: none; }
-    .netflix-card { flex-shrink: 0; width: 150px; background: white; border: 1px solid #ffe0cc; border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
-    .netflix-card:hover { transform: scale(1.03); }
-    .netflix-thumb { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 36px; }
-    .netflix-card-info { padding: 10px; }
-    .netflix-card-info h4 { font-size: 12px; font-weight: 600; color: #1f2937; margin-bottom: 3px; }
-    .netflix-card-info p { font-size: 11px; color: #6b7280; }
-    .card-tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; margin-top: 5px; }
-    .tag-video { background: #fee2e2; color: #dc2626; }
-    .tag-podcast { background: #e0f2fe; color: #0369a1; }
-    .tag-leccion { background: #dcfce7; color: #15803d; }
-    .tag-practica { background: #fff3ec; color: #FF6B35; }
-    .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .opcion-card { background: white; border: 1px solid #ffe0cc; border-radius: 16px; padding: 20px 14px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .opcion-card:hover { border-color: #FF6B35; background: #fff3ec; }
-    .opcion-card .opcion-icon { font-size: 32px; }
-    .opcion-card h4 { font-size: 13px; font-weight: 600; color: #1f2937; }
-    .opcion-card p { font-size: 11px; color: #6b7280; line-height: 1.4; }
-    .chat-fab { position: fixed; bottom: 24px; right: 24px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 22px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(255,107,53,0.4); }
+    .dashboard-body { flex: 1; overflow-y: auto; background: #0a0a0a; padding-bottom: 90px; }
+    .hero-section { position: relative; height: 380px; overflow: hidden; }
+    .hero-img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 60%, #0a0a0a 100%); }
+    .hero-content { position: absolute; bottom: 24px; left: 20px; right: 20px; }
+    .hero-badge { display: inline-block; background: #FF6B35; color: white; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; letter-spacing: 0.5px; }
+    .hero-content h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; line-height: 1.2; }
+    .hero-content p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 14px; }
+    .hero-razon { font-size: 12px; color: #FF8C42; margin-bottom: 14px; }
+    .hero-btn { background: white; color: #0a0a0a; border: none; border-radius: 10px; padding: 11px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .dashboard-sections { padding: 8px 0 16px; }
+    .section-header { padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between; }
+    .section-header h3 { font-size: 17px; font-weight: 700; }
+    .section-header span { font-size: 13px; color: #FF6B35; cursor: pointer; }
+    .cards-row { display: flex; gap: 12px; overflow-x: auto; padding: 0 20px 8px; scrollbar-width: none; }
+    .cards-row::-webkit-scrollbar { display: none; }
+    .content-card { flex-shrink: 0; width: 160px; cursor: pointer; }
+    .content-thumb { width: 160px; height: 90px; border-radius: 10px; object-fit: cover; background: #1a1a1a; display: block; }
+    .content-thumb-placeholder { width: 160px; height: 90px; border-radius: 10px; background: linear-gradient(135deg, #1a1a1a, #2a1a0a); display: flex; align-items: center; justify-content: center; font-size: 32px; }
+    .content-card h4 { font-size: 12px; font-weight: 600; margin: 8px 0 3px; line-height: 1.3; }
+    .content-card p { font-size: 11px; color: rgba(255,255,255,0.5); }
+    .card-tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; margin-top: 4px; }
+    .tag-video { background: rgba(220,38,38,0.2); color: #fca5a5; }
+    .tag-podcast { background: rgba(3,105,161,0.2); color: #7dd3fc; }
+    .tag-lesson { background: rgba(21,128,61,0.2); color: #86efac; }
+    .opciones-section { padding: 8px 20px; }
+    .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .opcion-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.2); border-radius: 16px; padding: 18px 14px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .opcion-card:hover { border-color: #FF6B35; background: rgba(255,107,53,0.1); }
+    .opcion-icon { font-size: 30px; }
+    .opcion-card h4 { font-size: 13px; font-weight: 600; }
+    .opcion-card p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+    .chat-fab { position: fixed; bottom: 24px; right: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(255,107,53,0.5); z-index: 10; }
     .chat-fab img { width: 24px; height: 24px; object-fit: contain; }
+    .loading-cards { display: flex; gap: 12px; padding: 0 20px; overflow: hidden; }
+    .loading-card { flex-shrink: 0; width: 160px; height: 90px; border-radius: 10px; background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* TRADUCTOR */
+    .traductor-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; background: #0a0a0a; overflow-y: auto; }
+    .lang-toggle { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 16px; border: 1px solid rgba(255,107,53,0.2); }
+    .lang-label { flex: 1; text-align: center; font-size: 15px; font-weight: 600; }
+    .lang-swap { background: #FF6B35; border: none; border-radius: 50%; width: 36px; height: 36px; color: white; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .trad-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.2); border-radius: 14px; padding: 16px; }
+    .trad-box label { font-size: 12px; color: rgba(255,255,255,0.4); display: block; margin-bottom: 8px; }
+    .trad-textarea { width: 100%; background: transparent; border: none; outline: none; color: white; font-size: 16px; font-family: inherit; resize: none; min-height: 80px; }
+    .trad-textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .trad-result { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.3); border-radius: 14px; padding: 16px; min-height: 80px; }
+    .trad-result label { font-size: 12px; color: #FF8C42; display: block; margin-bottom: 8px; }
+    .trad-result p { font-size: 16px; color: white; line-height: 1.6; }
+    .trad-nota { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 8px; font-style: italic; }
+    .trad-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
+    .trad-btn:disabled { opacity: 0.5; }
+
+    /* BOTTOM NAV */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); border-top: 1px solid rgba(255,107,53,0.15); display: flex; padding: 8px 0 16px; z-index: 20; }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 0; }
+    .nav-item .nav-icon { font-size: 22px; }
+    .nav-item .nav-label { font-size: 10px; color: rgba(255,255,255,0.4); }
+    .nav-item.active .nav-label { color: #FF6B35; }
+    .nav-item.active .nav-icon { filter: none; }
   </style>
 </head>
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-  }
-</script>
 <body>
 
 <!-- PANTALLA 1: ¿Conoces MokiTalk? -->
 <div class="screen active" id="screen-know">
   <div class="know-screen">
     <img src="moki.png" class="moki-big" alt="Moki" />
-    <h1>¡Hola! Soy Moki</h1>
-    <p>Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.</p>
-    <button class="btn-primary" onclick="showScreen('screen-landing')">No, cuéntame más</button>
-    <button class="btn-secondary" onclick="showScreen('screen-login')">Sí, quiero entrar</button>
+    <h1 id="know-title">¡Hola! Soy Moki</h1>
+    <p id="know-desc">Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.</p>
+    <button class="btn-primary" id="know-no" onclick="showScreen('screen-landing')">No, cuéntame más</button>
+    <button class="btn-secondary" id="know-yes" onclick="showScreen('screen-login')">Sí, quiero entrar</button>
   </div>
 </div>
-  
 
 <!-- PANTALLA 2: LANDING -->
 <div class="screen" id="screen-landing">
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
-    <div class="header-info"><p>MokiTalk</p><span>Aprende inglés con Moki</span></div>
+    <span class="header-logo">MokiTalk</span>
   </div>
   <div class="landing-body">
     <div class="landing-hero">
-      <img src="moki.png" class="moki-med" alt="Moki" />
-      <h2>Aprende inglés como nunca antes</h2>
-      <p>Moki se adapta a ti — tus intereses, tu nivel, tu ritmo. Sin tests aburridos, sin presión.</p>
+      <img src="moki.png" class="landing-hero-bg" alt="Moki" />
+      <div class="landing-hero-overlay"></div>
+      <div class="landing-hero-content">
+        <h2 id="landing-h2">Aprende inglés como nunca antes</h2>
+        <p id="landing-p">Moki se adapta a ti — tus intereses, tu nivel, tu ritmo.</p>
+        <button class="btn-primary" onclick="showScreen('screen-register')" id="landing-btn">Empezar gratis</button>
+      </div>
     </div>
-    <div class="features">
-      <div class="feature-card"><div class="feature-icon">🎯</div><div><h4>Personalizado para ti</h4><p>Si te gusta el fútbol, aprendes con fútbol. Si te gusta la música, aprendes con música.</p></div></div>
-      <div class="feature-card"><div class="feature-icon">💬</div><div><h4>Conversación sin juicio</h4><p>Moki nunca te corrige bruscamente. Primero comunícate, la gramática viene después.</p></div></div>
-      <div class="feature-card"><div class="feature-icon">📱</div><div><h4>Traductor offline</h4><p>¿Sin internet en un restaurante? Moki traduce de forma coloquial, no literal.</p></div></div>
-      <div class="feature-card"><div class="feature-icon">🎬</div><div><h4>Contenido tipo Netflix</h4><p>Videos, podcasts y lecciones recomendadas según lo que ya viste y aprendiste.</p></div></div>
+    <div class="landing-sections">
+      <div class="landing-section-title" id="landing-features-title">¿Por qué MokiTalk?</div>
+      <div class="features-row">
+        <div class="feature-card"><div class="feature-icon">🎯</div><div><h4 id="f1h">Personalizado para ti</h4><p id="f1p">Si te gusta el fútbol, aprendes con fútbol.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">💬</div><div><h4 id="f2h">Sin juicios</h4><p id="f2p">Primero comunícate, la gramática viene después.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">🌍</div><div><h4 id="f3h">Traductor contextual</h4><p id="f3p">Traducciones coloquiales, no literales.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">🎬</div><div><h4 id="f4h">Contenido tipo Netflix</h4><p id="f4p">Videos y podcasts según tus intereses.</p></div></div>
+      </div>
     </div>
-    <button class="btn-primary" onclick="showScreen('screen-register')" style="margin-top:8px;">Empezar gratis con Moki</button>
+    <div class="landing-cta">
+      <button class="btn-primary" onclick="showScreen('screen-register')" id="landing-cta-btn">Empezar gratis con Moki</button>
+    </div>
   </div>
 </div>
 
@@ -151,21 +190,21 @@
 <div class="screen" id="screen-login">
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
-    <div class="header-info"><p>MokiTalk</p><span>Bienvenido de vuelta</span></div>
+    <span class="header-logo">MokiTalk</span>
   </div>
   <div class="auth-body">
-    <h2>Entrar a MokiTalk</h2>
-    <p class="subtitle">Continúa donde lo dejaste</p>
+    <h2 id="login-title">Entrar a MokiTalk</h2>
+    <p class="subtitle" id="login-sub">Continúa donde lo dejaste</p>
     <div class="error-msg" id="login-error"></div>
     <button class="btn-google" onclick="loginGoogle()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      Continuar con Google
+      <span id="login-google-btn">Continuar con Google</span>
     </button>
-    <div class="divider">o</div>
-    <input class="input-field" id="login-email" type="email" placeholder="Tu correo electrónico" />
+    <div class="divider"><span id="login-or">o</span></div>
+    <input class="input-field" id="login-email" type="email" placeholder="correo@ejemplo.com" />
     <input class="input-field" id="login-password" type="password" placeholder="Contraseña" />
-    <button class="btn-primary" onclick="loginEmail()">Entrar</button>
-    <div class="switch-auth">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
+    <button class="btn-primary" id="login-btn" onclick="loginEmail()">Entrar</button>
+    <div class="switch-auth" id="login-switch">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
   </div>
 </div>
 
@@ -173,22 +212,22 @@
 <div class="screen" id="screen-register">
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
-    <div class="header-info"><p>MokiTalk</p><span>Crea tu cuenta</span></div>
+    <span class="header-logo">MokiTalk</span>
   </div>
   <div class="auth-body">
-    <h2>Únete a MokiTalk</h2>
-    <p class="subtitle">Es gratis, siempre</p>
+    <h2 id="reg-title">Únete a MokiTalk</h2>
+    <p class="subtitle" id="reg-sub">Es gratis, siempre</p>
     <div class="error-msg" id="register-error"></div>
     <button class="btn-google" onclick="loginGoogle()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      Registrarse con Google
+      <span id="reg-google-btn">Registrarse con Google</span>
     </button>
-    <div class="divider">o</div>
-    <input class="input-field" id="nombre" type="text" placeholder="Tu nombre" />
-    <input class="input-field" id="register-email" type="email" placeholder="Tu correo electrónico" />
-    <input class="input-field" id="register-password" type="password" placeholder="Crea una contraseña (mín. 6 caracteres)" />
-    <button class="btn-primary" onclick="registrar()">Crear cuenta y conocer a Moki</button>
-    <div class="switch-auth">¿Ya tienes cuenta? <span onclick="showScreen('screen-login')">Inicia sesión</span></div>
+    <div class="divider"><span id="reg-or">o</span></div>
+    <input class="input-field" id="nombre" type="text" />
+    <input class="input-field" id="register-email" type="email" placeholder="correo@ejemplo.com" />
+    <input class="input-field" id="register-password" type="password" />
+    <button class="btn-primary" id="reg-btn" onclick="registrar()">Crear cuenta</button>
+    <div class="switch-auth" id="reg-switch">¿Ya tienes cuenta? <span onclick="showScreen('screen-login')">Inicia sesión</span></div>
   </div>
 </div>
 
@@ -197,124 +236,209 @@
   <div class="transition-screen">
     <img src="moki.png" class="moki-transition" alt="Moki" />
     <h2 id="transicion-titulo">¡Listo!</h2>
-    <p>Ahora déjame conocerte un poco mejor para crear tu plan personalizado 🎯</p>
-    <div class="dots">
-      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
+    <p id="transicion-texto">Ahora déjame conocerte un poco mejor 🎯</p>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
   </div>
 </div>
 
 <!-- PANTALLA 6: DASHBOARD -->
 <div class="screen" id="screen-dashboard">
-  <div class="dashboard-body">
-    <div class="dashboard-header">
-      <h2 id="dash-saludo">¡Hola!</h2>
-      <p class="dash-meta" id="dash-meta"></p>
-      <p class="dash-intereses" id="dash-intereses"></p>
-      <div class="nivel-badge">Nivel A2 → B1</div>
-      <img src="moki.png" class="moki-dashboard" alt="Moki" />
-    </div>
-    <div class="dashboard-content">
-
-      <div>
-        <div class="section-title">¿Qué quieres hacer hoy?</div>
-        <div class="opciones-grid">
-          <div class="opcion-card" onclick="irAlChat()">
-            <div class="opcion-icon">💬</div>
-            <h4>Charlar con Moki</h4>
-            <p>Conversación libre sin presión</p>
-          </div>
-          <div class="opcion-card" onclick="irAlChat()">
-            <div class="opcion-icon">📚</div>
-            <h4>Tomar una lección</h4>
-            <p>Aprende algo nuevo hoy</p>
-          </div>
-          <div class="opcion-card" onclick="irAlChat()">
-            <div class="opcion-icon">🎯</div>
-            <h4>Practicar situación</h4>
-            <p>Hotel, café, reunión...</p>
-          </div>
-          <div class="opcion-card" onclick="irAlChat()">
-            <div class="opcion-icon">🌍</div>
-            <h4>Traducir algo</h4>
-            <p>Coloquial y contextual</p>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="section-title">Continúa aprendiendo</div>
-        <div class="continue-card" onclick="irAlChat()">
-          <div class="continue-icon">🗣️</div>
-          <div class="continue-info">
-            <h4>Preguntar en reuniones</h4>
-            <p>Semana 1 · Lección 2 de 4</p>
-            <div class="progress-bar"><div class="progress-fill"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="section-title">Recomendado para ti</div>
-        <div class="netflix-row">
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#fff3ec;">⚽</div>
-            <div class="netflix-card-info"><h4>Premier League en inglés</h4><p>Vocabulario de fútbol</p><span class="card-tag tag-video">Video</span></div>
-          </div>
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#e0f2fe;">🎧</div>
-            <div class="netflix-card-info"><h4>Business English básico</h4><p>Para reuniones de trabajo</p><span class="card-tag tag-podcast">Podcast</span></div>
-          </div>
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#dcfce7;">📖</div>
-            <div class="netflix-card-info"><h4>Frases para el trabajo</h4><p>10 frases esenciales</p><span class="card-tag tag-leccion">Lección</span></div>
-          </div>
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#fef9c3;">🎵</div>
-            <div class="netflix-card-info"><h4>Aprende con Drake</h4><p>Inglés informal y coloquial</p><span class="card-tag tag-video">Video</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="section-title">Practica tu pronunciación</div>
-        <div class="netflix-row">
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#fce7f3;">🎤</div>
-            <div class="netflix-card-info"><h4>Shadowing con Moki</h4><p>Repite y mejora tu acento</p><span class="card-tag tag-practica">Práctica</span></div>
-          </div>
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#ede9fe;">🏨</div>
-            <div class="netflix-card-info"><h4>En el hotel</h4><p>Simulación de viaje</p><span class="card-tag tag-practica">Práctica</span></div>
-          </div>
-          <div class="netflix-card" onclick="irAlChat()">
-            <div class="netflix-thumb" style="background:#fff3ec;">☕</div>
-            <div class="netflix-card-info"><h4>Pedir en un café</h4><p>Situaciones cotidianas</p><span class="card-tag tag-practica">Práctica</span></div>
-          </div>
-        </div>
-      </div>
-
+  <div class="header">
+    <img src="moki.png" class="moki-header-img" alt="Moki" />
+    <span class="header-logo">MokiTalk</span>
+    <div class="header-nav">
+      <span id="nav-translate" onclick="showTab('traductor')">🌍</span>
     </div>
   </div>
-  <button class="chat-fab" onclick="irAlChat()">
+  <div class="dashboard-body" id="dashboard-body">
+    <div class="hero-section" id="hero-section">
+      <div class="content-thumb-placeholder" style="width:100%;height:380px;border-radius:0;font-size:60px;">🐒</div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge" id="hero-badge">RECOMENDADO</div>
+        <h2 id="hero-title">Cargando tu contenido...</h2>
+        <p id="hero-desc">Moki está preparando tu plan personalizado</p>
+        <p class="hero-razon" id="hero-razon"></p>
+        <button class="hero-btn" id="hero-btn" onclick="abrirContenido(0)">▶ Ver ahora</button>
+      </div>
+    </div>
+    <div class="dashboard-sections">
+      <div class="opciones-section">
+        <div class="section-header"><h3 id="dash-que-hacer">¿Qué quieres hacer hoy?</h3></div>
+        <div class="opciones-grid">
+          <div class="opcion-card" onclick="irAlChat('chat')"><div class="opcion-icon">💬</div><h4 id="op1h">Charlar con Moki</h4><p id="op1p">Conversación libre</p></div>
+          <div class="opcion-card" onclick="irAlChat('leccion')"><div class="opcion-icon">📚</div><h4 id="op2h">Tomar lección</h4><p id="op2p">Aprende algo nuevo</p></div>
+          <div class="opcion-card" onclick="irAlChat('practica')"><div class="opcion-icon">🎯</div><h4 id="op3h">Practicar situación</h4><p id="op3p">Hotel, café, trabajo...</p></div>
+          <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4 id="op4h">Traducir</h4><p id="op4p">Contextual y coloquial</p></div>
+        </div>
+      </div>
+      <div id="recomendados-section">
+        <div class="section-header"><h3 id="sec-rec">Recomendado para ti</h3></div>
+        <div class="loading-cards" id="loading-cards">
+          <div class="loading-card"></div>
+          <div class="loading-card"></div>
+          <div class="loading-card"></div>
+        </div>
+        <div class="cards-row" id="cards-recomendados" style="display:none;"></div>
+      </div>
+      <div id="porque-section" style="display:none;">
+        <div class="section-header"><h3 id="sec-porque"></h3></div>
+        <div class="cards-row" id="cards-porque"></div>
+      </div>
+    </div>
+  </div>
+  <button class="chat-fab" onclick="irAlChat('chat')">
     <img src="moki.png" alt="Moki" />
-    Hablar con Moki
+    <span id="fab-label">Hablar con Moki</span>
   </button>
+</div>
+
+<!-- PANTALLA 7: TRADUCTOR -->
+<div class="screen" id="screen-traductor">
+  <div class="header">
+    <img src="moki.png" class="moki-header-img" alt="Moki" />
+    <span class="header-logo">MokiTalk</span>
+  </div>
+  <div class="traductor-body">
+    <div class="lang-toggle">
+      <span class="lang-label" id="lang-from-label">Español</span>
+      <button class="lang-swap" onclick="swapLangs()">⇄</button>
+      <span class="lang-label" id="lang-to-label">Inglés</span>
+    </div>
+    <div class="trad-box">
+      <label id="trad-input-label">Escribe aquí</label>
+      <textarea class="trad-textarea" id="trad-input" rows="4" id="trad-input"></textarea>
+    </div>
+    <button class="trad-btn" id="trad-btn" onclick="traducir()">
+      <span id="trad-btn-label">Traducir con Moki 🐒</span>
+    </button>
+    <div class="trad-result" id="trad-result" style="display:none;">
+      <label id="trad-result-label">Traducción</label>
+      <p id="trad-traduccion"></p>
+      <p class="trad-nota" id="trad-nota"></p>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label" id="nav-home-label">Inicio</div></div>
+    <div class="nav-item active" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label" id="nav-trad-label">Traducir</div></div>
+    <div class="nav-item" onclick="irAlChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label" id="nav-moki-label">Moki</div></div>
+  </div>
 </div>
 
 <script>
   var CHAT_URL = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
   var usuarios = {};
   var usuarioActual = null;
+  var recomendaciones = [];
+  var langFrom = 'es';
+  var langTo = 'en';
+  var lang = navigator.language && navigator.language.startsWith('en') ? 'en' : 'es';
+  var perfil = {};
+
+  var T = {
+    es: {
+      knowTitle: '¡Hola! Soy Moki', knowDesc: 'Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.',
+      knowNo: 'No, cuéntame más', knowYes: 'Sí, quiero entrar',
+      landingH2: 'Aprende inglés como nunca antes', landingP: 'Moki se adapta a ti — tus intereses, tu nivel, tu ritmo.',
+      landingBtn: 'Empezar gratis', landingCtaBtn: 'Empezar gratis con Moki',
+      f1h: 'Personalizado para ti', f1p: 'Si te gusta el fútbol, aprendes con fútbol.',
+      f2h: 'Sin juicios', f2p: 'Primero comunícate, la gramática viene después.',
+      f3h: 'Traductor contextual', f3p: 'Traducciones coloquiales, no literales.',
+      f4h: 'Contenido tipo Netflix', f4p: 'Videos y podcasts según tus intereses.',
+      loginTitle: 'Entrar a MokiTalk', loginSub: 'Continúa donde lo dejaste',
+      loginGoogleBtn: 'Continuar con Google', loginBtn: 'Entrar',
+      loginSwitch: '¿No tienes cuenta? <span onclick="showScreen(\'screen-register\')">Regístrate gratis</span>',
+      regTitle: 'Únete a MokiTalk', regSub: 'Es gratis, siempre',
+      regGoogleBtn: 'Registrarse con Google', regBtn: 'Crear cuenta',
+      regSwitch: '¿Ya tienes cuenta? <span onclick="showScreen(\'screen-login\')">Inicia sesión</span>',
+      nombrePlaceholder: 'Tu nombre', passPlaceholder: 'Crea una contraseña (mín. 6 caracteres)',
+      transicionTexto: 'Ahora déjame conocerte un poco mejor 🎯',
+      dashQueHacer: '¿Qué quieres hacer hoy?',
+      op1h: 'Charlar con Moki', op1p: 'Conversación libre',
+      op2h: 'Tomar lección', op2p: 'Aprende algo nuevo',
+      op3h: 'Practicar situación', op3p: 'Hotel, café, trabajo...',
+      op4h: 'Traducir', op4p: 'Contextual y coloquial',
+      secRec: 'Recomendado para ti', fabLabel: 'Hablar con Moki',
+      tradInputLabel: 'Escribe aquí', tradBtnLabel: 'Traducir con Moki 🐒',
+      tradResultLabel: 'Traducción', navHome: 'Inicio', navTrad: 'Traducir', navMoki: 'Moki',
+      heroBadge: 'RECOMENDADO', heroBtn: '▶ Ver ahora',
+      errFields: 'Por favor completa todos los campos.',
+      errPass: 'La contraseña debe tener al menos 6 caracteres.',
+      errExists: 'Este correo ya está registrado. Inicia sesión.',
+      errLogin: 'Correo o contraseña incorrectos.',
+      tradLoading: 'Traduciendo...',
+      langFrom: 'Español', langTo: 'Inglés'
+    },
+    en: {
+      knowTitle: "Hi! I'm Moki", knowDesc: 'Your companion to learn Spanish without pressure, no judgment, at your own pace.',
+      knowNo: "No, tell me more", knowYes: "Yes, I want in",
+      landingH2: 'Learn a new language like never before', landingP: 'Moki adapts to you — your interests, your level, your pace.',
+      landingBtn: 'Start free', landingCtaBtn: 'Start free with Moki',
+      f1h: 'Personalized for you', f1p: 'If you like soccer, you learn with soccer.',
+      f2h: 'No judgment', f2p: 'Communication first, grammar comes later.',
+      f3h: 'Contextual translator', f3p: 'Colloquial translations, not literal.',
+      f4h: 'Netflix-style content', f4p: 'Videos and podcasts based on your interests.',
+      loginTitle: 'Sign in to MokiTalk', loginSub: 'Continue where you left off',
+      loginGoogleBtn: 'Continue with Google', loginBtn: 'Sign in',
+      loginSwitch: "Don't have an account? <span onclick=\"showScreen('screen-register')\">Sign up free</span>",
+      regTitle: 'Join MokiTalk', regSub: "It's free, always",
+      regGoogleBtn: 'Sign up with Google', regBtn: 'Create account',
+      regSwitch: "Already have an account? <span onclick=\"showScreen('screen-login')\">Sign in</span>",
+      nombrePlaceholder: 'Your name', passPlaceholder: 'Create a password (min. 6 characters)',
+      transicionTexto: "Now let me get to know you a little better 🎯",
+      dashQueHacer: 'What do you want to do today?',
+      op1h: 'Chat with Moki', op1p: 'Free conversation',
+      op2h: 'Take a lesson', op2p: 'Learn something new',
+      op3h: 'Practice a situation', op3p: 'Hotel, cafe, work...',
+      op4h: 'Translate', op4p: 'Contextual and colloquial',
+      secRec: 'Recommended for you', fabLabel: 'Talk to Moki',
+      tradInputLabel: 'Type here', tradBtnLabel: 'Translate with Moki 🐒',
+      tradResultLabel: 'Translation', navHome: 'Home', navTrad: 'Translate', navMoki: 'Moki',
+      heroBadge: 'RECOMMENDED', heroBtn: '▶ Watch now',
+      errFields: 'Please fill in all fields.',
+      errPass: 'Password must be at least 6 characters.',
+      errExists: 'This email is already registered. Sign in.',
+      errLogin: 'Email or password incorrect.',
+      tradLoading: 'Translating...',
+      langFrom: 'English', langTo: 'Spanish'
+    }
+  };
+
+  function applyLang() {
+    var t = T[lang];
+    var ids = ['knowTitle','knowDesc','knowNo','knowYes','landingH2','landingP','landingBtn','landingCtaBtn',
+      'f1h','f1p','f2h','f2p','f3h','f3p','f4h','f4p','loginTitle','loginSub','loginGoogleBtn','loginBtn',
+      'regTitle','regSub','regGoogleBtn','regBtn','transicionTexto','dashQueHacer',
+      'op1h','op1p','op2h','op2p','op3h','op3p','op4h','op4p','secRec','fabLabel',
+      'tradInputLabel','tradBtnLabel','tradResultLabel','navHome','navTrad','navMoki','heroBadge','heroBtn'];
+    ids.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && t[id]) el.innerText = t[id];
+    });
+    document.getElementById('login-switch').innerHTML = t.loginSwitch;
+    document.getElementById('reg-switch').innerHTML = t.regSwitch;
+    document.getElementById('nombre').placeholder = t.nombrePlaceholder;
+    document.getElementById('register-password').placeholder = t.passPlaceholder;
+    document.getElementById('lang-from-label').innerText = lang === 'es' ? t.langFrom : t.langTo;
+    document.getElementById('lang-to-label').innerText = lang === 'es' ? t.langTo : t.langFrom;
+    if (lang === 'en') { langFrom = 'en'; langTo = 'es'; } else { langFrom = 'es'; langTo = 'en'; }
+  }
 
   window.onload = function() {
+    applyLang();
     var params = new URLSearchParams(window.location.search);
     if (params.get('onboarding') === 'completo') {
-      var nombre = params.get('nombre') || 'amigo';
-      var motivacion = params.get('motivacion') || '';
-      var intereses = params.get('intereses') || '';
-      var meta = params.get('meta') || '';
-      mostrarDashboard(nombre, motivacion, intereses, meta);
+      perfil = {
+        nombre: params.get('nombre') || '',
+        motivacion: params.get('motivacion') || '',
+        confianza: params.get('confianza') || '',
+        intereses: params.get('intereses') || '',
+        meta: params.get('meta') || '',
+        lang: params.get('lang') || lang
+      };
+      lang = perfil.lang;
+      applyLang();
+      mostrarDashboard();
     }
   };
 
@@ -323,31 +447,30 @@
     document.getElementById(id).classList.add('active');
   }
 
-  function irAlChat() {
-    var nombre = usuarioActual ? usuarioActual.nombre : '';
-    window.location.href = CHAT_URL + (nombre ? '?nombre=' + encodeURIComponent(nombre) : '');
+  function showTab(tab) {
+    if (tab === 'dashboard') showScreen('screen-dashboard');
+    else if (tab === 'traductor') showScreen('screen-traductor');
   }
 
-  function loginGoogle() { irAlChat(); }
+  function irAlChat(modo) {
+    var nombre = usuarioActual ? usuarioActual.nombre : (perfil.nombre || '');
+    var url = CHAT_URL + '?nombre=' + encodeURIComponent(nombre) + '&modo=' + (modo || 'chat') + '&lang=' + lang;
+    window.location.href = url;
+  }
+
+  function loginGoogle() { irAlChat('chat'); }
 
   function loginEmail() {
     var email = document.getElementById('login-email').value.trim();
     var password = document.getElementById('login-password').value;
     var errorEl = document.getElementById('login-error');
-    if (!email || !password) {
-      errorEl.style.display = 'block';
-      errorEl.innerText = 'Por favor completa todos los campos.';
-      return;
-    }
+    var t = T[lang];
+    if (!email || !password) { errorEl.style.display = 'block'; errorEl.innerText = t.errFields; return; }
     var usuario = usuarios[email];
-    if (!usuario || usuario.password !== password) {
-      errorEl.style.display = 'block';
-      errorEl.innerText = 'Correo o contraseña incorrectos. Intenta de nuevo.';
-      return;
-    }
+    if (!usuario || usuario.password !== password) { errorEl.style.display = 'block'; errorEl.innerText = t.errLogin; return; }
     errorEl.style.display = 'none';
     usuarioActual = usuario;
-    irAlChat();
+    irAlChat('chat');
   }
 
   function registrar() {
@@ -355,41 +478,132 @@
     var email = document.getElementById('register-email').value.trim();
     var password = document.getElementById('register-password').value;
     var errorEl = document.getElementById('register-error');
-    if (!nombre || !email || !password) {
-      errorEl.style.display = 'block';
-      errorEl.innerText = 'Por favor completa todos los campos.';
-      return;
-    }
-    if (password.length < 6) {
-      errorEl.style.display = 'block';
-      errorEl.innerText = 'La contraseña debe tener al menos 6 caracteres.';
-      return;
-    }
-    if (usuarios[email]) {
-      errorEl.style.display = 'block';
-      errorEl.innerText = 'Este correo ya está registrado. Inicia sesión.';
-      return;
-    }
+    var t = T[lang];
+    if (!nombre || !email || !password) { errorEl.style.display = 'block'; errorEl.innerText = t.errFields; return; }
+    if (password.length < 6) { errorEl.style.display = 'block'; errorEl.innerText = t.errPass; return; }
+    if (usuarios[email]) { errorEl.style.display = 'block'; errorEl.innerText = t.errExists; return; }
     errorEl.style.display = 'none';
     usuarios[email] = { nombre: nombre, email: email, password: password };
     usuarioActual = usuarios[email];
-    document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
+    document.getElementById('transicion-titulo').innerText = lang === 'es' ? '¡Hola, ' + nombre + '!' : 'Hi, ' + nombre + '!';
     showScreen('screen-transicion');
     setTimeout(function() {
-      window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre);
+      window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre) + '&lang=' + lang;
     }, 3000);
   }
 
-  function mostrarDashboard(nombre, motivacion, intereses, meta) {
-    document.getElementById('dash-saludo').innerText = '¡Hola, ' + nombre + '! 👋';
-    if (meta) document.getElementById('dash-meta').innerText = '🎯 Meta: ' + meta;
-    if (intereses) document.getElementById('dash-intereses').innerText = '❤️ Intereses: ' + intereses;
+  function mostrarDashboard() {
+    var nombre = perfil.nombre || '';
     showScreen('screen-dashboard');
+    cargarRecomendaciones();
   }
-  <script>
+
+  function cargarRecomendaciones() {
+    fetch(CHAT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'recomendaciones', perfil: perfil })
+    });
+    setTimeout(function() {
+      var mock = [
+        { titulo: 'English for work meetings', descripcion: 'Aprende frases clave para reuniones', tipo: 'Video', emoji: '💼', razon: 'Porque quieres mejorar en el trabajo', youtube_id: 'xV7pMoHb73E' },
+        { titulo: 'Business English basics', descripcion: 'Vocabulario esencial de negocios', tipo: 'Podcast', emoji: '🎧', razon: 'Basado en tu meta', youtube_id: 'l5gxHN9FkXA' },
+        { titulo: 'Daily English conversation', descripcion: 'Práctica de conversación diaria', tipo: 'Video', emoji: '💬', razon: 'Para mejorar tu fluidez', youtube_id: 'K_bFc0fJwcE' },
+        { titulo: 'English pronunciation tips', descripcion: 'Mejora tu pronunciación', tipo: 'Video', emoji: '🎤', razon: 'Para sonar más natural', youtube_id: 'n4NVkNk522s' }
+      ];
+      recomendaciones = mock;
+      renderRecomendaciones(mock);
+    }, 2000);
+  }
+
+  function renderRecomendaciones(items) {
+    document.getElementById('loading-cards').style.display = 'none';
+    if (items.length > 0) {
+      var hero = items[0];
+      var heroImg = document.createElement('img');
+      heroImg.src = 'https://img.youtube.com/vi/' + hero.youtube_id + '/maxresdefault.jpg';
+      heroImg.className = 'hero-img';
+      heroImg.onerror = function() { this.style.display = 'none'; };
+      var heroSection = document.getElementById('hero-section');
+      heroSection.insertBefore(heroImg, heroSection.firstChild);
+      document.getElementById('hero-title').innerText = hero.titulo;
+      document.getElementById('hero-desc').innerText = hero.descripcion;
+      document.getElementById('hero-razon').innerText = hero.razon;
+    }
+    var row = document.getElementById('cards-recomendados');
+    row.style.display = 'flex';
+    items.slice(1).forEach(function(item, i) {
+      var card = document.createElement('div');
+      card.className = 'content-card';
+      card.onclick = function() { abrirContenido(i + 1); };
+      var thumb = document.createElement('img');
+      thumb.className = 'content-thumb';
+      thumb.src = 'https://img.youtube.com/vi/' + item.youtube_id + '/mqdefault.jpg';
+      thumb.onerror = function() {
+        this.outerHTML = '<div class="content-thumb-placeholder">' + item.emoji + '</div>';
+      };
+      var tag = item.tipo === 'Video' ? 'tag-video' : item.tipo === 'Podcast' ? 'tag-podcast' : 'tag-lesson';
+      card.innerHTML = '';
+      card.appendChild(thumb);
+      card.innerHTML += '<h4>' + item.titulo + '</h4><p>' + item.descripcion + '</p><span class="card-tag ' + tag + '">' + item.tipo + '</span>';
+      row.appendChild(card);
+    });
+    if (items.length > 0 && items[0].razon) {
+      var porqueSection = document.getElementById('porque-section');
+      porqueSection.style.display = 'block';
+      document.getElementById('sec-porque').innerText = items[0].razon;
+    }
+  }
+
+  function abrirContenido(index) {
+    var item = recomendaciones[index];
+    if (item && item.youtube_id) {
+      window.open('https://www.youtube.com/watch?v=' + item.youtube_id, '_blank');
+    }
+  }
+
+  function swapLangs() {
+    var tmp = langFrom;
+    langFrom = langTo;
+    langTo = tmp;
+    var fromLabel = document.getElementById('lang-from-label').innerText;
+    var toLabel = document.getElementById('lang-to-label').innerText;
+    document.getElementById('lang-from-label').innerText = toLabel;
+    document.getElementById('lang-to-label').innerText = fromLabel;
+    document.getElementById('trad-result').style.display = 'none';
+    document.getElementById('trad-input').value = '';
+  }
+
+  function traducir() {
+    var texto = document.getElementById('trad-input').value.trim();
+    if (!texto) return;
+    var btn = document.getElementById('trad-btn');
+    var t = T[lang];
+    btn.disabled = true;
+    document.getElementById('trad-btn-label').innerText = t.tradLoading;
+    document.getElementById('trad-result').style.display = 'none';
+
+    fetch(CHAT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'traduccion', texto: texto, deLang: langFrom, aLang: langTo })
+    }).then(function() {
+      setTimeout(function() {
+        document.getElementById('trad-traduccion').innerText = '(Traducción disponible próximamente)';
+        document.getElementById('trad-nota').innerText = '';
+        document.getElementById('trad-result').style.display = 'block';
+        btn.disabled = false;
+        document.getElementById('trad-btn-label').innerText = t.tradBtnLabel;
+      }, 1500);
+    });
+  }
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
   }
 </script>
+
 </body>
 </html>
