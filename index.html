@@ -516,22 +516,58 @@
   }
 
   function cargarRecomendaciones() {
-    fetch(CHAT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: 'recomendaciones', perfil: perfil })
+    var intereses = perfil.intereses || 'general';
+    var meta = perfil.meta || '';
+    var nivel = perfil.confianza || 'intermedio';
+
+    var contenidoPorIntereses = {
+      'videojuegos': [
+        { titulo: 'English for Gamers', descripcion: 'Vocabulario esencial para gaming en inglés', tipo: 'Video', emoji: '🎮', razon: 'Porque te gustan los videojuegos', youtube_id: 'dQw4w9WgXcQ' },
+        { titulo: 'Gaming phrases in English', descripcion: 'Frases que usan los gamers', tipo: 'Lección', emoji: '🕹️', razon: 'Para chatear con jugadores de todo el mundo', youtube_id: 'xV7pMoHb73E' },
+        { titulo: 'How to talk about games', descripcion: 'Conversa sobre tus juegos favoritos', tipo: 'Podcast', emoji: '🎧', razon: 'Basado en tus intereses', youtube_id: 'l5gxHN9FkXA' }
+      ],
+      'música': [
+        { titulo: 'Learn English with songs', descripcion: 'Aprende inglés con música', tipo: 'Video', emoji: '🎵', razon: 'Porque te gusta la música', youtube_id: 'K_bFc0fJwcE' },
+        { titulo: 'Music vocabulary in English', descripcion: 'Vocabulario musical en inglés', tipo: 'Lección', emoji: '🎸', razon: 'Para hablar de música', youtube_id: 'n4NVkNk522s' }
+      ],
+      'tecnología': [
+        { titulo: 'Tech English for beginners', descripcion: 'Inglés técnico para principiantes', tipo: 'Video', emoji: '💻', razon: 'Porque te interesa la tecnología', youtube_id: 'xV7pMoHb73E' },
+        { titulo: 'Programming in English', descripcion: 'Cómo hablar de tech en inglés', tipo: 'Podcast', emoji: '⚙️', razon: 'Para el mundo tech', youtube_id: 'l5gxHN9FkXA' }
+      ],
+      'fútbol': [
+        { titulo: 'Football English vocabulary', descripcion: 'Vocabulario de fútbol en inglés', tipo: 'Video', emoji: '⚽', razon: 'Porque te gusta el fútbol', youtube_id: 'K_bFc0fJwcE' },
+        { titulo: 'Premier League in English', descripcion: 'Entiende los comentarios en inglés', tipo: 'Video', emoji: '🏆', razon: 'Para ver la Premier en inglés', youtube_id: 'n4NVkNk522s' }
+      ],
+      'trabajo': [
+        { titulo: 'Business English essentials', descripcion: 'Inglés esencial para el trabajo', tipo: 'Video', emoji: '💼', razon: 'Para tu desarrollo profesional', youtube_id: 'xV7pMoHb73E' },
+        { titulo: 'English for meetings', descripcion: 'Frases clave para reuniones', tipo: 'Lección', emoji: '📊', razon: 'Para hablar en reuniones', youtube_id: 'l5gxHN9FkXA' }
+      ],
+      'viajes': [
+        { titulo: 'Travel English essentials', descripcion: 'Inglés esencial para viajeros', tipo: 'Video', emoji: '✈️', razon: 'Porque quieres viajar', youtube_id: 'K_bFc0fJwcE' },
+        { titulo: 'At the hotel in English', descripcion: 'Cómo pedir tu habitación en inglés', tipo: 'Lección', emoji: '🏨', razon: 'Para defenderte viajando', youtube_id: 'n4NVkNk522s' }
+      ]
+    };
+
+    var resultado = [];
+    var interesesLower = intereses.toLowerCase();
+    
+    Object.keys(contenidoPorIntereses).forEach(function(key) {
+      if (interesesLower.indexOf(key) !== -1) {
+        resultado = resultado.concat(contenidoPorIntereses[key]);
+      }
     });
+
+    if (resultado.length === 0) {
+      resultado = contenidoPorIntereses['trabajo'];
+    }
+
+    resultado = resultado.slice(0, 6);
+    recomendaciones = resultado;
+    
     setTimeout(function() {
-      var mock = [
-        { titulo: 'English for work meetings', descripcion: 'Aprende frases clave para reuniones', tipo: 'Video', emoji: '💼', razon: 'Porque quieres mejorar en el trabajo', youtube_id: 'xV7pMoHb73E' },
-        { titulo: 'Business English basics', descripcion: 'Vocabulario esencial de negocios', tipo: 'Podcast', emoji: '🎧', razon: 'Basado en tu meta', youtube_id: 'l5gxHN9FkXA' },
-        { titulo: 'Daily English conversation', descripcion: 'Práctica de conversación diaria', tipo: 'Video', emoji: '💬', razon: 'Para mejorar tu fluidez', youtube_id: 'K_bFc0fJwcE' },
-        { titulo: 'English pronunciation tips', descripcion: 'Mejora tu pronunciación', tipo: 'Video', emoji: '🎤', razon: 'Para sonar más natural', youtube_id: 'n4NVkNk522s' }
-      ];
-      recomendaciones = mock;
-      renderRecomendaciones(mock);
-    }, 2000);
+      document.getElementById('loading-cards').style.display = 'none';
+      renderRecomendaciones(resultado);
+    }, 1000);
   }
 
   function renderRecomendaciones(items) {
