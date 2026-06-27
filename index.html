@@ -20,9 +20,6 @@
     .header { background: rgba(0,0,0,0.9); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(255,107,53,0.2); }
     .moki-header-img { width: 40px; height: 40px; object-fit: contain; }
     .header-logo { font-weight: 800; font-size: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .header-nav { margin-left: auto; display: flex; gap: 16px; }
-    .header-nav span { font-size: 13px; color: rgba(255,255,255,0.7); cursor: pointer; }
-    .header-nav span:hover { color: #FF6B35; }
 
     /* BUTTONS */
     .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; }
@@ -37,7 +34,7 @@
     .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
     .error-msg { background: rgba(220,38,38,0.2); color: #fca5a5; border: 1px solid rgba(220,38,38,0.3); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
 
-    /* PANTALLA 1 — KNOW */
+    /* PANTALLA 1 KNOW */
     .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
     .moki-big { width: 180px; height: 180px; object-fit: contain; animation: bounce 2s infinite; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(255,107,53,0.4)); }
     @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
@@ -46,11 +43,11 @@
 
     /* LANDING */
     .landing-body { flex: 1; overflow-y: auto; background: #0a0a0a; }
-    .landing-hero { position: relative; height: 420px; overflow: hidden; }
-    .landing-hero-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
-    .landing-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, #0a0a0a 100%); }
-    .landing-hero-content { position: absolute; bottom: 24px; left: 20px; right: 20px; }
-    .landing-hero-content h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+    .landing-hero { position: relative; height: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
+    .landing-hero img { width: 200px; height: 200px; object-fit: contain; animation: bounce 2s infinite; filter: drop-shadow(0 0 40px rgba(255,107,53,0.5)); }
+    .landing-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, #0a0a0a 100%); }
+    .landing-hero-content { position: absolute; bottom: 24px; left: 20px; right: 20px; text-align: center; }
+    .landing-hero-content h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
     .landing-hero-content p { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
     .landing-sections { padding: 0 16px 100px; }
     .landing-section-title { font-size: 18px; font-weight: 700; margin: 28px 0 14px; }
@@ -80,32 +77,24 @@
 
     /* DASHBOARD */
     .dashboard-body { flex: 1; overflow-y: auto; background: #0a0a0a; padding-bottom: 90px; }
-    .hero-section { position: relative; height: 380px; overflow: hidden; }
-    .hero-img { width: 100%; height: 100%; object-fit: cover; }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 60%, #0a0a0a 100%); }
-    .hero-content { position: absolute; bottom: 24px; left: 20px; right: 20px; }
-    .hero-badge { display: inline-block; background: #FF6B35; color: white; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; letter-spacing: 0.5px; }
-    .hero-content h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; line-height: 1.2; }
-    .hero-content p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 14px; }
-    .hero-razon { font-size: 12px; color: #FF8C42; margin-bottom: 14px; }
-    .hero-btn { background: white; color: #0a0a0a; border: none; border-radius: 10px; padding: 11px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-    .dashboard-sections { padding: 8px 0 16px; }
+    .dash-greeting { padding: 20px 20px 8px; }
+    .dash-greeting h2 { font-size: 22px; font-weight: 800; }
+    .dash-greeting p { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .reto-card { margin: 12px 20px; background: linear-gradient(135deg, rgba(255,107,53,0.15), rgba(255,140,66,0.1)); border: 1px solid rgba(255,107,53,0.3); border-radius: 16px; padding: 16px; }
+    .reto-badge { font-size: 11px; font-weight: 700; color: #FF6B35; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .reto-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+    .reto-card p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+    .reto-btn { margin-top: 12px; background: #FF6B35; color: white; border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; }
     .section-header { padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between; }
     .section-header h3 { font-size: 17px; font-weight: 700; }
-    .section-header span { font-size: 13px; color: #FF6B35; cursor: pointer; }
-    .cards-row { display: flex; gap: 12px; overflow-x: auto; padding: 0 20px 8px; scrollbar-width: none; }
-    .cards-row::-webkit-scrollbar { display: none; }
-    .content-card { flex-shrink: 0; width: 160px; cursor: pointer; }
-    .content-thumb { width: 160px; height: 90px; border-radius: 10px; object-fit: cover; background: #1a1a1a; display: block; }
-    .content-thumb-placeholder { width: 160px; height: 90px; border-radius: 10px; background: linear-gradient(135deg, #1a1a1a, #2a1a0a); display: flex; align-items: center; justify-content: center; font-size: 32px; }
-    .content-card h4 { font-size: 12px; font-weight: 600; margin: 8px 0 3px; line-height: 1.3; }
-    .content-card p { font-size: 11px; color: rgba(255,255,255,0.5); }
-    .card-tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; margin-top: 4px; }
-    .tag-video { background: rgba(220,38,38,0.2); color: #fca5a5; }
-    .tag-podcast { background: rgba(3,105,161,0.2); color: #7dd3fc; }
-    .tag-lesson { background: rgba(21,128,61,0.2); color: #86efac; }
-    .opciones-section { padding: 8px 20px; }
-    .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .temas-row { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 8px; scrollbar-width: none; }
+    .temas-row::-webkit-scrollbar { display: none; }
+    .tema-card { flex-shrink: 0; width: 140px; height: 160px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.2s; }
+    .tema-card:hover { transform: scale(1.03); }
+    .tema-card .tema-emoji { font-size: 36px; }
+    .tema-card h4 { font-size: 13px; font-weight: 700; text-align: center; padding: 0 8px; }
+    .tema-card .tema-nivel { font-size: 10px; opacity: 0.7; }
+    .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; }
     .opcion-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.2); border-radius: 16px; padding: 18px 14px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .opcion-card:hover { border-color: #FF6B35; background: rgba(255,107,53,0.1); }
     .opcion-icon { font-size: 30px; }
@@ -113,12 +102,46 @@
     .opcion-card p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
     .chat-fab { position: fixed; bottom: 24px; right: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(255,107,53,0.5); z-index: 10; }
     .chat-fab img { width: 24px; height: 24px; object-fit: contain; }
-    .loading-cards { display: flex; gap: 12px; padding: 0 20px; overflow: hidden; }
-    .loading-card { flex-shrink: 0; width: 160px; height: 90px; border-radius: 10px; background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* PANTALLA LECCION INMERSIVA */
+    .leccion-screen { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    .leccion-bg { position: absolute; inset: 0; opacity: 0.15; }
+    .leccion-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
+    .leccion-tema-badge { position: absolute; top: 16px; left: 16px; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; z-index: 10; letter-spacing: 0.5px; }
+    .leccion-moki-area { flex: 0 0 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding-top: 60px; }
+    .leccion-moki-img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 20px currentColor); }
+    .leccion-moki-img.hablando { animation: mokihabla 0.5s infinite alternate; }
+    @keyframes mokihabla { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
+    .leccion-ondas { display: flex; gap: 4px; align-items: center; justify-content: center; margin-top: 12px; height: 24px; }
+    .onda { width: 4px; border-radius: 4px; background: white; opacity: 0.4; animation: onda 1s infinite; }
+    .onda:nth-child(1) { animation-delay: 0s; }
+    .onda:nth-child(2) { animation-delay: 0.15s; }
+    .onda:nth-child(3) { animation-delay: 0.3s; }
+    .onda:nth-child(4) { animation-delay: 0.15s; }
+    .onda:nth-child(5) { animation-delay: 0s; }
+    @keyframes onda { 0%,100% { height: 4px; } 50% { height: 20px; opacity: 0.9; } }
+    .leccion-ondas.activo .onda { opacity: 0.9; }
+    .leccion-subtitulo { margin: 0 20px; text-align: center; font-size: 16px; line-height: 1.6; min-height: 80px; color: rgba(255,255,255,0.9); font-weight: 500; }
+    .leccion-chat-area { flex: 1; overflow-y: auto; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .leccion-bubble { max-width: 80%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+    .leccion-bubble.moki { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); align-self: flex-start; border-bottom-left-radius: 4px; }
+    .leccion-bubble.usuario { background: rgba(255,255,255,0.15); align-self: flex-end; border-bottom-right-radius: 4px; }
+    .leccion-input-area { padding: 12px 16px 32px; display: flex; gap: 10px; align-items: center; background: rgba(0,0,0,0.3); }
+    .leccion-text-input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 11px 16px; font-size: 14px; outline: none; color: white; display: none; }
+    .leccion-text-input::placeholder { color: rgba(255,255,255,0.4); }
+    .leccion-text-input.visible { display: block; }
+    .mic-btn { width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; transition: all 0.2s; }
+    .mic-btn.idle { background: rgba(255,255,255,0.15); }
+    .mic-btn.recording { background: #ef4444; animation: micpulse 1s infinite; }
+    @keyframes micpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); } 50% { box-shadow: 0 0 0 12px rgba(239,68,68,0); } }
+    .send-leccion-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 18px; cursor: pointer; display: none; }
+    .send-leccion-btn.visible { display: flex; align-items: center; justify-content: center; }
+    .toggle-input-btn { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 20px; cursor: pointer; padding: 8px; }
+    .progreso-bar { height: 3px; background: rgba(255,255,255,0.1); margin: 0 20px; border-radius: 3px; overflow: hidden; }
+    .progreso-fill { height: 100%; border-radius: 3px; transition: width 0.5s; width: 0%; }
 
     /* TRADUCTOR */
-    .traductor-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; background: #0a0a0a; overflow-y: auto; }
+    .traductor-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; background: #0a0a0a; overflow-y: auto; padding-bottom: 90px; }
     .lang-toggle { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 16px; border: 1px solid rgba(255,107,53,0.2); }
     .lang-label { flex: 1; text-align: center; font-size: 15px; font-weight: 600; }
     .lang-swap { background: #FF6B35; border: none; border-radius: 50%; width: 36px; height: 36px; color: white; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -126,7 +149,7 @@
     .trad-box label { font-size: 12px; color: rgba(255,255,255,0.4); display: block; margin-bottom: 8px; }
     .trad-textarea { width: 100%; background: transparent; border: none; outline: none; color: white; font-size: 16px; font-family: inherit; resize: none; min-height: 80px; }
     .trad-textarea::placeholder { color: rgba(255,255,255,0.2); }
-    .trad-result { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.3); border-radius: 14px; padding: 16px; min-height: 80px; }
+    .trad-result { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.3); border-radius: 14px; padding: 16px; min-height: 80px; display: none; }
     .trad-result label { font-size: 12px; color: #FF8C42; display: block; margin-bottom: 8px; }
     .trad-result p { font-size: 16px; color: white; line-height: 1.6; }
     .trad-nota { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 8px; font-style: italic; }
@@ -134,12 +157,12 @@
     .trad-btn:disabled { opacity: 0.5; }
 
     /* BOTTOM NAV */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); border-top: 1px solid rgba(255,107,53,0.15); display: flex; padding: 8px 0 16px; z-index: 20; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); border-top: 1px solid rgba(255,107,53,0.15); display: none; padding: 8px 0 16px; z-index: 20; }
+    .bottom-nav.visible { display: flex; }
     .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 0; }
     .nav-item .nav-icon { font-size: 22px; }
     .nav-item .nav-label { font-size: 10px; color: rgba(255,255,255,0.4); }
     .nav-item.active .nav-label { color: #FF6B35; }
-    .nav-item.active .nav-icon { filter: none; }
   </style>
 </head>
 <body>
@@ -148,10 +171,10 @@
 <div class="screen active" id="screen-know">
   <div class="know-screen">
     <img src="moki.png" class="moki-big" alt="Moki" />
-    <h1 id="know-title">¡Hola! Soy Moki</h1>
-    <p id="know-desc">Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.</p>
-    <button class="btn-primary" id="know-no" onclick="showScreen('screen-landing')">No, cuéntame más</button>
-    <button class="btn-secondary" id="know-yes" onclick="showScreen('screen-login')">Sí, quiero entrar</button>
+    <h1>¡Hola! Soy Moki</h1>
+    <p>Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.</p>
+    <button class="btn-primary" onclick="showScreen('screen-landing')">No, cuéntame más</button>
+    <button class="btn-secondary" onclick="showScreen('screen-login')">Sí, quiero entrar</button>
   </div>
 </div>
 
@@ -163,25 +186,24 @@
   </div>
   <div class="landing-body">
     <div class="landing-hero">
-      <img src="moki.png" class="landing-hero-bg" alt="Moki" />
+      <img src="moki.png" alt="Moki" />
       <div class="landing-hero-overlay"></div>
       <div class="landing-hero-content">
-        <h2 id="landing-h2">Aprende inglés como nunca antes</h2>
-        <p id="landing-p">Moki se adapta a ti — tus intereses, tu nivel, tu ritmo.</p>
-        <button class="btn-primary" onclick="showScreen('screen-register')" id="landing-btn">Empezar gratis</button>
+        <h2>Aprende inglés como nunca antes</h2>
+        <p>Moki se adapta a ti — tus intereses, tu nivel, tu ritmo.</p>
       </div>
     </div>
     <div class="landing-sections">
-      <div class="landing-section-title" id="landing-features-title">¿Por qué MokiTalk?</div>
+      <div class="landing-section-title">¿Por qué MokiTalk?</div>
       <div class="features-row">
-        <div class="feature-card"><div class="feature-icon">🎯</div><div><h4 id="f1h">Personalizado para ti</h4><p id="f1p">Si te gusta el fútbol, aprendes con fútbol.</p></div></div>
-        <div class="feature-card"><div class="feature-icon">💬</div><div><h4 id="f2h">Sin juicios</h4><p id="f2p">Primero comunícate, la gramática viene después.</p></div></div>
-        <div class="feature-card"><div class="feature-icon">🌍</div><div><h4 id="f3h">Traductor contextual</h4><p id="f3p">Traducciones coloquiales, no literales.</p></div></div>
-        <div class="feature-card"><div class="feature-icon">🎬</div><div><h4 id="f4h">Contenido tipo Netflix</h4><p id="f4p">Videos y podcasts según tus intereses.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">🎯</div><div><h4>Personalizado para ti</h4><p>Si te gustan los videojuegos, aprendes con videojuegos.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">🎙️</div><div><h4>Aprende hablando</h4><p>Practica con voz real — Moki te escucha y te responde.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">💬</div><div><h4>Sin juicios</h4><p>Primero comunícate, la gramática viene después.</p></div></div>
+        <div class="feature-card"><div class="feature-icon">🌍</div><div><h4>Traductor contextual</h4><p>Traducciones coloquiales, no literales.</p></div></div>
       </div>
     </div>
     <div class="landing-cta">
-      <button class="btn-primary" onclick="showScreen('screen-register')" id="landing-cta-btn">Empezar gratis con Moki</button>
+      <button class="btn-primary" onclick="showScreen('screen-register')">Empezar gratis con Moki</button>
     </div>
   </div>
 </div>
@@ -193,18 +215,18 @@
     <span class="header-logo">MokiTalk</span>
   </div>
   <div class="auth-body">
-    <h2 id="login-title">Entrar a MokiTalk</h2>
-    <p class="subtitle" id="login-sub">Continúa donde lo dejaste</p>
+    <h2>Entrar a MokiTalk</h2>
+    <p class="subtitle">Continúa donde lo dejaste</p>
     <div class="error-msg" id="login-error"></div>
-    <button class="btn-google" onclick="loginGoogle()">
+    <button class="btn-google" onclick="irAlChat()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      <span id="login-google-btn">Continuar con Google</span>
+      Continuar con Google
     </button>
-    <div class="divider"><span id="login-or">o</span></div>
+    <div class="divider">o</div>
     <input class="input-field" id="login-email" type="email" placeholder="correo@ejemplo.com" />
     <input class="input-field" id="login-password" type="password" placeholder="Contraseña" />
-    <button class="btn-primary" id="login-btn" onclick="loginEmail()">Entrar</button>
-    <div class="switch-auth" id="login-switch">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
+    <button class="btn-primary" onclick="loginEmail()">Entrar</button>
+    <div class="switch-auth">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
   </div>
 </div>
 
@@ -215,19 +237,19 @@
     <span class="header-logo">MokiTalk</span>
   </div>
   <div class="auth-body">
-    <h2 id="reg-title">Únete a MokiTalk</h2>
-    <p class="subtitle" id="reg-sub">Es gratis, siempre</p>
+    <h2>Únete a MokiTalk</h2>
+    <p class="subtitle">Es gratis, siempre</p>
     <div class="error-msg" id="register-error"></div>
-    <button class="btn-google" onclick="loginGoogle()">
+    <button class="btn-google" onclick="irAlChat()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      <span id="reg-google-btn">Registrarse con Google</span>
+      Registrarse con Google
     </button>
-    <div class="divider"><span id="reg-or">o</span></div>
-    <input class="input-field" id="nombre" type="text" />
+    <div class="divider">o</div>
+    <input class="input-field" id="nombre" type="text" placeholder="Tu nombre" />
     <input class="input-field" id="register-email" type="email" placeholder="correo@ejemplo.com" />
-    <input class="input-field" id="register-password" type="password" />
-    <button class="btn-primary" id="reg-btn" onclick="registrar()">Crear cuenta</button>
-    <div class="switch-auth" id="reg-switch">¿Ya tienes cuenta? <span onclick="showScreen('screen-login')">Inicia sesión</span></div>
+    <input class="input-field" id="register-password" type="password" placeholder="Contraseña (mín. 6 caracteres)" />
+    <button class="btn-primary" onclick="registrar()">Crear cuenta y conocer a Moki</button>
+    <div class="switch-auth">¿Ya tienes cuenta? <span onclick="showScreen('screen-login')">Inicia sesión</span></div>
   </div>
 </div>
 
@@ -236,7 +258,7 @@
   <div class="transition-screen">
     <img src="moki.png" class="moki-transition" alt="Moki" />
     <h2 id="transicion-titulo">¡Listo!</h2>
-    <p id="transicion-texto">Ahora déjame conocerte un poco mejor 🎯</p>
+    <p>Ahora déjame conocerte un poco mejor para crear tu plan personalizado 🎯</p>
     <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
   </div>
 </div>
@@ -246,54 +268,68 @@
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
     <span class="header-logo">MokiTalk</span>
-    <div class="header-nav">
-      <span id="nav-translate" onclick="showTab('traductor')">🌍</span>
-    </div>
   </div>
-  <div class="dashboard-body" id="dashboard-body">
-    <div class="hero-section" id="hero-section">
-      <div class="content-thumb-placeholder" style="width:100%;height:380px;border-radius:0;font-size:60px;">🐒</div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="hero-badge" id="hero-badge">RECOMENDADO</div>
-        <h2 id="hero-title">Cargando tu contenido...</h2>
-        <p id="hero-desc">Moki está preparando tu plan personalizado</p>
-        <p class="hero-razon" id="hero-razon"></p>
-        <button class="hero-btn" id="hero-btn" onclick="abrirContenido(0)">▶ Ver ahora</button>
-      </div>
+  <div class="dashboard-body">
+    <div class="dash-greeting">
+      <h2 id="dash-saludo">¡Hola!</h2>
+      <p id="dash-sub">Elige qué quieres hacer hoy</p>
     </div>
-    <div class="dashboard-sections">
-      <div class="opciones-section">
-        <div class="section-header"><h3 id="dash-que-hacer">¿Qué quieres hacer hoy?</h3></div>
-        <div class="opciones-grid">
-          <div class="opcion-card" onclick="irAlChat('chat')"><div class="opcion-icon">💬</div><h4 id="op1h">Charlar con Moki</h4><p id="op1p">Conversación libre</p></div>
-          <div class="opcion-card" onclick="irAlChat('leccion')"><div class="opcion-icon">📚</div><h4 id="op2h">Tomar lección</h4><p id="op2p">Aprende algo nuevo</p></div>
-          <div class="opcion-card" onclick="irAlChat('practica')"><div class="opcion-icon">🎯</div><h4 id="op3h">Practicar situación</h4><p id="op3p">Hotel, café, trabajo...</p></div>
-          <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4 id="op4h">Traducir</h4><p id="op4p">Contextual y coloquial</p></div>
-        </div>
-      </div>
-      <div id="recomendados-section">
-        <div class="section-header"><h3 id="sec-rec">Recomendado para ti</h3></div>
-        <div class="loading-cards" id="loading-cards">
-          <div class="loading-card"></div>
-          <div class="loading-card"></div>
-          <div class="loading-card"></div>
-        </div>
-        <div class="cards-row" id="cards-recomendados" style="display:none;"></div>
-      </div>
-      <div id="porque-section" style="display:none;">
-        <div class="section-header"><h3 id="sec-porque"></h3></div>
-        <div class="cards-row" id="cards-porque"></div>
+    <div class="reto-card" id="reto-card">
+      <div class="reto-badge">🔥 RETO DEL DÍA</div>
+      <h4 id="reto-titulo">Cargando tu reto...</h4>
+      <p id="reto-desc">Moki está preparando algo especial para ti</p>
+      <button class="reto-btn" onclick="abrirReto()">Aceptar reto 🚀</button>
+    </div>
+    <div>
+      <div class="section-header"><h3>Tus temas</h3></div>
+      <div class="temas-row" id="temas-row"></div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div class="section-header"><h3>¿Qué quieres hacer?</h3></div>
+      <div class="opciones-grid">
+        <div class="opcion-card" onclick="irAlChat('chat')"><div class="opcion-icon">💬</div><h4>Charlar con Moki</h4><p>Conversación libre sin presión</p></div>
+        <div class="opcion-card" onclick="irAlChat('practica')"><div class="opcion-icon">🎯</div><h4>Practicar situación</h4><p>Hotel, café, reunión...</p></div>
+        <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4>Traducir</h4><p>Contextual y coloquial</p></div>
+        <div class="opcion-card" onclick="irAlChat('chat')"><div class="opcion-icon">🐒</div><h4>Sorpréndeme</h4><p>Deja que Moki elija</p></div>
       </div>
     </div>
   </div>
   <button class="chat-fab" onclick="irAlChat('chat')">
     <img src="moki.png" alt="Moki" />
-    <span id="fab-label">Hablar con Moki</span>
+    Hablar con Moki
   </button>
+  <div class="bottom-nav visible" id="bottom-nav-dashboard">
+    <div class="nav-item active" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
+    <div class="nav-item" onclick="irAlChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
+  </div>
 </div>
 
-<!-- PANTALLA 7: TRADUCTOR -->
+<!-- PANTALLA 7: LECCIÓN INMERSIVA -->
+<div class="screen" id="screen-leccion">
+  <div class="leccion-screen" id="leccion-screen">
+    <div class="leccion-bg" id="leccion-bg"></div>
+    <button class="leccion-close" onclick="cerrarLeccion()">✕</button>
+    <div class="leccion-tema-badge" id="leccion-tema-badge">TEMA</div>
+    <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill"></div></div>
+    <div class="leccion-moki-area">
+      <img src="moki.png" class="leccion-moki-img" id="leccion-moki-img" alt="Moki" />
+      <div class="leccion-ondas" id="leccion-ondas">
+        <div class="onda"></div><div class="onda"></div><div class="onda"></div><div class="onda"></div><div class="onda"></div>
+      </div>
+    </div>
+    <div class="leccion-subtitulo" id="leccion-subtitulo">Moki está listo para practicar contigo...</div>
+    <div class="leccion-chat-area" id="leccion-chat-area"></div>
+    <div class="leccion-input-area">
+      <button class="toggle-input-btn" onclick="toggleTeclado()" title="Cambiar a teclado">⌨️</button>
+      <input type="text" class="leccion-text-input" id="leccion-text-input" placeholder="Escribe tu respuesta..." />
+      <button class="send-leccion-btn" id="send-leccion-btn" onclick="enviarTextoLeccion()">➤</button>
+      <button class="mic-btn idle" id="mic-btn" onclick="toggleMic()">🎙️</button>
+    </div>
+  </div>
+</div>
+
+<!-- PANTALLA 8: TRADUCTOR -->
 <div class="screen" id="screen-traductor">
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
@@ -306,22 +342,20 @@
       <span class="lang-label" id="lang-to-label">Inglés</span>
     </div>
     <div class="trad-box">
-      <label id="trad-input-label">Escribe aquí</label>
-      <textarea class="trad-textarea" id="trad-input" rows="4" id="trad-input"></textarea>
+      <label>Escribe aquí</label>
+      <textarea class="trad-textarea" id="trad-input" placeholder="Escribe lo que quieres traducir..."></textarea>
     </div>
-    <button class="trad-btn" id="trad-btn" onclick="traducir()">
-      <span id="trad-btn-label">Traducir con Moki 🐒</span>
-    </button>
-    <div class="trad-result" id="trad-result" style="display:none;">
-      <label id="trad-result-label">Traducción</label>
+    <button class="trad-btn" id="trad-btn" onclick="traducir()">Traducir con Moki 🐒</button>
+    <div class="trad-result" id="trad-result">
+      <label>Traducción</label>
       <p id="trad-traduccion"></p>
       <p class="trad-nota" id="trad-nota"></p>
     </div>
   </div>
-  <div class="bottom-nav">
-    <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label" id="nav-home-label">Inicio</div></div>
-    <div class="nav-item active" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label" id="nav-trad-label">Traducir</div></div>
-    <div class="nav-item" onclick="irAlChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label" id="nav-moki-label">Moki</div></div>
+  <div class="bottom-nav visible">
+    <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item active" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
+    <div class="nav-item" onclick="irAlChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
   </div>
 </div>
 
@@ -329,132 +363,50 @@
   var CHAT_URL = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
   var usuarios = {};
   var usuarioActual = null;
-  var recomendaciones = [];
+  var perfil = {};
   var langFrom = 'es';
   var langTo = 'en';
-  var lang = navigator.language && navigator.language.startsWith('en') ? 'en' : 'es';
-  var perfil = {};
+  var temaActual = null;
+  var leccionHistorial = [];
+  var isLeccionTyping = false;
+  var recognition = null;
+  var isRecording = false;
+  var synth = window.speechSynthesis;
+  var progresoLeccion = 0;
 
-  var T = {
-    es: {
-      knowTitle: '¡Hola! Soy Moki', knowDesc: 'Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.',
-      knowNo: 'No, cuéntame más', knowYes: 'Sí, quiero entrar',
-      landingH2: 'Aprende inglés como nunca antes', landingP: 'Moki se adapta a ti — tus intereses, tu nivel, tu ritmo.',
-      landingBtn: 'Empezar gratis', landingCtaBtn: 'Empezar gratis con Moki',
-      f1h: 'Personalizado para ti', f1p: 'Si te gusta el fútbol, aprendes con fútbol.',
-      f2h: 'Sin juicios', f2p: 'Primero comunícate, la gramática viene después.',
-      f3h: 'Traductor contextual', f3p: 'Traducciones coloquiales, no literales.',
-      f4h: 'Contenido tipo Netflix', f4p: 'Videos y podcasts según tus intereses.',
-      loginTitle: 'Entrar a MokiTalk', loginSub: 'Continúa donde lo dejaste',
-      loginGoogleBtn: 'Continuar con Google', loginBtn: 'Entrar',
-      loginSwitch: '¿No tienes cuenta? <span onclick="showScreen(\'screen-register\')">Regístrate gratis</span>',
-      regTitle: 'Únete a MokiTalk', regSub: 'Es gratis, siempre',
-      regGoogleBtn: 'Registrarse con Google', regBtn: 'Crear cuenta',
-      regSwitch: '¿Ya tienes cuenta? <span onclick="showScreen(\'screen-login\')">Inicia sesión</span>',
-      nombrePlaceholder: 'Tu nombre', passPlaceholder: 'Crea una contraseña (mín. 6 caracteres)',
-      transicionTexto: 'Ahora déjame conocerte un poco mejor 🎯',
-      dashQueHacer: '¿Qué quieres hacer hoy?',
-      op1h: 'Charlar con Moki', op1p: 'Conversación libre',
-      op2h: 'Tomar lección', op2p: 'Aprende algo nuevo',
-      op3h: 'Practicar situación', op3p: 'Hotel, café, trabajo...',
-      op4h: 'Traducir', op4p: 'Contextual y coloquial',
-      secRec: 'Recomendado para ti', fabLabel: 'Hablar con Moki',
-      tradInputLabel: 'Escribe aquí', tradBtnLabel: 'Traducir con Moki 🐒',
-      tradResultLabel: 'Traducción', navHome: 'Inicio', navTrad: 'Traducir', navMoki: 'Moki',
-      heroBadge: 'RECOMENDADO', heroBtn: '▶ Ver ahora',
-      errFields: 'Por favor completa todos los campos.',
-      errPass: 'La contraseña debe tener al menos 6 caracteres.',
-      errExists: 'Este correo ya está registrado. Inicia sesión.',
-      errLogin: 'Correo o contraseña incorrectos.',
-      tradLoading: 'Traduciendo...',
-      langFrom: 'Español', langTo: 'Inglés'
-    },
-    en: {
-      knowTitle: "Hi! I'm Moki", knowDesc: 'Your companion to learn Spanish without pressure, no judgment, at your own pace.',
-      knowNo: "No, tell me more", knowYes: "Yes, I want in",
-      landingH2: 'Learn a new language like never before', landingP: 'Moki adapts to you — your interests, your level, your pace.',
-      landingBtn: 'Start free', landingCtaBtn: 'Start free with Moki',
-      f1h: 'Personalized for you', f1p: 'If you like soccer, you learn with soccer.',
-      f2h: 'No judgment', f2p: 'Communication first, grammar comes later.',
-      f3h: 'Contextual translator', f3p: 'Colloquial translations, not literal.',
-      f4h: 'Netflix-style content', f4p: 'Videos and podcasts based on your interests.',
-      loginTitle: 'Sign in to MokiTalk', loginSub: 'Continue where you left off',
-      loginGoogleBtn: 'Continue with Google', loginBtn: 'Sign in',
-      loginSwitch: "Don't have an account? <span onclick=\"showScreen('screen-register')\">Sign up free</span>",
-      regTitle: 'Join MokiTalk', regSub: "It's free, always",
-      regGoogleBtn: 'Sign up with Google', regBtn: 'Create account',
-      regSwitch: "Already have an account? <span onclick=\"showScreen('screen-login')\">Sign in</span>",
-      nombrePlaceholder: 'Your name', passPlaceholder: 'Create a password (min. 6 characters)',
-      transicionTexto: "Now let me get to know you a little better 🎯",
-      dashQueHacer: 'What do you want to do today?',
-      op1h: 'Chat with Moki', op1p: 'Free conversation',
-      op2h: 'Take a lesson', op2p: 'Learn something new',
-      op3h: 'Practice a situation', op3p: 'Hotel, cafe, work...',
-      op4h: 'Translate', op4p: 'Contextual and colloquial',
-      secRec: 'Recommended for you', fabLabel: 'Talk to Moki',
-      tradInputLabel: 'Type here', tradBtnLabel: 'Translate with Moki 🐒',
-      tradResultLabel: 'Translation', navHome: 'Home', navTrad: 'Translate', navMoki: 'Moki',
-      heroBadge: 'RECOMMENDED', heroBtn: '▶ Watch now',
-      errFields: 'Please fill in all fields.',
-      errPass: 'Password must be at least 6 characters.',
-      errExists: 'This email is already registered. Sign in.',
-      errLogin: 'Email or password incorrect.',
-      tradLoading: 'Translating...',
-      langFrom: 'English', langTo: 'Spanish'
-    }
+  var PALETA = [
+    { bg: 'linear-gradient(135deg, #4C1D95, #7C3AED)', accent: '#7C3AED', light: '#DDD6FE' },
+    { bg: 'linear-gradient(135deg, #831843, #DB2777)', accent: '#DB2777', light: '#FBCFE8' },
+    { bg: 'linear-gradient(135deg, #1E3A5F, #2563EB)', accent: '#2563EB', light: '#BFDBFE' },
+    { bg: 'linear-gradient(135deg, #14532D, #16A34A)', accent: '#16A34A', light: '#BBF7D0' },
+    { bg: 'linear-gradient(135deg, #78350F, #D97706)', accent: '#D97706', light: '#FDE68A' },
+    { bg: 'linear-gradient(135deg, #7C2D12, #EA580C)', accent: '#EA580C', light: '#FED7AA' },
+    { bg: 'linear-gradient(135deg, #134E4A, #0D9488)', accent: '#0D9488', light: '#99F6E4' },
+    { bg: 'linear-gradient(135deg, #312E81, #4F46E5)', accent: '#4F46E5', light: '#C7D2FE' }
+  ];
+
+  var EMOJIS_TEMAS = {
+    'videojuegos': '🎮', 'gaming': '🎮', 'games': '🎮',
+    'música': '🎵', 'musica': '🎵', 'music': '🎵',
+    'tecnología': '💻', 'tecnologia': '💻', 'tech': '💻',
+    'fútbol': '⚽', 'futbol': '⚽', 'soccer': '⚽', 'football': '⚽',
+    'trabajo': '💼', 'work': '💼', 'business': '💼',
+    'viajes': '✈️', 'travel': '✈️',
+    'series': '🎬', 'películas': '🎬', 'movies': '🎬',
+    'cocina': '🍳', 'food': '🍳',
+    'deportes': '🏃', 'sports': '🏃',
+    'arte': '🎨', 'art': '🎨'
   };
 
-  function applyLang() {
-    var t = T[lang];
-    var ids = ['knowTitle','knowDesc','knowNo','knowYes','landingH2','landingP','landingBtn','landingCtaBtn',
-      'f1h','f1p','f2h','f2p','f3h','f3p','f4h','f4p','loginTitle','loginSub','loginGoogleBtn','loginBtn',
-      'regTitle','regSub','regGoogleBtn','regBtn','transicionTexto','dashQueHacer',
-      'op1h','op1p','op2h','op2p','op3h','op3p','op4h','op4p','secRec','fabLabel',
-      'tradInputLabel','tradBtnLabel','tradResultLabel','navHome','navTrad','navMoki','heroBadge','heroBtn'];
-    ids.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el && t[id]) el.innerText = t[id];
-    });
-    document.getElementById('login-switch').innerHTML = t.loginSwitch;
-    document.getElementById('reg-switch').innerHTML = t.regSwitch;
-    document.getElementById('nombre').placeholder = t.nombrePlaceholder;
-    document.getElementById('register-password').placeholder = t.passPlaceholder;
-    document.getElementById('lang-from-label').innerText = lang === 'es' ? t.langFrom : t.langTo;
-    document.getElementById('lang-to-label').innerText = lang === 'es' ? t.langTo : t.langFrom;
-    if (lang === 'en') { langFrom = 'en'; langTo = 'es'; } else { langFrom = 'es'; langTo = 'en'; }
-  }
-
   window.onload = function() {
-    applyLang();
-    
-    // MODO DESARROLLADOR
-    var DEV_EMAIL = 'r11jsebas@gmail.com';
     var params = new URLSearchParams(window.location.search);
-    
     if (params.get('dev') === 'true') {
-      perfil = {
-        nombre: 'Sebastian',
-        motivacion: 'trabajo y desarrollo personal',
-        confianza: 'intermedio',
-        intereses: 'videojuegos, música, tecnología, fútbol',
-        meta: 'hablar con fluidez en reuniones',
-        lang: 'es'
-      };
+      perfil = { nombre: 'Sebastian', motivacion: 'trabajo y desarrollo personal', confianza: 'intermedio', intereses: 'videojuegos, música, tecnología, fútbol', meta: 'hablar con fluidez en reuniones', lang: 'es' };
       mostrarDashboard();
       return;
     }
-
     if (params.get('onboarding') === 'completo') {
-      perfil = {
-        nombre: params.get('nombre') || '',
-        motivacion: params.get('motivacion') || '',
-        confianza: params.get('confianza') || '',
-        intereses: params.get('intereses') || '',
-        meta: params.get('meta') || '',
-        lang: params.get('lang') || lang
-      };
-      lang = perfil.lang;
-      applyLang();
+      perfil = { nombre: params.get('nombre') || '', motivacion: params.get('motivacion') || '', confianza: params.get('confianza') || '', intereses: params.get('intereses') || '', meta: params.get('meta') || '', lang: params.get('lang') || 'es' };
       mostrarDashboard();
     }
   };
@@ -470,21 +422,17 @@
   }
 
   function irAlChat(modo) {
-    var nombre = usuarioActual ? usuarioActual.nombre : (perfil.nombre || '');
-    var url = CHAT_URL + '?nombre=' + encodeURIComponent(nombre) + '&modo=' + (modo || 'chat') + '&lang=' + lang;
-    window.location.href = url;
+    var nombre = perfil.nombre || '';
+    window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre) + '&modo=' + (modo || 'chat') + '&lang=' + (perfil.lang || 'es');
   }
-
-  function loginGoogle() { irAlChat('chat'); }
 
   function loginEmail() {
     var email = document.getElementById('login-email').value.trim();
     var password = document.getElementById('login-password').value;
     var errorEl = document.getElementById('login-error');
-    var t = T[lang];
-    if (!email || !password) { errorEl.style.display = 'block'; errorEl.innerText = t.errFields; return; }
+    if (!email || !password) { errorEl.style.display = 'block'; errorEl.innerText = 'Por favor completa todos los campos.'; return; }
     var usuario = usuarios[email];
-    if (!usuario || usuario.password !== password) { errorEl.style.display = 'block'; errorEl.innerText = t.errLogin; return; }
+    if (!usuario || usuario.password !== password) { errorEl.style.display = 'block'; errorEl.innerText = 'Correo o contraseña incorrectos.'; return; }
     errorEl.style.display = 'none';
     usuarioActual = usuario;
     irAlChat('chat');
@@ -495,131 +443,240 @@
     var email = document.getElementById('register-email').value.trim();
     var password = document.getElementById('register-password').value;
     var errorEl = document.getElementById('register-error');
-    var t = T[lang];
-    if (!nombre || !email || !password) { errorEl.style.display = 'block'; errorEl.innerText = t.errFields; return; }
-    if (password.length < 6) { errorEl.style.display = 'block'; errorEl.innerText = t.errPass; return; }
-    if (usuarios[email]) { errorEl.style.display = 'block'; errorEl.innerText = t.errExists; return; }
+    if (!nombre || !email || !password) { errorEl.style.display = 'block'; errorEl.innerText = 'Por favor completa todos los campos.'; return; }
+    if (password.length < 6) { errorEl.style.display = 'block'; errorEl.innerText = 'La contraseña debe tener al menos 6 caracteres.'; return; }
+    if (usuarios[email]) { errorEl.style.display = 'block'; errorEl.innerText = 'Este correo ya está registrado.'; return; }
     errorEl.style.display = 'none';
     usuarios[email] = { nombre: nombre, email: email, password: password };
     usuarioActual = usuarios[email];
-    document.getElementById('transicion-titulo').innerText = lang === 'es' ? '¡Hola, ' + nombre + '!' : 'Hi, ' + nombre + '!';
+    document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
     showScreen('screen-transicion');
     setTimeout(function() {
-      window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre) + '&lang=' + lang;
+      window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre);
     }, 3000);
   }
 
   function mostrarDashboard() {
-    var nombre = perfil.nombre || '';
+    var nombre = perfil.nombre || 'amigo';
+    document.getElementById('dash-saludo').innerText = '¡Hola, ' + nombre + '! 👋';
+    document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 Meta: ' + perfil.meta : 'Elige qué quieres hacer hoy';
+    generarTemas();
+    generarReto();
     showScreen('screen-dashboard');
-    cargarRecomendaciones();
   }
 
-  function cargarRecomendaciones() {
-    var intereses = perfil.intereses || 'general';
-    var meta = perfil.meta || '';
-    var nivel = perfil.confianza || 'intermedio';
-
-    var contenidoPorIntereses = {
-      'videojuegos': [
-        { titulo: 'English for Gamers', descripcion: 'Vocabulario esencial para gaming en inglés', tipo: 'Video', emoji: '🎮', razon: 'Porque te gustan los videojuegos', youtube_id: 'dQw4w9WgXcQ' },
-        { titulo: 'Gaming phrases in English', descripcion: 'Frases que usan los gamers', tipo: 'Lección', emoji: '🕹️', razon: 'Para chatear con jugadores de todo el mundo', youtube_id: 'xV7pMoHb73E' },
-        { titulo: 'How to talk about games', descripcion: 'Conversa sobre tus juegos favoritos', tipo: 'Podcast', emoji: '🎧', razon: 'Basado en tus intereses', youtube_id: 'l5gxHN9FkXA' }
-      ],
-      'música': [
-        { titulo: 'Learn English with songs', descripcion: 'Aprende inglés con música', tipo: 'Video', emoji: '🎵', razon: 'Porque te gusta la música', youtube_id: 'K_bFc0fJwcE' },
-        { titulo: 'Music vocabulary in English', descripcion: 'Vocabulario musical en inglés', tipo: 'Lección', emoji: '🎸', razon: 'Para hablar de música', youtube_id: 'n4NVkNk522s' }
-      ],
-      'tecnología': [
-        { titulo: 'Tech English for beginners', descripcion: 'Inglés técnico para principiantes', tipo: 'Video', emoji: '💻', razon: 'Porque te interesa la tecnología', youtube_id: 'xV7pMoHb73E' },
-        { titulo: 'Programming in English', descripcion: 'Cómo hablar de tech en inglés', tipo: 'Podcast', emoji: '⚙️', razon: 'Para el mundo tech', youtube_id: 'l5gxHN9FkXA' }
-      ],
-      'fútbol': [
-        { titulo: 'Football English vocabulary', descripcion: 'Vocabulario de fútbol en inglés', tipo: 'Video', emoji: '⚽', razon: 'Porque te gusta el fútbol', youtube_id: 'K_bFc0fJwcE' },
-        { titulo: 'Premier League in English', descripcion: 'Entiende los comentarios en inglés', tipo: 'Video', emoji: '🏆', razon: 'Para ver la Premier en inglés', youtube_id: 'n4NVkNk522s' }
-      ],
-      'trabajo': [
-        { titulo: 'Business English essentials', descripcion: 'Inglés esencial para el trabajo', tipo: 'Video', emoji: '💼', razon: 'Para tu desarrollo profesional', youtube_id: 'xV7pMoHb73E' },
-        { titulo: 'English for meetings', descripcion: 'Frases clave para reuniones', tipo: 'Lección', emoji: '📊', razon: 'Para hablar en reuniones', youtube_id: 'l5gxHN9FkXA' }
-      ],
-      'viajes': [
-        { titulo: 'Travel English essentials', descripcion: 'Inglés esencial para viajeros', tipo: 'Video', emoji: '✈️', razon: 'Porque quieres viajar', youtube_id: 'K_bFc0fJwcE' },
-        { titulo: 'At the hotel in English', descripcion: 'Cómo pedir tu habitación en inglés', tipo: 'Lección', emoji: '🏨', razon: 'Para defenderte viajando', youtube_id: 'n4NVkNk522s' }
-      ]
-    };
-
-    var resultado = [];
-    var interesesLower = intereses.toLowerCase();
-    
-    Object.keys(contenidoPorIntereses).forEach(function(key) {
-      if (interesesLower.indexOf(key) !== -1) {
-        resultado = resultado.concat(contenidoPorIntereses[key]);
-      }
-    });
-
-    if (resultado.length === 0) {
-      resultado = contenidoPorIntereses['trabajo'];
+  function getEmoji(tema) {
+    var temaLower = tema.toLowerCase();
+    for (var key in EMOJIS_TEMAS) {
+      if (temaLower.indexOf(key) !== -1) return EMOJIS_TEMAS[key];
     }
-
-    resultado = resultado.slice(0, 6);
-    recomendaciones = resultado;
-    
-    setTimeout(function() {
-      document.getElementById('loading-cards').style.display = 'none';
-      renderRecomendaciones(resultado);
-    }, 1000);
+    return '📚';
   }
 
-  function renderRecomendaciones(items) {
-    document.getElementById('loading-cards').style.display = 'none';
-    if (items.length > 0) {
-      var hero = items[0];
-      var heroImg = document.createElement('img');
-      heroImg.src = 'https://img.youtube.com/vi/' + hero.youtube_id + '/maxresdefault.jpg';
-      heroImg.className = 'hero-img';
-      heroImg.onerror = function() { this.style.display = 'none'; };
-      var heroSection = document.getElementById('hero-section');
-      heroSection.insertBefore(heroImg, heroSection.firstChild);
-      document.getElementById('hero-title').innerText = hero.titulo;
-      document.getElementById('hero-desc').innerText = hero.descripcion;
-      document.getElementById('hero-razon').innerText = hero.razon;
-    }
-    var row = document.getElementById('cards-recomendados');
-    row.style.display = 'flex';
-    items.slice(1).forEach(function(item, i) {
+  function generarTemas() {
+    var intereses = perfil.intereses || 'inglés general';
+    var temas = intereses.split(/[,，、]+/).map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+    var row = document.getElementById('temas-row');
+    row.innerHTML = '';
+    temas.forEach(function(tema, i) {
+      var color = PALETA[i % PALETA.length];
+      var emoji = getEmoji(tema);
       var card = document.createElement('div');
-      card.className = 'content-card';
-      card.onclick = function() { abrirContenido(i + 1); };
-      var thumb = document.createElement('img');
-      thumb.className = 'content-thumb';
-      thumb.src = 'https://img.youtube.com/vi/' + item.youtube_id + '/mqdefault.jpg';
-      thumb.onerror = function() {
-        this.outerHTML = '<div class="content-thumb-placeholder">' + item.emoji + '</div>';
-      };
-      var tag = item.tipo === 'Video' ? 'tag-video' : item.tipo === 'Podcast' ? 'tag-podcast' : 'tag-lesson';
-      card.innerHTML = '';
-      card.appendChild(thumb);
-      card.innerHTML += '<h4>' + item.titulo + '</h4><p>' + item.descripcion + '</p><span class="card-tag ' + tag + '">' + item.tipo + '</span>';
+      card.className = 'tema-card';
+      card.style.background = color.bg;
+      card.innerHTML = '<div class="tema-emoji">' + emoji + '</div><h4>' + tema + '</h4><div class="tema-nivel">Toca para practicar</div>';
+      card.onclick = function() { abrirLeccion(tema, i); };
       row.appendChild(card);
     });
-    if (items.length > 0 && items[0].razon) {
-      var porqueSection = document.getElementById('porque-section');
-      porqueSection.style.display = 'block';
-      document.getElementById('sec-porque').innerText = items[0].razon;
+  }
+
+  function generarReto() {
+    var intereses = perfil.intereses || 'inglés';
+    var meta = perfil.meta || 'mejorar tu inglés';
+    var retos = [
+      { titulo: 'Habla por 2 minutos', desc: 'Cuéntale a Moki sobre tu ' + intereses.split(',')[0].trim() + ' favorito en inglés, sin parar.' },
+      { titulo: 'Describe tu día', desc: 'Explícale a Moki cómo fue tu día usando solo inglés.' },
+      { titulo: 'Pregunta 5 cosas', desc: 'Hazle 5 preguntas a Moki sobre cualquier tema en inglés.' },
+      { titulo: 'Cuéntale a Moki', desc: 'Explica por qué quieres lograr: ' + meta }
+    ];
+    var reto = retos[Math.floor(Math.random() * retos.length)];
+    document.getElementById('reto-titulo').innerText = reto.titulo;
+    document.getElementById('reto-desc').innerText = reto.desc;
+  }
+
+  function abrirReto() { irAlChat('reto'); }
+
+  function abrirLeccion(tema, indice) {
+    temaActual = tema;
+    leccionHistorial = [];
+    progresoLeccion = 0;
+    var color = PALETA[indice % PALETA.length];
+    var emoji = getEmoji(tema);
+    var screen = document.getElementById('leccion-screen');
+    screen.style.background = color.bg;
+    document.getElementById('leccion-bg').style.background = color.bg;
+    var badge = document.getElementById('leccion-tema-badge');
+    badge.innerText = emoji + ' ' + tema.toUpperCase();
+    badge.style.background = 'rgba(255,255,255,0.15)';
+    badge.style.color = 'white';
+    document.getElementById('progreso-fill').style.background = color.light;
+    document.getElementById('leccion-chat-area').innerHTML = '';
+    document.getElementById('leccion-subtitulo').innerText = 'Moki está listo...';
+    showScreen('screen-leccion');
+    setTimeout(function() { iniciarLeccion(tema, color); }, 500);
+  }
+
+  function iniciarLeccion(tema, color) {
+    var mensajeInicial;
+    var lang = perfil.lang || 'es';
+    if (lang === 'en') {
+      mensajeInicial = "Hey! I'm super excited to talk about " + tema + " with you today! 🎉 Tell me everything — what do you love most about " + tema + "? Don't worry about grammar, just talk!";
+    } else {
+      mensajeInicial = "¡Hola! Estoy súper emocionado de hablar sobre " + tema + " contigo hoy 🎉 Cuéntame todo — ¿qué es lo que más te apasiona de " + tema + "? No te preocupes por la gramática, ¡solo habla!";
+    }
+    mostrarMensajeLeccion('moki', mensajeInicial);
+    hablarMoki(mensajeInicial);
+    leccionHistorial.push({ role: 'assistant', content: mensajeInicial });
+  }
+
+  function mostrarMensajeLeccion(tipo, texto) {
+    var area = document.getElementById('leccion-chat-area');
+    var div = document.createElement('div');
+    div.className = 'leccion-bubble ' + tipo;
+    div.innerText = texto;
+    area.appendChild(div);
+    area.scrollTop = area.scrollHeight;
+    if (tipo === 'moki') {
+      document.getElementById('leccion-subtitulo').innerText = texto;
+    }
+    actualizarProgreso();
+  }
+
+  function actualizarProgreso() {
+    progresoLeccion = Math.min(progresoLeccion + 10, 100);
+    document.getElementById('progreso-fill').style.width = progresoLeccion + '%';
+  }
+
+  function hablarMoki(texto) {
+    if (!synth) return;
+    synth.cancel();
+    var utter = new SpeechSynthesisUtterance(texto);
+    utter.lang = (perfil.lang === 'en') ? 'en-US' : 'en-US';
+    utter.rate = 0.9;
+    utter.pitch = 1.1;
+    var img = document.getElementById('leccion-moki-img');
+    var ondas = document.getElementById('leccion-ondas');
+    utter.onstart = function() { img.classList.add('hablando'); ondas.classList.add('activo'); };
+    utter.onend = function() { img.classList.remove('hablando'); ondas.classList.remove('activo'); };
+    synth.speak(utter);
+  }
+
+  function toggleTeclado() {
+    var input = document.getElementById('leccion-text-input');
+    var sendBtn = document.getElementById('send-leccion-btn');
+    var micBtn = document.getElementById('mic-btn');
+    if (input.classList.contains('visible')) {
+      input.classList.remove('visible');
+      sendBtn.classList.remove('visible');
+      micBtn.style.display = 'flex';
+    } else {
+      input.classList.add('visible');
+      sendBtn.classList.add('visible');
+      micBtn.style.display = 'none';
+      input.focus();
     }
   }
 
-  function abrirContenido(index) {
-    var item = recomendaciones[index];
-    if (item && item.youtube_id) {
-      window.open('https://www.youtube.com/watch?v=' + item.youtube_id, '_blank');
+  function enviarTextoLeccion() {
+    var input = document.getElementById('leccion-text-input');
+    var texto = input.value.trim();
+    if (!texto || isLeccionTyping) return;
+    input.value = '';
+    procesarRespuestaUsuario(texto);
+  }
+
+  function toggleMic() {
+    if (isRecording) { pararGrabacion(); return; }
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Tu navegador no soporta reconocimiento de voz. Usa el teclado.');
+      toggleTeclado();
+      return;
     }
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SR();
+    recognition.lang = 'es-CO';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.onresult = function(e) {
+      var texto = e.results[0][0].transcript;
+      procesarRespuestaUsuario(texto);
+    };
+    recognition.onerror = function() { pararGrabacion(); };
+    recognition.onend = function() { pararGrabacion(); };
+    recognition.start();
+    isRecording = true;
+    var btn = document.getElementById('mic-btn');
+    btn.classList.remove('idle');
+    btn.classList.add('recording');
+    btn.innerText = '⏹️';
+  }
+
+  function pararGrabacion() {
+    isRecording = false;
+    if (recognition) { try { recognition.stop(); } catch(e) {} }
+    var btn = document.getElementById('mic-btn');
+    btn.classList.remove('recording');
+    btn.classList.add('idle');
+    btn.innerText = '🎙️';
+  }
+
+  function procesarRespuestaUsuario(texto) {
+    if (isLeccionTyping) return;
+    mostrarMensajeLeccion('usuario', texto);
+    leccionHistorial.push({ role: 'user', content: texto });
+    isLeccionTyping = true;
+    document.getElementById('leccion-subtitulo').innerText = '...';
+
+    var systemPrompt = 'Eres Moki en modo lección sobre el tema: ' + temaActual + '.\n' +
+      'El usuario está practicando inglés hablando sobre lo que le apasiona.\n\n' +
+      'REGLAS CRÍTICAS:\n' +
+      '- NUNCA corrijas errores gramaticales directamente\n' +
+      '- Haz preguntas que inviten al usuario a hablar MÁS\n' +
+      '- Si el usuario usa una palabra en español, úsala naturalmente en inglés después sin hacer notar el cambio\n' +
+      '- Celebra cuando el usuario habla mucho\n' +
+      '- Mantén la conversación fluida y emocionante sobre ' + temaActual + '\n' +
+      '- Respuestas cortas (2-3 oraciones máximo) para que el usuario siga hablando\n' +
+      '- Mezcla inglés y español según el nivel del usuario\n' +
+      'PERFIL: ' + JSON.stringify(perfil);
+
+    fetch(CHAT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'leccion', historial: leccionHistorial, system: systemPrompt })
+    }).then(function() {
+      var respuestasMock = [
+        "That's amazing! Tell me more — what's your favorite part about it? 🎮",
+        "Wow, I love that! And how long have you been into " + temaActual + "?",
+        "Really? That's so cool! What would you tell someone who's just starting?",
+        "I can feel your passion! What's the best experience you've had with " + temaActual + "?"
+      ];
+      var respuesta = respuestasMock[Math.floor(Math.random() * respuestasMock.length)];
+      mostrarMensajeLeccion('moki', respuesta);
+      hablarMoki(respuesta);
+      leccionHistorial.push({ role: 'assistant', content: respuesta });
+      isLeccionTyping = false;
+    });
+  }
+
+  function cerrarLeccion() {
+    synth && synth.cancel();
+    pararGrabacion();
+    showScreen('screen-dashboard');
   }
 
   function swapLangs() {
-    var tmp = langFrom;
-    langFrom = langTo;
-    langTo = tmp;
+    var tmp = langFrom; langFrom = langTo; langTo = tmp;
     var fromLabel = document.getElementById('lang-from-label').innerText;
     var toLabel = document.getElementById('lang-to-label').innerText;
     document.getElementById('lang-from-label').innerText = toLabel;
@@ -632,30 +689,18 @@
     var texto = document.getElementById('trad-input').value.trim();
     if (!texto) return;
     var btn = document.getElementById('trad-btn');
-    var t = T[lang];
     btn.disabled = true;
-    document.getElementById('trad-btn-label').innerText = t.tradLoading;
-    document.getElementById('trad-result').style.display = 'none';
-
-    fetch(CHAT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: 'traduccion', texto: texto, deLang: langFrom, aLang: langTo })
-    }).then(function() {
-      setTimeout(function() {
-        document.getElementById('trad-traduccion').innerText = '(Traducción disponible próximamente)';
-        document.getElementById('trad-nota').innerText = '';
-        document.getElementById('trad-result').style.display = 'block';
-        btn.disabled = false;
-        document.getElementById('trad-btn-label').innerText = t.tradBtnLabel;
-      }, 1500);
-    });
+    btn.innerText = 'Traduciendo...';
+    setTimeout(function() {
+      document.getElementById('trad-traduccion').innerText = '(Traducción disponible próximamente — conectando con Moki)';
+      document.getElementById('trad-nota').innerText = '';
+      document.getElementById('trad-result').style.display = 'block';
+      btn.disabled = false;
+      btn.innerText = 'Traducir con Moki 🐒';
+    }, 1500);
   }
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-  }
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }
 </script>
 
 </body>
