@@ -9,65 +9,58 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FFF8F0; min-height: 100vh; display: flex; flex-direction: column; }
     .screen { display: none; flex-direction: column; min-height: 100vh; }
     .screen.active { display: flex; }
-
-    /* HEADER */
     .header { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
-    .moki-avatar { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+    .moki-header-img { width: 44px; height: 44px; object-fit: contain; }
     .header-info p { font-weight: 700; font-size: 17px; }
     .header-info span { font-size: 12px; opacity: 0.85; }
-
-    /* PANTALLA 1 — ¿Conoces MokiTalk? */
-    .know-screen { justify-content: center; align-items: center; padding: 40px 24px; text-align: center; background: #FFF8F0; }
-    .moki-big { font-size: 80px; margin-bottom: 16px; animation: bounce 2s infinite; }
-    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .know-screen h1 { font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
-    .know-screen p { font-size: 15px; color: #6b7280; margin-bottom: 40px; line-height: 1.6; }
     .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; transition: opacity 0.2s; }
     .btn-primary:hover { opacity: 0.9; }
     .btn-secondary { background: white; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; }
     .btn-secondary:hover { background: #fff3ec; }
+    .btn-google { background: white; color: #1f2937; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+    .btn-google:hover { background: #f9fafb; }
+    .input-field { width: 100%; border: 1.5px solid #ffe0cc; border-radius: 12px; padding: 13px 16px; font-size: 14px; outline: none; background: white; transition: border 0.2s; margin-bottom: 12px; }
+    .input-field:focus { border-color: #FF6B35; }
+    .divider { display: flex; align-items: center; gap: 12px; color: #9ca3af; font-size: 13px; margin-bottom: 12px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #ffe0cc; }
+    .switch-auth { text-align: center; font-size: 13px; color: #6b7280; margin-top: 8px; }
+    .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
 
-    /* PANTALLA 2 — LANDING */
-    .landing-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 24px; }
-    .landing-hero { text-align: center; padding: 20px 0; }
-    .landing-hero .moki-big { font-size: 70px; }
-    .landing-hero h2 { font-size: 24px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
+    /* PANTALLA 1 */
+    .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; }
+    .moki-big { width: 160px; height: 160px; object-fit: contain; animation: bounce 2s infinite; margin-bottom: 16px; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .know-screen h1 { font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
+    .know-screen p { font-size: 15px; color: #6b7280; margin-bottom: 40px; line-height: 1.6; }
+
+    /* PANTALLA 2 LANDING */
+    .landing-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+    .landing-hero { text-align: center; padding: 16px 0; }
+    .landing-hero .moki-med { width: 120px; height: 120px; object-fit: contain; animation: bounce 2s infinite; }
+    .landing-hero h2 { font-size: 22px; font-weight: 700; color: #1f2937; margin: 12px 0 8px; }
     .landing-hero p { font-size: 14px; color: #6b7280; line-height: 1.6; }
     .features { display: flex; flex-direction: column; gap: 12px; }
     .feature-card { background: white; border: 1px solid #ffe0cc; border-radius: 14px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
     .feature-icon { font-size: 28px; flex-shrink: 0; }
     .feature-card h4 { font-size: 14px; font-weight: 600; color: #1f2937; margin-bottom: 3px; }
     .feature-card p { font-size: 13px; color: #6b7280; line-height: 1.5; }
-    .landing-cta { padding: 0 0 24px; }
 
-    /* PANTALLA 3 — REGISTRO / LOGIN */
-    .auth-body { flex: 1; padding: 32px 24px; display: flex; flex-direction: column; gap: 20px; }
-    .auth-body h2 { font-size: 22px; font-weight: 700; color: #1f2937; text-align: center; }
-    .auth-body p { font-size: 14px; color: #6b7280; text-align: center; margin-top: -12px; }
-    .divider { display: flex; align-items: center; gap: 12px; color: #9ca3af; font-size: 13px; }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #ffe0cc; }
-    .input-field { width: 100%; border: 1.5px solid #ffe0cc; border-radius: 12px; padding: 13px 16px; font-size: 14px; outline: none; background: white; transition: border 0.2s; }
-    .input-field:focus { border-color: #FF6B35; }
-    .btn-google { background: white; color: #1f2937; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s; }
-    .btn-google:hover { background: #f9fafb; }
-    .switch-auth { text-align: center; font-size: 13px; color: #6b7280; }
-    .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
+    /* AUTH */
+    .auth-body { flex: 1; padding: 32px 24px; display: flex; flex-direction: column; }
+    .auth-body h2 { font-size: 22px; font-weight: 700; color: #1f2937; text-align: center; margin-bottom: 4px; }
+    .auth-body .subtitle { font-size: 14px; color: #6b7280; text-align: center; margin-bottom: 28px; }
 
-    /* PANTALLA 4 — CHAT */
-    .chat-screen { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 14px; }
-    .msg-row { display: flex; align-items: flex-end; gap: 8px; }
-    .msg-row.user { flex-direction: row-reverse; }
-    .moki-icon { width: 30px; height: 30px; border-radius: 50%; background: #FF6B35; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-    .bubble { max-width: 75%; padding: 12px 16px; border-radius: 20px; font-size: 14px; line-height: 1.6; word-break: break-word; }
-    .bubble.bot { background: white; border: 1px solid #ffe0cc; border-bottom-left-radius: 4px; color: #1f2937; }
-    .bubble.user { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border-bottom-right-radius: 4px; }
-    .bubble.typing { background: white; border: 1px solid #ffe0cc; border-bottom-left-radius: 4px; color: #9ca3af; font-style: italic; }
-    .welcome-chip { background: #fff3ec; border: 1px solid #ffe0cc; border-radius: 12px; padding: 8px 14px; font-size: 12px; color: #FF6B35; text-align: center; margin: 0 auto; font-weight: 500; }
-    .input-area { padding: 12px 16px; background: white; border-top: 1px solid #ffe0cc; display: flex; gap: 8px; align-items: center; }
-    input[type="text"] { flex: 1; border: 1.5px solid #ffe0cc; border-radius: 24px; padding: 11px 18px; font-size: 14px; outline: none; background: #FFF8F0; transition: border 0.2s; }
-    input[type="text"]:focus { border-color: #FF6B35; background: white; }
-    .send-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    /* PANTALLA TRANSICION */
+    .transition-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
+    .moki-transition { width: 180px; height: 180px; object-fit: contain; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    .transition-screen h2 { font-size: 24px; font-weight: 700; color: #1f2937; }
+    .transition-screen p { font-size: 15px; color: #6b7280; line-height: 1.6; }
+    .dots { display: flex; gap: 8px; justify-content: center; margin-top: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #FF6B35; animation: dotbounce 1.2s infinite; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotbounce { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
   </style>
 </head>
 <body>
@@ -75,7 +68,7 @@
 <!-- PANTALLA 1: ¿Conoces MokiTalk? -->
 <div class="screen active" id="screen-know">
   <div class="know-screen">
-    <div class="moki-big">🐒</div>
+    <img src="moki.png" class="moki-big" alt="Moki" />
     <h1>¡Hola! Soy Moki</h1>
     <p>Tu compañero para aprender inglés sin presión, sin juicios, y a tu propio ritmo.</p>
     <button class="btn-primary" onclick="showScreen('screen-landing')">No, cuéntame más</button>
@@ -86,68 +79,42 @@
 <!-- PANTALLA 2: LANDING -->
 <div class="screen" id="screen-landing">
   <div class="header">
-    <div class="moki-avatar">🐒</div>
+    <img src="moki.png" class="moki-header-img" alt="Moki" />
     <div class="header-info"><p>MokiTalk</p><span>Aprende inglés con Moki</span></div>
   </div>
   <div class="landing-body">
     <div class="landing-hero">
-      <div class="moki-big">🐒</div>
+      <img src="moki.png" class="moki-med" alt="Moki" />
       <h2>Aprende inglés como nunca antes</h2>
       <p>Moki se adapta a ti — tus intereses, tu nivel, tu ritmo. Sin tests aburridos, sin presión.</p>
     </div>
     <div class="features">
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <div>
-          <h4>Personalizado para ti</h4>
-          <p>Si te gusta el fútbol, aprendes con fútbol. Si te gusta la música, aprendes con música.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💬</div>
-        <div>
-          <h4>Conversación sin juicio</h4>
-          <p>Moki nunca te corrige bruscamente. Primero comunícate, la gramática viene después.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📱</div>
-        <div>
-          <h4>Traductor offline</h4>
-          <p>¿Sin internet en un restaurante? Moki traduce de forma coloquial, no literal.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎬</div>
-        <div>
-          <h4>Contenido tipo Netflix</h4>
-          <p>Videos, podcasts y lecciones recomendadas según lo que ya viste y aprendiste.</p>
-        </div>
-      </div>
+      <div class="feature-card"><div class="feature-icon">🎯</div><div><h4>Personalizado para ti</h4><p>Si te gusta el fútbol, aprendes con fútbol. Si te gusta la música, aprendes con música.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><div><h4>Conversación sin juicio</h4><p>Moki nunca te corrige bruscamente. Primero comunícate, la gramática viene después.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">📱</div><div><h4>Traductor offline</h4><p>¿Sin internet en un restaurante? Moki traduce de forma coloquial, no literal.</p></div></div>
+      <div class="feature-card"><div class="feature-icon">🎬</div><div><h4>Contenido tipo Netflix</h4><p>Videos, podcasts y lecciones recomendadas según lo que ya viste y aprendiste.</p></div></div>
     </div>
-    <div class="landing-cta">
-      <button class="btn-primary" onclick="showScreen('screen-register')">Empezar gratis con Moki</button>
-    </div>
+    <button class="btn-primary" onclick="showScreen('screen-register')" style="margin-top: 8px;">Empezar gratis con Moki</button>
   </div>
 </div>
 
 <!-- PANTALLA 3: LOGIN -->
 <div class="screen" id="screen-login">
   <div class="header">
-    <div class="moki-avatar">🐒</div>
+    <img src="moki.png" class="moki-header-img" alt="Moki" />
     <div class="header-info"><p>MokiTalk</p><span>Bienvenido de vuelta</span></div>
   </div>
   <div class="auth-body">
     <h2>Entrar a MokiTalk</h2>
-    <p>Continúa donde lo dejaste</p>
-    <button class="btn-google" onclick="showScreen('screen-chat')">
+    <p class="subtitle">Continúa donde lo dejaste</p>
+    <button class="btn-google" onclick="irAlChat()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Continuar con Google
     </button>
     <div class="divider">o</div>
     <input class="input-field" type="email" placeholder="Tu correo electrónico" />
     <input class="input-field" type="password" placeholder="Contraseña" />
-    <button class="btn-primary" onclick="showScreen('screen-chat')">Entrar</button>
+    <button class="btn-primary" onclick="irAlChat()">Entrar</button>
     <div class="switch-auth">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
   </div>
 </div>
@@ -155,138 +122,60 @@
 <!-- PANTALLA 4: REGISTRO -->
 <div class="screen" id="screen-register">
   <div class="header">
-    <div class="moki-avatar">🐒</div>
+    <img src="moki.png" class="moki-header-img" alt="Moki" />
     <div class="header-info"><p>MokiTalk</p><span>Crea tu cuenta</span></div>
   </div>
   <div class="auth-body">
     <h2>Únete a MokiTalk</h2>
-    <p>Es gratis, siempre</p>
-    <button class="btn-google" onclick="showScreen('screen-chat')">
+    <p class="subtitle">Es gratis, siempre</p>
+    <button class="btn-google" onclick="irAlChat()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Registrarse con Google
     </button>
     <div class="divider">o</div>
-    <input class="input-field" type="text" placeholder="Tu nombre" />
+    <input class="input-field" id="nombre" type="text" placeholder="Tu nombre" />
     <input class="input-field" type="email" placeholder="Tu correo electrónico" />
     <input class="input-field" type="password" placeholder="Crea una contraseña" />
-    <button class="btn-primary" onclick="showScreen('screen-chat')">Crear cuenta</button>
+    <button class="btn-primary" onclick="irConTransicion()">Crear cuenta y conocer a Moki</button>
     <div class="switch-auth">¿Ya tienes cuenta? <span onclick="showScreen('screen-login')">Inicia sesión</span></div>
   </div>
 </div>
 
-<!-- PANTALLA 5: CHAT CON MOKI -->
-<div class="screen" id="screen-chat" style="flex-direction: column;">
-  <div class="header">
-    <div class="moki-avatar">🐒</div>
-    <div class="header-info"><p>MokiTalk</p><span>Moki está listo para practicar contigo</span></div>
-  </div>
-  <div class="chat-screen" id="chat">
-    <div class="welcome-chip">Sin presión, sin juicios — solo práctica real 🎯</div>
-  </div>
-  <div class="input-area">
-    <input type="text" id="input" placeholder="Habla con Moki..." autocomplete="off" />
-    <button class="send-btn" id="btn" onclick="sendMessage()">➤</button>
+<!-- PANTALLA 5: TRANSICIÓN -->
+<div class="screen" id="screen-transicion">
+  <div class="transition-screen">
+    <img src="moki.png" class="moki-transition" alt="Moki" />
+    <h2 id="transicion-titulo">¡Listo!</h2>
+    <p id="transicion-texto">Ahora déjame conocerte un poco mejor para crear tu plan personalizado 🎯</p>
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
   </div>
 </div>
 
 <script>
-  var historial = [];
-  var isTyping = false;
-  var chatIniciado = false;
+  var CHAT_URL = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
 
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
-    if (id === 'screen-chat' && !chatIniciado) {
-      chatIniciado = true;
-      iniciarChat();
+  }
+
+  function irAlChat() {
+    window.location.href = CHAT_URL;
+  }
+
+  function irConTransicion() {
+    var nombre = document.getElementById('nombre').value.trim();
+    showScreen('screen-transicion');
+    if (nombre) {
+      document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
     }
-  }
-
-  function iniciarChat() {
-    var mensajeInicial = '¡Hola! Soy Moki, tu compañero de inglés 🐒\n\nNo soy un profesor — soy más como un amigo con quien practicar sin presión. Aquí puedes equivocarte, mezclar idiomas, ir a tu ritmo.\n\nCuéntame: ¿por qué quieres aprender inglés? No hay respuesta correcta.';
-    addBotMessage(mensajeInicial);
-    historial.push({ role: 'assistant', content: mensajeInicial });
-    document.getElementById('input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') sendMessage();
-    });
-  }
-
-  function addBotMessage(text) {
-    var chat = document.getElementById('chat');
-    var row = document.createElement('div');
-    row.className = 'msg-row';
-    var icon = document.createElement('div');
-    icon.className = 'moki-icon';
-    icon.innerText = '🐒';
-    var bubble = document.createElement('div');
-    bubble.className = 'bubble bot';
-    bubble.innerText = text;
-    row.appendChild(icon);
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    chat.scrollTop = chat.scrollHeight;
-    return row;
-  }
-
-  function addUserMessage(text) {
-    var chat = document.getElementById('chat');
-    var row = document.createElement('div');
-    row.className = 'msg-row user';
-    var bubble = document.createElement('div');
-    bubble.className = 'bubble user';
-    bubble.innerText = text;
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  function addTyping() {
-    var chat = document.getElementById('chat');
-    var row = document.createElement('div');
-    row.className = 'msg-row';
-    row.id = 'typing-row';
-    var icon = document.createElement('div');
-    icon.className = 'moki-icon';
-    icon.innerText = '🐒';
-    var bubble = document.createElement('div');
-    bubble.className = 'bubble typing';
-    bubble.innerText = 'Moki está escribiendo...';
-    row.appendChild(icon);
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  function removeTyping() {
-    var el = document.getElementById('typing-row');
-    if (el) el.remove();
-  }
-
-  function sendMessage() {
-    if (isTyping) return;
-    var input = document.getElementById('input');
-    var text = input.value.trim();
-    if (!text) return;
-    addUserMessage(text);
-    historial.push({ role: 'user', content: text });
-    input.value = '';
-    isTyping = true;
-    document.getElementById('btn').disabled = true;
-    addTyping();
-
-    fetch('https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ historial: historial })
-    })
-    .then(function() {
-      removeTyping();
-      addBotMessage('Ups, algo falló. Intenta de nuevo.');
-      isTyping = false;
-      document.getElementById('btn').disabled = false;
-    });
+    setTimeout(function() {
+      window.location.href = CHAT_URL;
+    }, 3000);
   }
 </script>
 
