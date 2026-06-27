@@ -1,0 +1,22 @@
+{
+  "name": "MokiTalk",
+  "short_name": "MokiTalk",
+  "description": "Aprende inglés con Moki, sin presión y a tu ritmo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8F0",
+  "theme_color": "#FF6B35",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "moki.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "moki.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
