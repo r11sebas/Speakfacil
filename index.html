@@ -13,18 +13,17 @@
     .moki-header-img { width: 44px; height: 44px; object-fit: contain; }
     .header-info p { font-weight: 700; font-size: 17px; }
     .header-info span { font-size: 12px; opacity: 0.85; }
-    .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; transition: opacity 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; }
     .btn-primary:hover { opacity: 0.9; }
-    .btn-secondary { background: white; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; }
-    .btn-secondary:hover { background: #fff3ec; }
+    .btn-secondary { background: white; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
     .btn-google { background: white; color: #1f2937; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
-    .btn-google:hover { background: #f9fafb; }
     .input-field { width: 100%; border: 1.5px solid #ffe0cc; border-radius: 12px; padding: 13px 16px; font-size: 14px; outline: none; background: white; transition: border 0.2s; margin-bottom: 12px; }
     .input-field:focus { border-color: #FF6B35; }
     .divider { display: flex; align-items: center; gap: 12px; color: #9ca3af; font-size: 13px; margin-bottom: 12px; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #ffe0cc; }
     .switch-auth { text-align: center; font-size: 13px; color: #6b7280; margin-top: 8px; }
     .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
+    .error-msg { background: #fee2e2; color: #dc2626; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
 
     /* PANTALLA 1 */
     .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; }
@@ -33,7 +32,7 @@
     .know-screen h1 { font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
     .know-screen p { font-size: 15px; color: #6b7280; margin-bottom: 40px; line-height: 1.6; }
 
-    /* PANTALLA 2 LANDING */
+    /* LANDING */
     .landing-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
     .landing-hero { text-align: center; padding: 16px 0; }
     .landing-hero .moki-med { width: 120px; height: 120px; object-fit: contain; animation: bounce 2s infinite; }
@@ -50,7 +49,7 @@
     .auth-body h2 { font-size: 22px; font-weight: 700; color: #1f2937; text-align: center; margin-bottom: 4px; }
     .auth-body .subtitle { font-size: 14px; color: #6b7280; text-align: center; margin-bottom: 28px; }
 
-    /* PANTALLA TRANSICION */
+    /* TRANSICION */
     .transition-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
     .moki-transition { width: 180px; height: 180px; object-fit: contain; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -61,6 +60,37 @@
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes dotbounce { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+
+    /* DASHBOARD */
+    .dashboard-body { flex: 1; overflow-y: auto; padding-bottom: 80px; }
+    .dashboard-header { background: linear-gradient(135deg, #FF6B35, #FF8C42); padding: 20px 20px 40px; color: white; position: relative; }
+    .dashboard-header h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .dashboard-header p { font-size: 13px; opacity: 0.85; }
+    .moki-dashboard { position: absolute; right: 16px; bottom: -20px; width: 80px; height: 80px; object-fit: contain; }
+    .dashboard-content { padding: 32px 16px 16px; display: flex; flex-direction: column; gap: 24px; }
+    .section-title { font-size: 16px; font-weight: 700; color: #1f2937; margin-bottom: 12px; }
+    .continue-card { background: white; border: 1px solid #ffe0cc; border-radius: 16px; padding: 16px; display: flex; gap: 14px; align-items: center; }
+    .continue-icon { width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #FF6B35, #FF8C42); display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+    .continue-info h4 { font-size: 14px; font-weight: 600; color: #1f2937; margin-bottom: 3px; }
+    .continue-info p { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
+    .progress-bar { height: 4px; background: #ffe0cc; border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(135deg, #FF6B35, #FF8C42); border-radius: 4px; width: 35%; }
+    .netflix-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+    .netflix-row::-webkit-scrollbar { display: none; }
+    .netflix-card { flex-shrink: 0; width: 150px; background: white; border: 1px solid #ffe0cc; border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
+    .netflix-card:hover { transform: scale(1.03); }
+    .netflix-thumb { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+    .netflix-card-info { padding: 10px; }
+    .netflix-card-info h4 { font-size: 12px; font-weight: 600; color: #1f2937; margin-bottom: 3px; }
+    .netflix-card-info p { font-size: 11px; color: #6b7280; }
+    .card-tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; margin-top: 5px; }
+    .tag-video { background: #fee2e2; color: #dc2626; }
+    .tag-podcast { background: #e0f2fe; color: #0369a1; }
+    .tag-leccion { background: #dcfce7; color: #15803d; }
+    .tag-practica { background: #fff3ec; color: #FF6B35; }
+    .chat-fab { position: fixed; bottom: 24px; right: 24px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 22px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(255,107,53,0.4); }
+    .chat-fab img { width: 24px; height: 24px; object-fit: contain; }
+    .nivel-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -107,14 +137,15 @@
   <div class="auth-body">
     <h2>Entrar a MokiTalk</h2>
     <p class="subtitle">Continúa donde lo dejaste</p>
-    <button class="btn-google" onclick="irAlChat()">
+    <div class="error-msg" id="login-error">Correo o contraseña incorrectos. Intenta de nuevo.</div>
+    <button class="btn-google" onclick="loginGoogle()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Continuar con Google
     </button>
     <div class="divider">o</div>
-    <input class="input-field" type="email" placeholder="Tu correo electrónico" />
-    <input class="input-field" type="password" placeholder="Contraseña" />
-    <button class="btn-primary" onclick="irAlChat()">Entrar</button>
+    <input class="input-field" id="login-email" type="email" placeholder="Tu correo electrónico" />
+    <input class="input-field" id="login-password" type="password" placeholder="Contraseña" />
+    <button class="btn-primary" onclick="loginEmail()">Entrar</button>
     <div class="switch-auth">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
   </div>
 </div>
@@ -128,15 +159,16 @@
   <div class="auth-body">
     <h2>Únete a MokiTalk</h2>
     <p class="subtitle">Es gratis, siempre</p>
-    <button class="btn-google" onclick="irAlChat()">
+    <div class="error-msg" id="register-error">Por favor completa todos los campos.</div>
+    <button class="btn-google" onclick="loginGoogle()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Registrarse con Google
     </button>
     <div class="divider">o</div>
     <input class="input-field" id="nombre" type="text" placeholder="Tu nombre" />
-    <input class="input-field" type="email" placeholder="Tu correo electrónico" />
-    <input class="input-field" type="password" placeholder="Crea una contraseña" />
-    <button class="btn-primary" onclick="irConTransicion()">Crear cuenta y conocer a Moki</button>
+    <input class="input-field" id="register-email" type="email" placeholder="Tu correo electrónico" />
+    <input class="input-field" id="register-password" type="password" placeholder="Crea una contraseña (mín. 6 caracteres)" />
+    <button class="btn-primary" onclick="registrar()">Crear cuenta y conocer a Moki</button>
     <div class="switch-auth">¿Ya tienes cuenta? <span onclick="showScreen('screen-login')">Inicia sesión</span></div>
   </div>
 </div>
@@ -155,8 +187,109 @@
   </div>
 </div>
 
+<!-- PANTALLA 6: DASHBOARD -->
+<div class="screen" id="screen-dashboard">
+  <div class="dashboard-body">
+    <div class="dashboard-header">
+      <h2 id="dash-saludo">¡Hola de nuevo!</h2>
+      <p>Sigues mejorando cada día 💪</p>
+      <div class="nivel-badge">Nivel A2 → B1</div>
+      <img src="moki.png" class="moki-dashboard" alt="Moki" />
+    </div>
+    <div class="dashboard-content">
+
+      <div>
+        <div class="section-title">Continúa aprendiendo</div>
+        <div class="continue-card">
+          <div class="continue-icon">🗣️</div>
+          <div class="continue-info">
+            <h4>Preguntar en reuniones</h4>
+            <p>Semana 1 · Lección 2 de 4</p>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Recomendado para ti</div>
+        <div class="netflix-row">
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#fff3ec;">⚽</div>
+            <div class="netflix-card-info">
+              <h4>Premier League en inglés</h4>
+              <p>Vocabulario de fútbol</p>
+              <span class="card-tag tag-video">Video</span>
+            </div>
+          </div>
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#e0f2fe;">🎧</div>
+            <div class="netflix-card-info">
+              <h4>Business English básico</h4>
+              <p>Para reuniones de trabajo</p>
+              <span class="card-tag tag-podcast">Podcast</span>
+            </div>
+          </div>
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#dcfce7;">📖</div>
+            <div class="netflix-card-info">
+              <h4>Frases para el trabajo</h4>
+              <p>10 frases esenciales</p>
+              <span class="card-tag tag-leccion">Lección</span>
+            </div>
+          </div>
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#fef9c3;">🎵</div>
+            <div class="netflix-card-info">
+              <h4>Aprende con Drake</h4>
+              <p>Inglés informal y coloquial</p>
+              <span class="card-tag tag-video">Video</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Practica tu pronunciación</div>
+        <div class="netflix-row">
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#fce7f3;">🎤</div>
+            <div class="netflix-card-info">
+              <h4>Shadowing con Moki</h4>
+              <p>Repite y mejora tu acento</p>
+              <span class="card-tag tag-practica">Práctica</span>
+            </div>
+          </div>
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#ede9fe;">🏨</div>
+            <div class="netflix-card-info">
+              <h4>En el hotel</h4>
+              <p>Simulación de viaje</p>
+              <span class="card-tag tag-practica">Práctica</span>
+            </div>
+          </div>
+          <div class="netflix-card" onclick="irAlChat()">
+            <div class="netflix-thumb" style="background:#fff3ec;">☕</div>
+            <div class="netflix-card-info">
+              <h4>Pedir en un café</h4>
+              <p>Situaciones cotidianas</p>
+              <span class="card-tag tag-practica">Práctica</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <button class="chat-fab" onclick="irAlChat()">
+    <img src="moki.png" alt="Moki" />
+    Hablar con Moki
+  </button>
+</div>
+
 <script>
   var CHAT_URL = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
+  var usuarios = {};
+  var usuarioActual = null;
 
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
@@ -167,15 +300,72 @@
     window.location.href = CHAT_URL;
   }
 
-  function irConTransicion() {
-    var nombre = document.getElementById('nombre').value.trim();
-    showScreen('screen-transicion');
-    if (nombre) {
-      document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
+  function loginGoogle() {
+    irAlChat();
+  }
+
+  function loginEmail() {
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var errorEl = document.getElementById('login-error');
+
+    if (!email || !password) {
+      errorEl.style.display = 'block';
+      errorEl.innerText = 'Por favor completa todos los campos.';
+      return;
     }
+
+    var usuario = usuarios[email];
+    if (!usuario || usuario.password !== password) {
+      errorEl.style.display = 'block';
+      errorEl.innerText = 'Correo o contraseña incorrectos. Intenta de nuevo.';
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    usuarioActual = usuario;
+    mostrarDashboard(usuario.nombre);
+  }
+
+  function registrar() {
+    var nombre = document.getElementById('nombre').value.trim();
+    var email = document.getElementById('register-email').value.trim();
+    var password = document.getElementById('register-password').value;
+    var errorEl = document.getElementById('register-error');
+
+    if (!nombre || !email || !password) {
+      errorEl.style.display = 'block';
+      errorEl.innerText = 'Por favor completa todos los campos.';
+      return;
+    }
+
+    if (password.length < 6) {
+      errorEl.style.display = 'block';
+      errorEl.innerText = 'La contraseña debe tener al menos 6 caracteres.';
+      return;
+    }
+
+    if (usuarios[email]) {
+      errorEl.style.display = 'block';
+      errorEl.innerText = 'Este correo ya está registrado. Inicia sesión.';
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    usuarios[email] = { nombre: nombre, email: email, password: password };
+    usuarioActual = usuarios[email];
+
+    document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
+    showScreen('screen-transicion');
+
     setTimeout(function() {
       window.location.href = CHAT_URL;
     }, 3000);
+  }
+
+  function mostrarDashboard(nombre) {
+    document.getElementById('dash-saludo').innerText = '¡Hola de nuevo, ' + nombre + '!';
+    showScreen('screen-dashboard');
   }
 </script>
 
