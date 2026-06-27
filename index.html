@@ -16,12 +16,10 @@
     .screen { display: none; flex-direction: column; min-height: 100vh; }
     .screen.active { display: flex; }
 
-    /* HEADER */
     .header { background: rgba(0,0,0,0.9); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(255,107,53,0.2); }
     .moki-header-img { width: 40px; height: 40px; object-fit: contain; }
     .header-logo { font-weight: 800; font-size: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-    /* BUTTONS */
     .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; }
     .btn-secondary { background: transparent; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
     .btn-google { background: white; color: #1f2937; border: none; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
@@ -34,7 +32,7 @@
     .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
     .error-msg { background: rgba(220,38,38,0.2); color: #fca5a5; border: 1px solid rgba(220,38,38,0.3); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
 
-    /* PANTALLA 1 KNOW */
+    /* KNOW */
     .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
     .moki-big { width: 180px; height: 180px; object-fit: contain; animation: bounce 2s infinite; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(255,107,53,0.4)); }
     @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
@@ -43,14 +41,14 @@
 
     /* LANDING */
     .landing-body { flex: 1; overflow-y: auto; background: #0a0a0a; }
-    .landing-hero { position: relative; height: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
+    .landing-hero { position: relative; height: 380px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
     .landing-hero img { width: 200px; height: 200px; object-fit: contain; animation: bounce 2s infinite; filter: drop-shadow(0 0 40px rgba(255,107,53,0.5)); }
     .landing-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, #0a0a0a 100%); }
     .landing-hero-content { position: absolute; bottom: 24px; left: 20px; right: 20px; text-align: center; }
     .landing-hero-content h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
-    .landing-hero-content p { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
-    .landing-sections { padding: 0 16px 100px; }
-    .landing-section-title { font-size: 18px; font-weight: 700; margin: 28px 0 14px; }
+    .landing-hero-content p { font-size: 14px; color: rgba(255,255,255,0.7); }
+    .landing-sections { padding: 16px 16px 100px; }
+    .landing-section-title { font-size: 18px; font-weight: 700; margin: 20px 0 14px; }
     .features-row { display: flex; flex-direction: column; gap: 10px; }
     .feature-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.15); border-radius: 14px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
     .feature-icon { font-size: 28px; flex-shrink: 0; }
@@ -75,70 +73,98 @@
     .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes dotbounce { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
+    /* ONBOARDING CHAT */
+    .onboarding-screen { flex: 1; display: flex; flex-direction: column; background: radial-gradient(ellipse at bottom, #1a0a00 0%, #0a0a0a 60%); }
+    .onboarding-moki-area { padding: 20px; display: flex; align-items: center; gap: 12px; }
+    .onboarding-moki-img { width: 52px; height: 52px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,107,53,0.4)); }
+    .onboarding-moki-img.hablando { animation: mokihabla 0.4s infinite alternate; }
+    @keyframes mokihabla { 0% { transform: scale(1) rotate(-2deg); } 100% { transform: scale(1.06) rotate(2deg); } }
+    .onboarding-moki-info p { font-weight: 700; font-size: 15px; color: #FF8C42; }
+    .onboarding-moki-info span { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .onboarding-chat { flex: 1; overflow-y: auto; padding: 8px 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .ob-msg { display: flex; align-items: flex-end; gap: 8px; }
+    .ob-msg.user { flex-direction: row-reverse; }
+    .ob-avatar { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .ob-avatar img { width: 100%; height: 100%; object-fit: contain; }
+    .ob-bubble { max-width: 78%; padding: 11px 15px; border-radius: 18px; font-size: 14px; line-height: 1.6; word-break: break-word; }
+    .ob-bubble.moki { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,107,53,0.2); border-bottom-left-radius: 4px; }
+    .ob-bubble.user { background: linear-gradient(135deg, #FF6B35, #FF8C42); border-bottom-right-radius: 4px; }
+    .ob-bubble.typing { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-bottom-left-radius: 4px; color: rgba(255,255,255,0.4); font-style: italic; }
+    .ob-chip { background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.2); border-radius: 12px; padding: 8px 14px; font-size: 12px; color: #FF8C42; text-align: center; margin: 0 auto; font-weight: 500; }
+    .ob-ready-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 14px 28px; font-size: 16px; font-weight: 600; cursor: pointer; margin: 8px auto; display: block; }
+    .ob-input-area { padding: 12px 16px 28px; background: rgba(0,0,0,0.3); display: flex; gap: 8px; align-items: center; border-top: 1px solid rgba(255,107,53,0.1); }
+    .ob-input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 11px 18px; font-size: 14px; outline: none; color: white; }
+    .ob-input::placeholder { color: rgba(255,255,255,0.3); }
+    .ob-input:focus { border-color: #FF6B35; }
+    .ob-send-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ob-send-btn:disabled { opacity: 0.4; }
+
     /* DASHBOARD */
     .dashboard-body { flex: 1; overflow-y: auto; background: #0a0a0a; padding-bottom: 90px; }
     .dash-greeting { padding: 20px 20px 8px; }
     .dash-greeting h2 { font-size: 22px; font-weight: 800; }
     .dash-greeting p { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
-    .reto-card { margin: 12px 20px; background: linear-gradient(135deg, rgba(255,107,53,0.15), rgba(255,140,66,0.1)); border: 1px solid rgba(255,107,53,0.3); border-radius: 16px; padding: 16px; }
+    .reto-card { margin: 12px 20px; background: linear-gradient(135deg, rgba(255,107,53,0.15), rgba(255,140,66,0.08)); border: 1px solid rgba(255,107,53,0.3); border-radius: 16px; padding: 16px; }
     .reto-badge { font-size: 11px; font-weight: 700; color: #FF6B35; letter-spacing: 0.5px; margin-bottom: 8px; }
     .reto-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
     .reto-card p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
     .reto-btn { margin-top: 12px; background: #FF6B35; color: white; border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .section-header { padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between; }
+    .section-header { padding: 20px 20px 12px; }
     .section-header h3 { font-size: 17px; font-weight: 700; }
     .temas-row { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 8px; scrollbar-width: none; }
     .temas-row::-webkit-scrollbar { display: none; }
-    .tema-card { flex-shrink: 0; width: 140px; height: 160px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.2s; }
+    .tema-card { flex-shrink: 0; width: 140px; height: 160px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: transform 0.2s; }
     .tema-card:hover { transform: scale(1.03); }
-    .tema-card .tema-emoji { font-size: 36px; }
+    .tema-emoji { font-size: 36px; }
     .tema-card h4 { font-size: 13px; font-weight: 700; text-align: center; padding: 0 8px; }
-    .tema-card .tema-nivel { font-size: 10px; opacity: 0.7; }
+    .tema-nivel { font-size: 10px; opacity: 0.7; }
     .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; }
     .opcion-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.2); border-radius: 16px; padding: 18px 14px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .opcion-card:hover { border-color: #FF6B35; background: rgba(255,107,53,0.1); }
     .opcion-icon { font-size: 30px; }
     .opcion-card h4 { font-size: 13px; font-weight: 600; }
     .opcion-card p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
-    .chat-fab { position: fixed; bottom: 24px; right: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(255,107,53,0.5); z-index: 10; }
+    .chat-fab { position: fixed; bottom: 74px; right: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(255,107,53,0.5); z-index: 10; }
     .chat-fab img { width: 24px; height: 24px; object-fit: contain; }
 
-    /* PANTALLA LECCION INMERSIVA */
+    /* LECCION */
     .leccion-screen { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-    .leccion-bg { position: absolute; inset: 0; opacity: 0.15; }
-    .leccion-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
-    .leccion-tema-badge { position: absolute; top: 16px; left: 16px; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; z-index: 10; letter-spacing: 0.5px; }
-    .leccion-moki-area { flex: 0 0 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding-top: 60px; }
-    .leccion-moki-img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 20px currentColor); }
-    .leccion-moki-img.hablando { animation: mokihabla 0.5s infinite alternate; }
-    @keyframes mokihabla { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
-    .leccion-ondas { display: flex; gap: 4px; align-items: center; justify-content: center; margin-top: 12px; height: 24px; }
-    .onda { width: 4px; border-radius: 4px; background: white; opacity: 0.4; animation: onda 1s infinite; }
+    .leccion-close { position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.3); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
+    .leccion-tema-badge { position: absolute; top: 16px; left: 16px; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; z-index: 10; background: rgba(255,255,255,0.15); color: white; }
+    .progreso-bar { height: 3px; margin: 0; position: relative; z-index: 5; }
+    .progreso-fill { height: 100%; border-radius: 3px; transition: width 0.5s; width: 0%; background: rgba(255,255,255,0.6); }
+    .leccion-intro { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px 40px; text-align: center; gap: 16px; }
+    .leccion-intro-emoji { font-size: 64px; animation: bounce 2s infinite; }
+    .leccion-intro h2 { font-size: 24px; font-weight: 800; }
+    .leccion-intro p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6; max-width: 280px; }
+    .leccion-start-btn { background: white; color: #0a0a0a; border: none; border-radius: 14px; padding: 14px 32px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .leccion-moki-area { flex: 0 0 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 60px; }
+    .leccion-moki-img { width: 100px; height: 100px; object-fit: contain; }
+    .leccion-moki-img.hablando { animation: mokihabla 0.4s infinite alternate; }
+    .leccion-ondas { display: flex; gap: 4px; align-items: center; justify-content: center; margin-top: 10px; height: 20px; }
+    .onda { width: 4px; border-radius: 4px; background: rgba(255,255,255,0.4); animation: onda 1s infinite; }
     .onda:nth-child(1) { animation-delay: 0s; }
     .onda:nth-child(2) { animation-delay: 0.15s; }
     .onda:nth-child(3) { animation-delay: 0.3s; }
     .onda:nth-child(4) { animation-delay: 0.15s; }
     .onda:nth-child(5) { animation-delay: 0s; }
-    @keyframes onda { 0%,100% { height: 4px; } 50% { height: 20px; opacity: 0.9; } }
+    @keyframes onda { 0%,100% { height: 4px; } 50% { height: 18px; opacity: 0.9; } }
     .leccion-ondas.activo .onda { opacity: 0.9; }
-    .leccion-subtitulo { margin: 0 20px; text-align: center; font-size: 16px; line-height: 1.6; min-height: 80px; color: rgba(255,255,255,0.9); font-weight: 500; }
-    .leccion-chat-area { flex: 1; overflow-y: auto; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .leccion-subtitulo { margin: 0 20px; text-align: center; font-size: 15px; line-height: 1.6; min-height: 60px; color: rgba(255,255,255,0.85); }
+    .leccion-chat-area { flex: 1; overflow-y: auto; padding: 8px 16px; display: flex; flex-direction: column; gap: 8px; }
     .leccion-bubble { max-width: 80%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
-    .leccion-bubble.moki { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); align-self: flex-start; border-bottom-left-radius: 4px; }
-    .leccion-bubble.usuario { background: rgba(255,255,255,0.15); align-self: flex-end; border-bottom-right-radius: 4px; }
-    .leccion-input-area { padding: 12px 16px 32px; display: flex; gap: 10px; align-items: center; background: rgba(0,0,0,0.3); }
-    .leccion-text-input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 11px 16px; font-size: 14px; outline: none; color: white; display: none; }
-    .leccion-text-input::placeholder { color: rgba(255,255,255,0.4); }
+    .leccion-bubble.moki { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); align-self: flex-start; border-bottom-left-radius: 4px; }
+    .leccion-bubble.usuario { background: rgba(255,255,255,0.2); align-self: flex-end; border-bottom-right-radius: 4px; }
+    .leccion-input-area { padding: 10px 16px 28px; display: flex; gap: 10px; align-items: center; background: rgba(0,0,0,0.2); }
+    .leccion-text-input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 11px 16px; font-size: 14px; outline: none; color: white; display: none; }
+    .leccion-text-input::placeholder { color: rgba(255,255,255,0.3); }
     .leccion-text-input.visible { display: block; }
-    .mic-btn { width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; transition: all 0.2s; }
-    .mic-btn.idle { background: rgba(255,255,255,0.15); }
+    .mic-btn { width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; background: rgba(255,255,255,0.15); transition: all 0.2s; }
     .mic-btn.recording { background: #ef4444; animation: micpulse 1s infinite; }
     @keyframes micpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); } 50% { box-shadow: 0 0 0 12px rgba(239,68,68,0); } }
-    .send-leccion-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 18px; cursor: pointer; display: none; }
-    .send-leccion-btn.visible { display: flex; align-items: center; justify-content: center; }
-    .toggle-input-btn { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 20px; cursor: pointer; padding: 8px; }
-    .progreso-bar { height: 3px; background: rgba(255,255,255,0.1); margin: 0 20px; border-radius: 3px; overflow: hidden; }
-    .progreso-fill { height: 100%; border-radius: 3px; transition: width 0.5s; width: 0%; }
+    .send-leccion-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 18px; cursor: pointer; align-items: center; justify-content: center; display: none; }
+    .send-leccion-btn.visible { display: flex; }
+    .toggle-input-btn { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 20px; cursor: pointer; padding: 8px; }
 
     /* TRADUCTOR */
     .traductor-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; background: #0a0a0a; overflow-y: auto; padding-bottom: 90px; }
@@ -149,7 +175,7 @@
     .trad-box label { font-size: 12px; color: rgba(255,255,255,0.4); display: block; margin-bottom: 8px; }
     .trad-textarea { width: 100%; background: transparent; border: none; outline: none; color: white; font-size: 16px; font-family: inherit; resize: none; min-height: 80px; }
     .trad-textarea::placeholder { color: rgba(255,255,255,0.2); }
-    .trad-result { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.3); border-radius: 14px; padding: 16px; min-height: 80px; display: none; }
+    .trad-result { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.3); border-radius: 14px; padding: 16px; display: none; }
     .trad-result label { font-size: 12px; color: #FF8C42; display: block; margin-bottom: 8px; }
     .trad-result p { font-size: 16px; color: white; line-height: 1.6; }
     .trad-nota { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 8px; font-style: italic; }
@@ -157,8 +183,7 @@
     .trad-btn:disabled { opacity: 0.5; }
 
     /* BOTTOM NAV */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); border-top: 1px solid rgba(255,107,53,0.15); display: none; padding: 8px 0 16px; z-index: 20; }
-    .bottom-nav.visible { display: flex; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.97); border-top: 1px solid rgba(255,107,53,0.15); display: flex; padding: 8px 0 18px; z-index: 20; }
     .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 0; }
     .nav-item .nav-icon { font-size: 22px; }
     .nav-item .nav-label { font-size: 10px; color: rgba(255,255,255,0.4); }
@@ -218,7 +243,7 @@
     <h2>Entrar a MokiTalk</h2>
     <p class="subtitle">Continúa donde lo dejaste</p>
     <div class="error-msg" id="login-error"></div>
-    <button class="btn-google" onclick="irAlChat()">
+    <button class="btn-google" onclick="iniciarOnboarding()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Continuar con Google
     </button>
@@ -240,7 +265,7 @@
     <h2>Únete a MokiTalk</h2>
     <p class="subtitle">Es gratis, siempre</p>
     <div class="error-msg" id="register-error"></div>
-    <button class="btn-google" onclick="irAlChat()">
+    <button class="btn-google" onclick="iniciarOnboarding()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Registrarse con Google
     </button>
@@ -263,7 +288,27 @@
   </div>
 </div>
 
-<!-- PANTALLA 6: DASHBOARD -->
+<!-- PANTALLA 6: ONBOARDING CHAT -->
+<div class="screen" id="screen-onboarding">
+  <div class="onboarding-screen">
+    <div class="onboarding-moki-area">
+      <img src="moki.png" class="onboarding-moki-img" id="ob-moki-img" alt="Moki" />
+      <div class="onboarding-moki-info">
+        <p>Moki</p>
+        <span id="ob-status">En línea</span>
+      </div>
+    </div>
+    <div class="onboarding-chat" id="ob-chat">
+      <div class="ob-chip">Sin presión, sin juicios — solo práctica real 🎯</div>
+    </div>
+    <div class="ob-input-area" id="ob-input-area">
+      <input type="text" class="ob-input" id="ob-input" placeholder="Habla con Moki..." autocomplete="off" />
+      <button class="ob-send-btn" id="ob-send-btn" onclick="enviarMensajeOnboarding()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- PANTALLA 7: DASHBOARD -->
 <div class="screen" id="screen-dashboard">
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
@@ -274,7 +319,7 @@
       <h2 id="dash-saludo">¡Hola!</h2>
       <p id="dash-sub">Elige qué quieres hacer hoy</p>
     </div>
-    <div class="reto-card" id="reto-card">
+    <div class="reto-card">
       <div class="reto-badge">🔥 RETO DEL DÍA</div>
       <h4 id="reto-titulo">Cargando tu reto...</h4>
       <p id="reto-desc">Moki está preparando algo especial para ti</p>
@@ -287,49 +332,56 @@
     <div style="margin-top: 20px;">
       <div class="section-header"><h3>¿Qué quieres hacer?</h3></div>
       <div class="opciones-grid">
-        <div class="opcion-card" onclick="irAlChat('chat')"><div class="opcion-icon">💬</div><h4>Charlar con Moki</h4><p>Conversación libre sin presión</p></div>
-        <div class="opcion-card" onclick="irAlChat('practica')"><div class="opcion-icon">🎯</div><h4>Practicar situación</h4><p>Hotel, café, reunión...</p></div>
+        <div class="opcion-card" onclick="abrirOnboardingChat('chat')"><div class="opcion-icon">💬</div><h4>Charlar con Moki</h4><p>Conversación libre</p></div>
+        <div class="opcion-card" onclick="abrirOnboardingChat('practica')"><div class="opcion-icon">🎯</div><h4>Practicar situación</h4><p>Hotel, café, reunión...</p></div>
         <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4>Traducir</h4><p>Contextual y coloquial</p></div>
-        <div class="opcion-card" onclick="irAlChat('chat')"><div class="opcion-icon">🐒</div><h4>Sorpréndeme</h4><p>Deja que Moki elija</p></div>
+        <div class="opcion-card" onclick="abrirOnboardingChat('sorpresa')"><div class="opcion-icon">🐒</div><h4>Sorpréndeme</h4><p>Deja que Moki elija</p></div>
       </div>
     </div>
   </div>
-  <button class="chat-fab" onclick="irAlChat('chat')">
+  <button class="chat-fab" onclick="abrirOnboardingChat('chat')">
     <img src="moki.png" alt="Moki" />
     Hablar con Moki
   </button>
-  <div class="bottom-nav visible" id="bottom-nav-dashboard">
+  <div class="bottom-nav">
     <div class="nav-item active" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
     <div class="nav-item" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
-    <div class="nav-item" onclick="irAlChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
+    <div class="nav-item" onclick="abrirOnboardingChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
   </div>
 </div>
 
-<!-- PANTALLA 7: LECCIÓN INMERSIVA -->
+<!-- PANTALLA 8: LECCIÓN INMERSIVA -->
 <div class="screen" id="screen-leccion">
   <div class="leccion-screen" id="leccion-screen">
-    <div class="leccion-bg" id="leccion-bg"></div>
+    <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill"></div></div>
     <button class="leccion-close" onclick="cerrarLeccion()">✕</button>
     <div class="leccion-tema-badge" id="leccion-tema-badge">TEMA</div>
-    <div class="progreso-bar"><div class="progreso-fill" id="progreso-fill"></div></div>
-    <div class="leccion-moki-area">
-      <img src="moki.png" class="leccion-moki-img" id="leccion-moki-img" alt="Moki" />
-      <div class="leccion-ondas" id="leccion-ondas">
-        <div class="onda"></div><div class="onda"></div><div class="onda"></div><div class="onda"></div><div class="onda"></div>
-      </div>
+    <div class="leccion-intro" id="leccion-intro">
+      <div class="leccion-intro-emoji" id="leccion-intro-emoji">🎮</div>
+      <h2 id="leccion-intro-titulo">Cargando...</h2>
+      <p id="leccion-intro-desc">Preparando tu sesión personalizada</p>
+      <button class="leccion-start-btn" onclick="empezarLeccion()">¡Empezar! 🚀</button>
     </div>
-    <div class="leccion-subtitulo" id="leccion-subtitulo">Moki está listo para practicar contigo...</div>
-    <div class="leccion-chat-area" id="leccion-chat-area"></div>
-    <div class="leccion-input-area">
-      <button class="toggle-input-btn" onclick="toggleTeclado()" title="Cambiar a teclado">⌨️</button>
-      <input type="text" class="leccion-text-input" id="leccion-text-input" placeholder="Escribe tu respuesta..." />
-      <button class="send-leccion-btn" id="send-leccion-btn" onclick="enviarTextoLeccion()">➤</button>
-      <button class="mic-btn idle" id="mic-btn" onclick="toggleMic()">🎙️</button>
+    <div style="display:none;" id="leccion-chat-container">
+      <div class="leccion-moki-area">
+        <img src="moki.png" class="leccion-moki-img" id="leccion-moki-img" alt="Moki" />
+        <div class="leccion-ondas" id="leccion-ondas">
+          <div class="onda"></div><div class="onda"></div><div class="onda"></div><div class="onda"></div><div class="onda"></div>
+        </div>
+      </div>
+      <div class="leccion-subtitulo" id="leccion-subtitulo"></div>
+      <div class="leccion-chat-area" id="leccion-chat-area"></div>
+      <div class="leccion-input-area">
+        <button class="toggle-input-btn" onclick="toggleTeclado()">⌨️</button>
+        <input type="text" class="leccion-text-input" id="leccion-text-input" placeholder="Escribe tu respuesta..." />
+        <button class="send-leccion-btn" id="send-leccion-btn" onclick="enviarTextoLeccion()">➤</button>
+        <button class="mic-btn" id="mic-btn" onclick="toggleMic()">🎙️</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- PANTALLA 8: TRADUCTOR -->
+<!-- PANTALLA 9: TRADUCTOR -->
 <div class="screen" id="screen-traductor">
   <div class="header">
     <img src="moki.png" class="moki-header-img" alt="Moki" />
@@ -347,56 +399,94 @@
     </div>
     <button class="trad-btn" id="trad-btn" onclick="traducir()">Traducir con Moki 🐒</button>
     <div class="trad-result" id="trad-result">
-      <label>Traducción</label>
+      <label>Traducción de Moki</label>
       <p id="trad-traduccion"></p>
       <p class="trad-nota" id="trad-nota"></p>
     </div>
   </div>
-  <div class="bottom-nav visible">
+  <div class="bottom-nav">
     <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
     <div class="nav-item active" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
-    <div class="nav-item" onclick="irAlChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
+    <div class="nav-item" onclick="abrirOnboardingChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
   </div>
 </div>
 
 <script>
-  var CHAT_URL = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
+  var BACKEND = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
   var usuarios = {};
-  var usuarioActual = null;
   var perfil = {};
+  var obHistorial = [];
+  var obTyping = false;
+  var leccionHistorial = [];
+  var leccionTyping = false;
+  var temaActual = null;
+  var temaIndice = 0;
+  var progresoLeccion = 0;
   var langFrom = 'es';
   var langTo = 'en';
-  var temaActual = null;
-  var leccionHistorial = [];
-  var isLeccionTyping = false;
   var recognition = null;
   var isRecording = false;
   var synth = window.speechSynthesis;
-  var progresoLeccion = 0;
+  var vozEspanol = null;
+  var vozIngles = null;
 
   var PALETA = [
-    { bg: 'linear-gradient(135deg, #4C1D95, #7C3AED)', accent: '#7C3AED', light: '#DDD6FE' },
-    { bg: 'linear-gradient(135deg, #831843, #DB2777)', accent: '#DB2777', light: '#FBCFE8' },
-    { bg: 'linear-gradient(135deg, #1E3A5F, #2563EB)', accent: '#2563EB', light: '#BFDBFE' },
-    { bg: 'linear-gradient(135deg, #14532D, #16A34A)', accent: '#16A34A', light: '#BBF7D0' },
-    { bg: 'linear-gradient(135deg, #78350F, #D97706)', accent: '#D97706', light: '#FDE68A' },
-    { bg: 'linear-gradient(135deg, #7C2D12, #EA580C)', accent: '#EA580C', light: '#FED7AA' },
-    { bg: 'linear-gradient(135deg, #134E4A, #0D9488)', accent: '#0D9488', light: '#99F6E4' },
-    { bg: 'linear-gradient(135deg, #312E81, #4F46E5)', accent: '#4F46E5', light: '#C7D2FE' }
+    { bg: 'linear-gradient(160deg, #2D1B69 0%, #11998e 100%)', accent: '#7C3AED' },
+    { bg: 'linear-gradient(160deg, #6D1B3B 0%, #e91e8c 100%)', accent: '#DB2777' },
+    { bg: 'linear-gradient(160deg, #0F2B5B 0%, #1565C0 100%)', accent: '#2563EB' },
+    { bg: 'linear-gradient(160deg, #1B3A1B 0%, #2E7D32 100%)', accent: '#16A34A' },
+    { bg: 'linear-gradient(160deg, #4A2000 0%, #E65100 100%)', accent: '#EA580C' },
+    { bg: 'linear-gradient(160deg, #1A1A2E 0%, #16213E 100%)', accent: '#4F46E5' },
+    { bg: 'linear-gradient(160deg, #0D3348 0%, #0D9488 100%)', accent: '#0D9488' },
+    { bg: 'linear-gradient(160deg, #3E1B00 0%, #D97706 100%)', accent: '#D97706' }
   ];
 
-  var EMOJIS_TEMAS = {
-    'videojuegos': '🎮', 'gaming': '🎮', 'games': '🎮',
-    'música': '🎵', 'musica': '🎵', 'music': '🎵',
-    'tecnología': '💻', 'tecnologia': '💻', 'tech': '💻',
-    'fútbol': '⚽', 'futbol': '⚽', 'soccer': '⚽', 'football': '⚽',
-    'trabajo': '💼', 'work': '💼', 'business': '💼',
-    'viajes': '✈️', 'travel': '✈️',
-    'series': '🎬', 'películas': '🎬', 'movies': '🎬',
-    'cocina': '🍳', 'food': '🍳',
-    'deportes': '🏃', 'sports': '🏃',
-    'arte': '🎨', 'art': '🎨'
+  var EMOJIS = { 'videojuegos': '🎮', 'gaming': '🎮', 'música': '🎵', 'musica': '🎵', 'tecnología': '💻', 'tecnologia': '💻', 'fútbol': '⚽', 'futbol': '⚽', 'trabajo': '💼', 'viajes': '✈️', 'series': '🎬', 'cocina': '🍳', 'deportes': '🏃', 'arte': '🎨', 'lectura': '📚', 'fitness': '💪' };
+
+  var INTROS = {
+    'videojuegos': { titulo: '¡A hablar de gaming!', desc: 'Moki quiere saber todo sobre tus juegos favoritos. Habla sin parar — en inglés o español, como quieras.' },
+    'música': { titulo: '¡Música es vida!', desc: 'Cuéntale a Moki sobre tus artistas favoritos, géneros y todo lo que te apasiona de la música.' },
+    'tecnología': { titulo: '¡Tech talk time!', desc: 'Desde gadgets hasta código — Moki quiere hablar de todo lo que te emociona del mundo tech.' },
+    'fútbol': { titulo: '¡Hablemos de fútbol!', desc: 'Tu equipo, tus jugadores favoritos, los mejores partidos — todo en inglés con Moki.' },
+    'trabajo': { titulo: '¡English for work!', desc: 'Practica el inglés que necesitas para reuniones, emails y conversaciones profesionales.' },
+    'viajes': { titulo: '¡Let\'s travel!', desc: 'Destinos soñados, experiencias vividas — Moki quiere escuchar tus historias de viaje en inglés.' }
   };
+
+  function getIntro(tema) {
+    var temaLower = tema.toLowerCase();
+    for (var key in INTROS) { if (temaLower.indexOf(key) !== -1) return INTROS[key]; }
+    return { titulo: '¡Hablemos de ' + tema + '!', desc: 'Cuéntale a Moki todo sobre ' + tema + ' — sin límites, sin presión.' };
+  }
+
+  function getEmoji(tema) {
+    var temaLower = tema.toLowerCase();
+    for (var key in EMOJIS) { if (temaLower.indexOf(key) !== -1) return EMOJIS[key]; }
+    return '📚';
+  }
+
+  function cargarVoces() {
+    var voices = synth.getVoices();
+    voices.forEach(function(v) {
+      if (!vozEspanol && (v.lang === 'es-ES' || v.lang === 'es-MX' || v.lang === 'es-CO' || v.lang.startsWith('es'))) vozEspanol = v;
+      if (!vozIngles && (v.lang === 'en-US' || v.lang === 'en-GB' || v.lang.startsWith('en'))) vozIngles = v;
+    });
+  }
+
+  if (synth) {
+    cargarVoces();
+    synth.onvoiceschanged = cargarVoces;
+  }
+
+  function hablar(texto, idioma) {
+    if (!synth) return;
+    synth.cancel();
+    var utter = new SpeechSynthesisUtterance(texto);
+    var esIngles = idioma === 'en' || /[a-z]{4,}/i.test(texto.replace(/[áéíóúüñ]/gi, ''));
+    if (esIngles && vozIngles) { utter.voice = vozIngles; utter.lang = 'en-US'; utter.rate = 0.88; utter.pitch = 1.2; }
+    else if (!esIngles && vozEspanol) { utter.voice = vozEspanol; utter.lang = 'es-CO'; utter.rate = 0.9; utter.pitch = 1.15; }
+    else { utter.rate = 0.9; utter.pitch = 1.1; }
+    synth.speak(utter);
+  }
 
   window.onload = function() {
     var params = new URLSearchParams(window.location.search);
@@ -404,10 +494,6 @@
       perfil = { nombre: 'Sebastian', motivacion: 'trabajo y desarrollo personal', confianza: 'intermedio', intereses: 'videojuegos, música, tecnología, fútbol', meta: 'hablar con fluidez en reuniones', lang: 'es' };
       mostrarDashboard();
       return;
-    }
-    if (params.get('onboarding') === 'completo') {
-      perfil = { nombre: params.get('nombre') || '', motivacion: params.get('motivacion') || '', confianza: params.get('confianza') || '', intereses: params.get('intereses') || '', meta: params.get('meta') || '', lang: params.get('lang') || 'es' };
-      mostrarDashboard();
     }
   };
 
@@ -417,13 +503,129 @@
   }
 
   function showTab(tab) {
-    if (tab === 'dashboard') showScreen('screen-dashboard');
-    else if (tab === 'traductor') showScreen('screen-traductor');
+    showScreen('screen-' + tab);
   }
 
-  function irAlChat(modo) {
-    var nombre = perfil.nombre || '';
-    window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre) + '&modo=' + (modo || 'chat') + '&lang=' + (perfil.lang || 'es');
+  function iniciarOnboarding() {
+    obHistorial = [];
+    document.getElementById('ob-chat').innerHTML = '<div class="ob-chip">Sin presión, sin juicios — solo práctica real 🎯</div>';
+    showScreen('screen-onboarding');
+    setTimeout(function() { enviarMensajeOnboardingIA(null); }, 400);
+    document.getElementById('ob-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') enviarMensajeOnboarding();
+    });
+  }
+
+  function abrirOnboardingChat(modo) {
+    obHistorial = [];
+    var modoTextos = {
+      'chat': '¡Hola de nuevo! ¿De qué quieres hablar hoy? 😊',
+      'practica': '¡Vamos a practicar una situación real! ¿Qué prefieres — un hotel, un restaurante, o una reunión de trabajo? 🎯',
+      'sorpresa': '¡Sorpresa! Hoy vamos a hacer algo diferente 🎲 ¿Estás listo?',
+      'reto': '¡Aceptaste el reto! 🔥 Vamos allá.'
+    };
+    document.getElementById('ob-chat').innerHTML = '<div class="ob-chip">Sesión de práctica 🎯</div>';
+    showScreen('screen-onboarding');
+    var msg = modoTextos[modo] || modoTextos['chat'];
+    setTimeout(function() {
+      agregarMensajeOB('moki', msg);
+      hablar(msg, 'es');
+      obHistorial.push({ role: 'assistant', content: msg });
+    }, 300);
+    document.getElementById('ob-input').onkeypress = function(e) { if (e.key === 'Enter') enviarMensajeOnboarding(); };
+  }
+
+  function agregarMensajeOB(tipo, texto, showBtn) {
+    var chat = document.getElementById('ob-chat');
+    var row = document.createElement('div');
+    row.className = 'ob-msg' + (tipo === 'user' ? ' user' : '');
+    if (tipo === 'moki') {
+      var av = document.createElement('div');
+      av.className = 'ob-avatar';
+      av.innerHTML = '<img src="moki.png" alt="Moki" />';
+      row.appendChild(av);
+    }
+    var bubble = document.createElement('div');
+    bubble.className = 'ob-bubble ' + tipo;
+    bubble.innerText = texto;
+    row.appendChild(bubble);
+    chat.appendChild(row);
+    if (showBtn) {
+      var btn = document.createElement('button');
+      btn.className = 'ob-ready-btn';
+      btn.innerText = '¡Ver mi plan personalizado! 🚀';
+      btn.onclick = function() {
+        btn.disabled = true;
+        mostrarDashboard();
+      };
+      chat.appendChild(btn);
+      document.getElementById('ob-input-area').style.display = 'none';
+    }
+    chat.scrollTop = chat.scrollHeight;
+    if (tipo === 'moki') {
+      var img = document.getElementById('ob-moki-img');
+      img.classList.add('hablando');
+      setTimeout(function() { img.classList.remove('hablando'); }, 2000);
+    }
+  }
+
+  function enviarMensajeOnboarding() {
+    if (obTyping) return;
+    var input = document.getElementById('ob-input');
+    var texto = input.value.trim();
+    if (!texto) return;
+    input.value = '';
+    agregarMensajeOB('user', texto);
+    obHistorial.push({ role: 'user', content: texto });
+    enviarMensajeOnboardingIA(texto);
+  }
+
+  function enviarMensajeOnboardingIA(texto) {
+    obTyping = true;
+    document.getElementById('ob-send-btn').disabled = true;
+    document.getElementById('ob-status').innerText = 'Escribiendo...';
+
+    if (obHistorial.length === 0) {
+      obHistorial.push({ role: 'user', content: 'Hola Moki, quiero aprender inglés' });
+    }
+
+    fetch(BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'onboarding', historial: obHistorial, perfil: { lang: 'es' } })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      document.getElementById('ob-status').innerText = 'En línea';
+      obTyping = false;
+      document.getElementById('ob-send-btn').disabled = false;
+      if (data.ok) {
+        var respuesta = data.resultado;
+        var marker = 'ONBOARDING_COMPLETO:';
+        var idx = respuesta.indexOf(marker);
+        if (idx !== -1) {
+          try {
+            var json = respuesta.substring(idx + marker.length).trim();
+            var p = JSON.parse(json);
+            perfil = { nombre: perfil.nombre || '', motivacion: p.motivacion, confianza: p.confianza, intereses: p.intereses, meta: p.meta, lang: 'es' };
+          } catch(e) {}
+          var textoLimpio = respuesta.substring(0, idx).trim();
+          agregarMensajeOB('moki', textoLimpio, true);
+          hablar(textoLimpio, 'es');
+          obHistorial.push({ role: 'assistant', content: textoLimpio });
+        } else {
+          agregarMensajeOB('moki', respuesta);
+          hablar(respuesta, 'es');
+          obHistorial.push({ role: 'assistant', content: respuesta });
+        }
+      }
+    })
+    .catch(function() {
+      obTyping = false;
+      document.getElementById('ob-send-btn').disabled = false;
+      document.getElementById('ob-status').innerText = 'En línea';
+      agregarMensajeOB('moki', 'Ups, algo falló. Intenta de nuevo.');
+    });
   }
 
   function loginEmail() {
@@ -434,8 +636,8 @@
     var usuario = usuarios[email];
     if (!usuario || usuario.password !== password) { errorEl.style.display = 'block'; errorEl.innerText = 'Correo o contraseña incorrectos.'; return; }
     errorEl.style.display = 'none';
-    usuarioActual = usuario;
-    irAlChat('chat');
+    perfil.nombre = usuario.nombre;
+    iniciarOnboarding();
   }
 
   function registrar() {
@@ -448,34 +650,24 @@
     if (usuarios[email]) { errorEl.style.display = 'block'; errorEl.innerText = 'Este correo ya está registrado.'; return; }
     errorEl.style.display = 'none';
     usuarios[email] = { nombre: nombre, email: email, password: password };
-    usuarioActual = usuarios[email];
+    perfil.nombre = nombre;
     document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
     showScreen('screen-transicion');
-    setTimeout(function() {
-      window.location.href = CHAT_URL + '?nombre=' + encodeURIComponent(nombre);
-    }, 3000);
+    setTimeout(function() { iniciarOnboarding(); }, 3000);
   }
 
   function mostrarDashboard() {
     var nombre = perfil.nombre || 'amigo';
     document.getElementById('dash-saludo').innerText = '¡Hola, ' + nombre + '! 👋';
-    document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 Meta: ' + perfil.meta : 'Elige qué quieres hacer hoy';
+    document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 ' + perfil.meta : 'Elige qué quieres hacer hoy';
     generarTemas();
     generarReto();
     showScreen('screen-dashboard');
   }
 
-  function getEmoji(tema) {
-    var temaLower = tema.toLowerCase();
-    for (var key in EMOJIS_TEMAS) {
-      if (temaLower.indexOf(key) !== -1) return EMOJIS_TEMAS[key];
-    }
-    return '📚';
-  }
-
   function generarTemas() {
-    var intereses = perfil.intereses || 'inglés general';
-    var temas = intereses.split(/[,，、]+/).map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+    var intereses = perfil.intereses || 'inglés';
+    var temas = intereses.split(/[,，、]+/).map(function(t) { return t.trim(); }).filter(Boolean);
     var row = document.getElementById('temas-row');
     row.innerHTML = '';
     temas.forEach(function(tema, i) {
@@ -485,58 +677,62 @@
       card.className = 'tema-card';
       card.style.background = color.bg;
       card.innerHTML = '<div class="tema-emoji">' + emoji + '</div><h4>' + tema + '</h4><div class="tema-nivel">Toca para practicar</div>';
-      card.onclick = function() { abrirLeccion(tema, i); };
+      card.onclick = (function(t, idx) { return function() { abrirLeccion(t, idx); }; })(tema, i);
       row.appendChild(card);
     });
   }
 
   function generarReto() {
-    var intereses = perfil.intereses || 'inglés';
+    var intereses = (perfil.intereses || 'inglés').split(',')[0].trim();
     var meta = perfil.meta || 'mejorar tu inglés';
     var retos = [
-      { titulo: 'Habla por 2 minutos', desc: 'Cuéntale a Moki sobre tu ' + intereses.split(',')[0].trim() + ' favorito en inglés, sin parar.' },
-      { titulo: 'Describe tu día', desc: 'Explícale a Moki cómo fue tu día usando solo inglés.' },
-      { titulo: 'Pregunta 5 cosas', desc: 'Hazle 5 preguntas a Moki sobre cualquier tema en inglés.' },
-      { titulo: 'Cuéntale a Moki', desc: 'Explica por qué quieres lograr: ' + meta }
+      { titulo: 'Habla 2 minutos seguidos', desc: 'Cuéntale a Moki sobre ' + intereses + ' sin parar. ¡Tú puedes!' },
+      { titulo: 'Describe tu día en inglés', desc: 'Explícale a Moki cómo fue tu día usando solo inglés.' },
+      { titulo: 'Hazle 5 preguntas a Moki', desc: 'Practica haciendo preguntas en inglés sobre cualquier tema.' },
+      { titulo: 'Cuéntale tu meta', desc: 'Explícale a Moki por qué quieres: ' + meta }
     ];
-    var reto = retos[Math.floor(Math.random() * retos.length)];
+    var reto = retos[new Date().getDay() % retos.length];
     document.getElementById('reto-titulo').innerText = reto.titulo;
     document.getElementById('reto-desc').innerText = reto.desc;
   }
 
-  function abrirReto() { irAlChat('reto'); }
+  function abrirReto() { abrirOnboardingChat('reto'); }
 
   function abrirLeccion(tema, indice) {
     temaActual = tema;
+    temaIndice = indice;
     leccionHistorial = [];
     progresoLeccion = 0;
     var color = PALETA[indice % PALETA.length];
     var emoji = getEmoji(tema);
-    var screen = document.getElementById('leccion-screen');
-    screen.style.background = color.bg;
-    document.getElementById('leccion-bg').style.background = color.bg;
-    var badge = document.getElementById('leccion-tema-badge');
-    badge.innerText = emoji + ' ' + tema.toUpperCase();
-    badge.style.background = 'rgba(255,255,255,0.15)';
-    badge.style.color = 'white';
-    document.getElementById('progreso-fill').style.background = color.light;
+    var intro = getIntro(tema);
+    document.getElementById('leccion-screen').style.background = color.bg;
+    document.getElementById('leccion-tema-badge').innerText = emoji + ' ' + tema.toUpperCase();
+    document.getElementById('leccion-intro-emoji').innerText = emoji;
+    document.getElementById('leccion-intro-titulo').innerText = intro.titulo;
+    document.getElementById('leccion-intro-desc').innerText = intro.desc;
+    document.getElementById('leccion-intro').style.display = 'flex';
+    document.getElementById('leccion-chat-container').style.display = 'none';
     document.getElementById('leccion-chat-area').innerHTML = '';
-    document.getElementById('leccion-subtitulo').innerText = 'Moki está listo...';
+    document.getElementById('progreso-fill').style.width = '0%';
+    document.getElementById('leccion-subtitulo').innerText = '';
     showScreen('screen-leccion');
-    setTimeout(function() { iniciarLeccion(tema, color); }, 500);
   }
 
-  function iniciarLeccion(tema, color) {
-    var mensajeInicial;
-    var lang = perfil.lang || 'es';
-    if (lang === 'en') {
-      mensajeInicial = "Hey! I'm super excited to talk about " + tema + " with you today! 🎉 Tell me everything — what do you love most about " + tema + "? Don't worry about grammar, just talk!";
-    } else {
-      mensajeInicial = "¡Hola! Estoy súper emocionado de hablar sobre " + tema + " contigo hoy 🎉 Cuéntame todo — ¿qué es lo que más te apasiona de " + tema + "? No te preocupes por la gramática, ¡solo habla!";
-    }
+  function empezarLeccion() {
+    document.getElementById('leccion-intro').style.display = 'none';
+    document.getElementById('leccion-chat-container').style.display = 'flex';
+    document.getElementById('leccion-chat-container').style.flexDirection = 'column';
+    document.getElementById('leccion-chat-container').style.flex = '1';
+    var color = PALETA[temaIndice % PALETA.length];
+    document.getElementById('progreso-fill').style.background = 'rgba(255,255,255,0.6)';
+    var mensajeInicial = "Hey! Let's talk about " + temaActual + " — I want to hear everything! What do you love most about it? Don't worry about grammar, just talk! 🎉";
     mostrarMensajeLeccion('moki', mensajeInicial);
-    hablarMoki(mensajeInicial);
+    hablar(mensajeInicial, 'en');
     leccionHistorial.push({ role: 'assistant', content: mensajeInicial });
+    document.getElementById('leccion-text-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') enviarTextoLeccion();
+    });
   }
 
   function mostrarMensajeLeccion(tipo, texto) {
@@ -548,27 +744,15 @@
     area.scrollTop = area.scrollHeight;
     if (tipo === 'moki') {
       document.getElementById('leccion-subtitulo').innerText = texto;
+      document.getElementById('leccion-moki-img').classList.add('hablando');
+      document.getElementById('leccion-ondas').classList.add('activo');
+      setTimeout(function() {
+        document.getElementById('leccion-moki-img').classList.remove('hablando');
+        document.getElementById('leccion-ondas').classList.remove('activo');
+      }, 2500);
     }
-    actualizarProgreso();
-  }
-
-  function actualizarProgreso() {
-    progresoLeccion = Math.min(progresoLeccion + 10, 100);
+    progresoLeccion = Math.min(progresoLeccion + 8, 95);
     document.getElementById('progreso-fill').style.width = progresoLeccion + '%';
-  }
-
-  function hablarMoki(texto) {
-    if (!synth) return;
-    synth.cancel();
-    var utter = new SpeechSynthesisUtterance(texto);
-    utter.lang = (perfil.lang === 'en') ? 'en-US' : 'en-US';
-    utter.rate = 0.9;
-    utter.pitch = 1.1;
-    var img = document.getElementById('leccion-moki-img');
-    var ondas = document.getElementById('leccion-ondas');
-    utter.onstart = function() { img.classList.add('hablando'); ondas.classList.add('activo'); };
-    utter.onend = function() { img.classList.remove('hablando'); ondas.classList.remove('activo'); };
-    synth.speak(utter);
   }
 
   function toggleTeclado() {
@@ -590,33 +774,28 @@
   function enviarTextoLeccion() {
     var input = document.getElementById('leccion-text-input');
     var texto = input.value.trim();
-    if (!texto || isLeccionTyping) return;
+    if (!texto || leccionTyping) return;
     input.value = '';
-    procesarRespuestaUsuario(texto);
+    procesarRespuestaLeccion(texto);
   }
 
   function toggleMic() {
     if (isRecording) { pararGrabacion(); return; }
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Tu navegador no soporta reconocimiento de voz. Usa el teclado.');
-      toggleTeclado();
-      return;
+      toggleTeclado(); return;
     }
     var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
-    recognition.lang = 'es-CO';
+    recognition.lang = 'en-US';
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.onresult = function(e) {
-      var texto = e.results[0][0].transcript;
-      procesarRespuestaUsuario(texto);
-    };
+    recognition.onresult = function(e) { procesarRespuestaLeccion(e.results[0][0].transcript); };
     recognition.onerror = function() { pararGrabacion(); };
     recognition.onend = function() { pararGrabacion(); };
     recognition.start();
     isRecording = true;
     var btn = document.getElementById('mic-btn');
-    btn.classList.remove('idle');
     btn.classList.add('recording');
     btn.innerText = '⏹️';
   }
@@ -626,46 +805,32 @@
     if (recognition) { try { recognition.stop(); } catch(e) {} }
     var btn = document.getElementById('mic-btn');
     btn.classList.remove('recording');
-    btn.classList.add('idle');
     btn.innerText = '🎙️';
   }
 
-  function procesarRespuestaUsuario(texto) {
-    if (isLeccionTyping) return;
+  function procesarRespuestaLeccion(texto) {
+    if (leccionTyping) return;
     mostrarMensajeLeccion('usuario', texto);
     leccionHistorial.push({ role: 'user', content: texto });
-    isLeccionTyping = true;
-    document.getElementById('leccion-subtitulo').innerText = '...';
+    leccionTyping = true;
 
-    var systemPrompt = 'Eres Moki en modo lección sobre el tema: ' + temaActual + '.\n' +
-      'El usuario está practicando inglés hablando sobre lo que le apasiona.\n\n' +
-      'REGLAS CRÍTICAS:\n' +
-      '- NUNCA corrijas errores gramaticales directamente\n' +
-      '- Haz preguntas que inviten al usuario a hablar MÁS\n' +
-      '- Si el usuario usa una palabra en español, úsala naturalmente en inglés después sin hacer notar el cambio\n' +
-      '- Celebra cuando el usuario habla mucho\n' +
-      '- Mantén la conversación fluida y emocionante sobre ' + temaActual + '\n' +
-      '- Respuestas cortas (2-3 oraciones máximo) para que el usuario siga hablando\n' +
-      '- Mezcla inglés y español según el nivel del usuario\n' +
-      'PERFIL: ' + JSON.stringify(perfil);
-
-    fetch(CHAT_URL, {
+    fetch(BACKEND, {
       method: 'POST',
-      mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: 'leccion', historial: leccionHistorial, system: systemPrompt })
-    }).then(function() {
-      var respuestasMock = [
-        "That's amazing! Tell me more — what's your favorite part about it? 🎮",
-        "Wow, I love that! And how long have you been into " + temaActual + "?",
-        "Really? That's so cool! What would you tell someone who's just starting?",
-        "I can feel your passion! What's the best experience you've had with " + temaActual + "?"
-      ];
-      var respuesta = respuestasMock[Math.floor(Math.random() * respuestasMock.length)];
-      mostrarMensajeLeccion('moki', respuesta);
-      hablarMoki(respuesta);
-      leccionHistorial.push({ role: 'assistant', content: respuesta });
-      isLeccionTyping = false;
+      body: JSON.stringify({ tipo: 'leccion', historial: leccionHistorial, tema: temaActual, perfil: perfil })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      leccionTyping = false;
+      if (data.ok) {
+        mostrarMensajeLeccion('moki', data.resultado);
+        hablar(data.resultado, 'en');
+        leccionHistorial.push({ role: 'assistant', content: data.resultado });
+      }
+    })
+    .catch(function() {
+      leccionTyping = false;
+      mostrarMensajeLeccion('moki', "That's great! Tell me more — what else do you love about " + temaActual + "?");
     });
   }
 
@@ -677,10 +842,10 @@
 
   function swapLangs() {
     var tmp = langFrom; langFrom = langTo; langTo = tmp;
-    var fromLabel = document.getElementById('lang-from-label').innerText;
-    var toLabel = document.getElementById('lang-to-label').innerText;
-    document.getElementById('lang-from-label').innerText = toLabel;
-    document.getElementById('lang-to-label').innerText = fromLabel;
+    var f = document.getElementById('lang-from-label').innerText;
+    var t = document.getElementById('lang-to-label').innerText;
+    document.getElementById('lang-from-label').innerText = t;
+    document.getElementById('lang-to-label').innerText = f;
     document.getElementById('trad-result').style.display = 'none';
     document.getElementById('trad-input').value = '';
   }
@@ -691,13 +856,36 @@
     var btn = document.getElementById('trad-btn');
     btn.disabled = true;
     btn.innerText = 'Traduciendo...';
-    setTimeout(function() {
-      document.getElementById('trad-traduccion').innerText = '(Traducción disponible próximamente — conectando con Moki)';
-      document.getElementById('trad-nota').innerText = '';
-      document.getElementById('trad-result').style.display = 'block';
+    document.getElementById('trad-result').style.display = 'none';
+
+    fetch(BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'traduccion', texto: texto, deLang: langFrom, aLang: langTo })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
       btn.disabled = false;
       btn.innerText = 'Traducir con Moki 🐒';
-    }, 1500);
+      if (data.ok) {
+        try {
+          var resultado = JSON.parse(data.resultado);
+          document.getElementById('trad-traduccion').innerText = resultado.traduccion;
+          document.getElementById('trad-nota').innerText = resultado.nota || '';
+        } catch(e) {
+          document.getElementById('trad-traduccion').innerText = data.resultado;
+          document.getElementById('trad-nota').innerText = '';
+        }
+        document.getElementById('trad-result').style.display = 'block';
+        hablar(document.getElementById('trad-traduccion').innerText, langTo);
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.innerText = 'Traducir con Moki 🐒';
+      document.getElementById('trad-traduccion').innerText = 'Error al traducir. Intenta de nuevo.';
+      document.getElementById('trad-result').style.display = 'block';
+    });
   }
 
   if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }
