@@ -426,7 +426,24 @@
 
   window.onload = function() {
     applyLang();
+    
+    // MODO DESARROLLADOR
+    var DEV_EMAIL = 'r11jsebas@gmail.com';
     var params = new URLSearchParams(window.location.search);
+    
+    if (params.get('dev') === 'true') {
+      perfil = {
+        nombre: 'Sebastian',
+        motivacion: 'trabajo y desarrollo personal',
+        confianza: 'intermedio',
+        intereses: 'videojuegos, música, tecnología, fútbol',
+        meta: 'hablar con fluidez en reuniones',
+        lang: 'es'
+      };
+      mostrarDashboard();
+      return;
+    }
+
     if (params.get('onboarding') === 'completo') {
       perfil = {
         nombre: params.get('nombre') || '',
