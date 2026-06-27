@@ -3,41 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpeakFácil</title>
+  <title>MokiTalk</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f7; height: 100vh; display: flex; flex-direction: column; }
-    .header { background: #4F46E5; color: white; padding: 16px 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(79,70,229,0.3); }
-    .avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
-    .header-info p { font-weight: 600; font-size: 16px; }
-    .header-info span { font-size: 12px; opacity: 0.75; }
-    .chat { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; }
-    .bubble { max-width: 78%; padding: 11px 15px; border-radius: 18px; font-size: 14px; line-height: 1.6; word-break: break-word; }
-    .bubble.bot { background: white; border: 1px solid #e5e7eb; align-self: flex-start; border-bottom-left-radius: 4px; color: #1f2937; }
-    .bubble.user { background: #4F46E5; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .bubble.typing { background: white; border: 1px solid #e5e7eb; align-self: flex-start; color: #9ca3af; font-style: italic; border-bottom-left-radius: 4px; }
-    .input-area { padding: 12px 16px; background: white; border-top: 1px solid #e5e7eb; display: flex; gap: 8px; align-items: center; }
-    input { flex: 1; border: 1.5px solid #e5e7eb; border-radius: 24px; padding: 11px 18px; font-size: 14px; outline: none; transition: border 0.2s; background: #fafafa; }
-    input:focus { border-color: #4F46E5; background: white; }
-    .send-btn { background: #4F46E5; color: white; border: none; border-radius: 50%; width: 42px; height: 42px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
-    .send-btn:hover { background: #4338ca; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FFF8F0; height: 100vh; display: flex; flex-direction: column; }
+    .header { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .moki-avatar { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+    .header-info p { font-weight: 700; font-size: 17px; letter-spacing: -0.3px; }
+    .header-info span { font-size: 12px; opacity: 0.85; }
+    .chat { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 14px; }
+    .msg-row { display: flex; align-items: flex-end; gap: 8px; }
+    .msg-row.user { flex-direction: row-reverse; }
+    .moki-icon { width: 30px; height: 30px; border-radius: 50%; background: #FF6B35; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .bubble { max-width: 75%; padding: 12px 16px; border-radius: 20px; font-size: 14px; line-height: 1.6; word-break: break-word; }
+    .bubble.bot { background: white; border: 1px solid #ffe0cc; border-bottom-left-radius: 4px; color: #1f2937; box-shadow: 0 1px 4px rgba(255,107,53,0.08); }
+    .bubble.user { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border-bottom-right-radius: 4px; }
+    .bubble.typing { background: white; border: 1px solid #ffe0cc; border-bottom-left-radius: 4px; color: #9ca3af; font-style: italic; }
+    .input-area { padding: 12px 16px; background: white; border-top: 1px solid #ffe0cc; display: flex; gap: 8px; align-items: center; }
+    input { flex: 1; border: 1.5px solid #ffe0cc; border-radius: 24px; padding: 11px 18px; font-size: 14px; outline: none; transition: border 0.2s; background: #FFF8F0; }
+    input:focus { border-color: #FF6B35; background: white; }
+    .send-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.2s; }
+    .send-btn:hover { opacity: 0.9; }
     .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .welcome-chip { background: #fff3ec; border: 1px solid #ffe0cc; border-radius: 12px; padding: 8px 14px; font-size: 12px; color: #FF6B35; text-align: center; margin: 0 auto; font-weight: 500; }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="avatar">SF</div>
+  <div class="moki-avatar">🐒</div>
   <div class="header-info">
-    <p>SpeakFácil</p>
-    <span>Tu compañero de inglés</span>
+    <p>MokiTalk</p>
+    <span>Moki está listo para practicar contigo</span>
   </div>
 </div>
 
-<div class="chat" id="chat"></div>
+<div class="chat" id="chat">
+  <div class="welcome-chip">Sin presión, sin juicios — solo práctica real 🎯</div>
+</div>
 
 <div class="input-area">
-  <input type="text" id="input" placeholder="Escribe tu mensaje..." autocomplete="off" />
+  <input type="text" id="input" placeholder="Habla con Moki..." autocomplete="off" />
   <button class="send-btn" id="btn" onclick="sendMessage()">➤</button>
 </div>
 
@@ -47,22 +53,63 @@
   var isTyping = false;
 
   window.onload = function() {
-    var mensajeInicial = '¡Hola! Soy SpeakFácil, tu compañero de inglés. No soy un profesor — soy más como un amigo con quien practicar sin presión. 😊\n\nCuéntame: ¿por qué quieres aprender inglés? No hay respuesta correcta.';
-    addMessage('bot', mensajeInicial);
+    var mensajeInicial = '¡Hola! Soy Moki, tu compañero de inglés 🐒\n\nNo soy un profesor — soy más como un amigo con quien practicar sin presión. Aquí puedes equivocarte, mezclar idiomas, ir a tu ritmo.\n\nCuéntame: ¿por qué quieres aprender inglés? No hay respuesta correcta.';
+    addBotMessage(mensajeInicial);
     historial.push({ role: 'assistant', content: mensajeInicial });
     document.getElementById('input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') sendMessage();
     });
   };
 
-  function addMessage(type, text) {
+  function addBotMessage(text) {
     var chat = document.getElementById('chat');
-    var div = document.createElement('div');
-    div.className = 'bubble ' + type;
-    div.innerText = text;
-    chat.appendChild(div);
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+    var icon = document.createElement('div');
+    icon.className = 'moki-icon';
+    icon.innerText = '🐒';
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble bot';
+    bubble.innerText = text;
+    row.appendChild(icon);
+    row.appendChild(bubble);
+    chat.appendChild(row);
     chat.scrollTop = chat.scrollHeight;
-    return div;
+    return bubble;
+  }
+
+  function addUserMessage(text) {
+    var chat = document.getElementById('chat');
+    var row = document.createElement('div');
+    row.className = 'msg-row user';
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble user';
+    bubble.innerText = text;
+    row.appendChild(bubble);
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function addTyping() {
+    var chat = document.getElementById('chat');
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+    row.id = 'typing-row';
+    var icon = document.createElement('div');
+    icon.className = 'moki-icon';
+    icon.innerText = '🐒';
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble typing';
+    bubble.innerText = 'Moki está escribiendo...';
+    row.appendChild(icon);
+    row.appendChild(bubble);
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function removeTyping() {
+    var el = document.getElementById('typing-row');
+    if (el) el.remove();
   }
 
   function sendMessage() {
@@ -71,13 +118,12 @@
     var text = input.value.trim();
     if (!text) return;
 
-    addMessage('user', text);
+    addUserMessage(text);
     historial.push({ role: 'user', content: text });
     input.value = '';
     isTyping = true;
     document.getElementById('btn').disabled = true;
-
-    var typingDiv = addMessage('typing', 'SpeakFácil está escribiendo...');
+    addTyping();
 
     fetch(BACKEND_URL, {
       method: 'POST',
@@ -86,16 +132,16 @@
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
-      typingDiv.remove();
+      removeTyping();
       var respuesta = data.response;
-      addMessage('bot', respuesta);
+      addBotMessage(respuesta);
       historial.push({ role: 'assistant', content: respuesta });
       isTyping = false;
       document.getElementById('btn').disabled = false;
     })
     .catch(function() {
-      typingDiv.remove();
-      addMessage('bot', 'Ups, algo falló. Intenta de nuevo.');
+      removeTyping();
+      addBotMessage('Ups, algo falló. Intenta de nuevo.');
       isTyping = false;
       document.getElementById('btn').disabled = false;
     });
