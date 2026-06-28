@@ -460,6 +460,7 @@
     if (!texto) return;
     var textoLimpio = limpiarEmojis(texto);
     if (!textoLimpio) return;
+    console.log('TTS llamando con:', textoLimpio);
 
     fetch(BACKEND, {
       method: 'POST',
