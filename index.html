@@ -289,7 +289,7 @@
 
 <!-- PANTALLA 7: DASHBOARD -->
 <div class="screen" id="screen-dashboard">
-  <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">MokiTalk</span></div>
+  <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">MokiTalk</span><button onclick="cerrarSesion()" style="background:none;border:none;color:rgba(255,255,255,0.35);font-size:12px;cursor:pointer;margin-left:auto;padding:4px 8px;">Salir</button></div>
   <div class="dashboard-body">
     <div class="dash-greeting">
       <h2 id="dash-saludo">¡Hola!</h2>
@@ -400,7 +400,10 @@
       <label>Traducción de Moki</label>
       <p id="trad-traduccion"></p>
       <p class="trad-nota" id="trad-nota"></p>
-      <button class="trad-speak-btn" onclick="escucharTraduccion()">Escuchar pronunciación</button>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="trad-speak-btn" onclick="escucharTraduccion()" style="flex:1;">🔊 Escuchar</button>
+        <button class="trad-speak-btn" id="trad-copy-btn" onclick="copiarTraduccion()" style="flex:1;">📋 Copiar</button>
+      </div>
     </div>
   </div>
   <div class="bottom-nav">
@@ -432,6 +435,7 @@
   var langFrom = 'es';
   var langTo = 'en';
   var synth = window.speechSynthesis;
+  var audioActivo = null;
 
   var PALETA = [
     'linear-gradient(160deg,#2D1B69 0%,#11998e 100%)',
@@ -444,26 +448,52 @@
     'linear-gradient(160deg,#3E1B00 0%,#D97706 100%)'
   ];
 
-  var EMOJIS = {'videojuegos':'🎮','gaming':'🎮','música':'🎵','musica':'🎵','tecnología':'💻','tecnologia':'💻','fútbol':'⚽','futbol':'⚽','trabajo':'💼','viajes':'✈️','series':'🎬','cocina':'🍳','deportes':'🏃','arte':'🎨','lectura':'📚','fitness':'💪','moda':'👗','naturaleza':'🌿'};
+  var EMOJIS = {'videojuegos':'🎮','gaming':'🎮','música':'🎵','musica':'🎵','tecnología':'💻','tecnologia':'💻','fútbol':'⚽','futbol':'⚽','trabajo':'💼','viajes':'✈️','viajar':'✈️','viaje':'✈️','travel':'✈️','aeropuerto':'✈️','vuelo':'✈️','series':'🎬','cine':'🎬','cocina':'🍳','deportes':'🏃','arte':'🎨','lectura':'📚','libros':'📚','fitness':'💪','moda':'👗','naturaleza':'🌿'};
 
   function getEmoji(tema) {
     var t = tema.toLowerCase();
     for (var k in EMOJIS) { if (t.indexOf(k) !== -1) return EMOJIS[k]; }
-    return '📚';
+    return '🌟';
   }
 
   function limpiarEmojis(texto) {
-    return texto.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').replace(/[🎮🎵💻⚽💼✈️🎬🍳🏃🎨📚💪👗🌿🎯🌍💬🎲📖🔥🚀🇨🇴🏨🚗🍔🛍️🏥]/g, '').trim();
+    return texto
+      .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '')
+      .replace(/[🎮🎵💻⚽💼✈️🎬🍳🏃🎨📚💪👗🌿🎯🌍💬🎲📖🔥🚀🇨🇴🏨🚗🍔🛍️🏥🌟]/g, '')
+      // Strip markdown bold/italic
+      .replace(/\*\*([^*\n]+)\*\*/g, '$1')
+      .replace(/__([^_\n]+)__/g, '$1')
+      .replace(/\*([^*\n]+)\*/g, '$1')
+      .replace(/_([^_\n]+)_/g, '$1')
+      // Strip markdown headers
+      .replace(/^#{1,6}\s+/gm, '')
+      // Strip numbered list markers (1. 2. etc.)
+      .replace(/^\d+\.\s+/gm, '')
+      // Strip unordered list bullets (- or * at line start)
+      .replace(/^[-*]\s+/gm, '')
+      // Strip inline code backticks
+      .replace(/`([^`]+)`/g, '$1')
+      // Strip blockquote markers
+      .replace(/^>\s*/gm, '')
+      // Strip markdown links [text](url)
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .trim();
+  }
+
+  function detenerAudio() {
+    if (audioActivo) { audioActivo.pause(); audioActivo.currentTime = 0; audioActivo = null; }
+    if (synth) synth.cancel();
   }
 
   function hablar(texto, idioma) {
     if (!texto) return;
     var textoLimpio = limpiarEmojis(texto);
     if (!textoLimpio) return;
+    detenerAudio();
     fetch(BACKEND, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: 'tts', texto: textoLimpio })
+      body: JSON.stringify({ tipo: 'tts', texto: textoLimpio, idioma: idioma || 'en' })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -482,6 +512,7 @@
     .catch(function() {
       if (synth) {
         var utter = new SpeechSynthesisUtterance(textoLimpio);
+        utter.lang = idioma === 'es' ? 'es-CO' : 'en-US';
         utter.rate = 0.88; utter.pitch = 1.1;
         synth.speak(utter);
       }
@@ -493,7 +524,15 @@
     if (params.get('dev') === 'true') {
       perfil = { nombre: 'Sebastian', motivacion: 'trabajo y desarrollo personal', confianza: 'intermedio', intereses: 'videojuegos, música, tecnología, fútbol', meta: 'hablar con fluidez en reuniones', lang: 'es' };
       mostrarDashboard();
+      return;
     }
+    try {
+      var saved = localStorage.getItem('mokiPerfil');
+      if (saved) {
+        var p = JSON.parse(saved);
+        if (p && p.nombre && p.intereses) { perfil = p; mostrarDashboard(); return; }
+      }
+    } catch(e) {}
   };
 
   function showScreen(id) {
@@ -624,6 +663,7 @@
   }
 
   function mostrarDashboard() {
+    try { localStorage.setItem('mokiPerfil', JSON.stringify(perfil)); } catch(e) {}
     document.getElementById('dash-saludo').innerText = '¡Hola, ' + (perfil.nombre || 'amigo') + '!';
     document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 ' + perfil.meta : 'Elige qué quieres hacer hoy';
     generarTemas();
@@ -684,10 +724,8 @@
   if (data.ok) {
     document.getElementById('lec-intro-texto').innerText = data.resultado;
     var startBtn = document.querySelector('.lec-start-btn');
-    startBtn.style.display = 'none';
-    hablarConCallback(data.resultado, 'es', function() {
-      startBtn.style.display = 'block';
-    });
+    startBtn.style.display = 'block';
+    hablar(data.resultado, 'es');
   }
 })
     .catch(function() {
@@ -792,6 +830,7 @@
 
   function pedirGramatica() {
     if (lecTyping) return;
+    detenerAudio();
     var msg = 'Explícame una regla de gramática relacionada con lo que hemos hablado';
     mostrarMsgLec('usuario', msg);
     lecHistorial.push({ role: 'user', content: msg });
@@ -831,6 +870,7 @@
   function toggleMic() {
     if (isRecording) { pararGrabacion(); return; }
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { toggleKbd(); return; }
+    detenerAudio();
     var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
     recognition.lang = 'en-US';
@@ -853,8 +893,7 @@
   }
 
   function cerrarLeccion() {
-    if (audioActivo) { audioActivo.pause(); audioActivo.currentTime = 0; audioActivo = null; }
-    if (synth) synth.cancel();
+    detenerAudio();
     pararGrabacion();
     showScreen('screen-dashboard');
   }
@@ -902,35 +941,69 @@
     document.getElementById('trad-input').value = '';
   }
 
+  function mostrarTraduccion(traduccion, nota) {
+    document.getElementById('trad-traduccion').innerText = traduccion;
+    document.getElementById('trad-nota').innerText = nota || '';
+    document.getElementById('trad-result').style.display = 'block';
+  }
+
   function traducir() {
     var texto = document.getElementById('trad-input').value.trim();
     if (!texto) return;
     var btn = document.getElementById('trad-btn');
     btn.disabled = true; btn.innerText = 'Traduciendo...';
     document.getElementById('trad-result').style.display = 'none';
+    var dirStr = langFrom === 'es' ? 'del español al inglés americano' : 'del inglés al español colombiano';
+    fetch(BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        tipo: 'traduccion',
+        texto: texto,
+        deLang: langFrom,
+        aLang: langTo,
+        instruccion: 'Traduce ' + dirStr + ' de forma coloquial y natural, como lo diría un nativo en una conversación real. Evita traducciones literales. Responde SOLO en formato JSON: {"traduccion":"...","nota":"..."}. La nota debe explicar brevemente por qué esta versión suena más natural.'
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      btn.disabled = false; btn.innerText = 'Traducir con Moki';
+      if (data.ok && data.resultado) {
+        try {
+          var res = JSON.parse(data.resultado);
+          mostrarTraduccion(res.traduccion, res.nota);
+        } catch(e) {
+          mostrarTraduccion(data.resultado, '');
+        }
+      } else {
+        traducirFallback(texto, btn);
+      }
+    })
+    .catch(function() { traducirFallback(texto, btn); });
+  }
+
+  function traducirFallback(texto, btn) {
     var callbackName = 'mokiCallback_' + Date.now();
     window[callbackName] = function(data) {
       delete window[callbackName];
-      btn.disabled = false; btn.innerText = 'Traducir con Moki';
+      if (btn) { btn.disabled = false; btn.innerText = 'Traducir con Moki'; }
       if (data.ok) {
         try {
           var res = JSON.parse(data.resultado);
-          document.getElementById('trad-traduccion').innerText = res.traduccion;
-          document.getElementById('trad-nota').innerText = res.nota || '';
+          mostrarTraduccion(res.traduccion, res.nota);
         } catch(e) {
-          document.getElementById('trad-traduccion').innerText = data.resultado;
-          document.getElementById('trad-nota').innerText = '';
+          mostrarTraduccion(data.resultado, '');
         }
-        document.getElementById('trad-result').style.display = 'block';
+      } else {
+        mostrarTraduccion('Error al traducir. Intenta de nuevo.', '');
       }
     };
     var script = document.createElement('script');
-    script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
+    script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo + '&modo=contextual';
     script.onerror = function() {
       delete window[callbackName];
-      btn.disabled = false; btn.innerText = 'Traducir con Moki';
-      document.getElementById('trad-traduccion').innerText = 'Error al traducir. Intenta de nuevo.';
-      document.getElementById('trad-result').style.display = 'block';
+      if (btn) { btn.disabled = false; btn.innerText = 'Traducir con Moki'; }
+      mostrarTraduccion('Error al traducir. Intenta de nuevo.', '');
     };
     document.head.appendChild(script);
   }
@@ -940,16 +1013,41 @@
     hablar(texto, langTo);
   }
 
+  function cerrarSesion() {
+    try { localStorage.removeItem('mokiPerfil'); } catch(e) {}
+    perfil = {}; obHistorial = []; lecHistorial = [];
+    showScreen('screen-know');
+  }
+
+  function copiarTraduccion() {
+    var texto = document.getElementById('trad-traduccion').innerText;
+    var btn = document.getElementById('trad-copy-btn');
+    var original = btn.innerText;
+    function confirmar() { btn.innerText = '✓ Copiado'; setTimeout(function() { btn.innerText = original; }, 2000); }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(texto).then(confirmar).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = texto;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); confirmar();
+      });
+    } else {
+      var ta = document.createElement('textarea'); ta.value = texto;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta); confirmar();
+    }
+  }
+
   if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }
 
   function hablarConCallback(texto, idioma, callback) {
     if (!texto) { if (callback) callback(); return; }
     var textoLimpio = limpiarEmojis(texto);
     if (!textoLimpio) { if (callback) callback(); return; }
+    detenerAudio();
     fetch(BACKEND, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: 'tts', texto: textoLimpio })
+      body: JSON.stringify({ tipo: 'tts', texto: textoLimpio, idioma: idioma || 'en' })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -960,7 +1058,7 @@
         var blob = new Blob([bytes], { type: 'audio/mpeg' });
         var url = URL.createObjectURL(blob);
         var audio = new Audio(url); audioActivo = audio;
-        audio.onended = function() { URL.revokeObjectURL(url); if (callback) callback(); };
+        audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; if (callback) callback(); };
         audio.play();
       } else { if (callback) callback(); }
     })
