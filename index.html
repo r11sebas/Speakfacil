@@ -864,6 +864,7 @@
   }
 
   function cerrarLeccion() {
+    if (audioActivo) { audioActivo.pause(); audioActivo.currentTime = 0; audioActivo = null; }
     if (synth) synth.cancel();
     pararGrabacion();
     showScreen('screen-dashboard');
@@ -969,7 +970,7 @@
         for (var i = 0; i < binary.length; i++) { bytes[i] = binary.charCodeAt(i); }
         var blob = new Blob([bytes], { type: 'audio/mpeg' });
         var url = URL.createObjectURL(blob);
-        var audio = new Audio(url);
+        var audio = new Audio(url); audioActivo = audio;
         audio.onended = function() { URL.revokeObjectURL(url); if (callback) callback(); };
         audio.play();
       } else { if (callback) callback(); }
