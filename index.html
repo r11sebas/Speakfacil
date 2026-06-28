@@ -692,17 +692,11 @@
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      if (data.ok) {
-        document.getElementById('lec-intro-texto').innerText = data.resultado;
-        var startBtn = document.querySelector('.lec-start-btn');
-        startBtn.disabled = true;
-        startBtn.innerText = 'Moki está hablando...';
-        hablarConCallback(data.resultado, 'es', function() {
-          startBtn.disabled = false;
-          startBtn.innerText = '¡Empezar!';
-        });
-      }
-    })
+  if (data.ok) {
+    document.getElementById('lec-intro-texto').innerText = data.resultado;
+    hablar(data.resultado, 'es');
+  }
+})
     .catch(function() {
       document.getElementById('lec-intro-texto').innerText = 'Moki está listo para practicar ' + tema + ' contigo. ¡Será divertido!';
     });
@@ -722,6 +716,7 @@
   }
 
   function empezarLeccion() {
+    document.querySelectorAll('audio').forEach(function(a) { a.pause(); a.currentTime = 0; });
     console.log('empezarLeccion llamado');
     document.getElementById('lec-intro').style.display = 'none';
     document.getElementById('lec-chat-wrap').style.display = 'flex';
