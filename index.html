@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MokiTalk</title>
-  <link rel="manifest" href="/manifest.json"><
+  <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#FF6B35">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MokiTalk">
@@ -14,11 +14,9 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; flex-direction: column; color: white; }
     .screen { display: none; flex-direction: column; min-height: 100vh; }
     .screen.active { display: flex; }
-
     .header { background: rgba(0,0,0,0.9); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(255,107,53,0.2); }
     .moki-header-img { width: 40px; height: 40px; object-fit: contain; }
     .header-logo { font-weight: 800; font-size: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
     .btn-primary { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 15px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 12px; }
     .btn-secondary { background: transparent; color: #FF6B35; border: 2px solid #FF6B35; border-radius: 14px; padding: 13px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
     .btn-google { background: white; color: #1f2937; border: none; border-radius: 14px; padding: 13px 20px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
@@ -30,15 +28,11 @@
     .switch-auth { text-align: center; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 8px; }
     .switch-auth span { color: #FF6B35; font-weight: 600; cursor: pointer; }
     .error-msg { background: rgba(220,38,38,0.2); color: #fca5a5; border: 1px solid rgba(220,38,38,0.3); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; display: none; }
-
-    /* KNOW */
     .know-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
     .moki-big { width: 180px; height: 180px; object-fit: contain; animation: bounce 2s infinite; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(255,107,53,0.4)); }
     @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
     .know-screen h1 { font-size: 32px; font-weight: 800; margin-bottom: 10px; background: linear-gradient(135deg, #FF6B35, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .know-screen p { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 44px; line-height: 1.7; max-width: 280px; }
-
-    /* LANDING */
     .landing-body { flex: 1; overflow-y: auto; background: #0a0a0a; }
     .landing-hero { position: relative; height: 380px; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); overflow: hidden; }
     .landing-hero img { width: 200px; height: 200px; object-fit: contain; animation: bounce 2s infinite; filter: drop-shadow(0 0 40px rgba(255,107,53,0.5)); }
@@ -54,25 +48,9 @@
     .feature-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
     .feature-card p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
     .landing-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to top, #0a0a0a 80%, transparent); }
-
-    /* AUTH */
     .auth-body { flex: 1; padding: 32px 24px; display: flex; flex-direction: column; background: #0a0a0a; }
     .auth-body h2 { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 4px; }
     .auth-body .subtitle { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 28px; }
-
-    /* VOZ SELECTOR */
-    .voz-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); gap: 20px; text-align: center; }
-    .voz-screen h2 { font-size: 24px; font-weight: 700; }
-    .voz-screen p { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 280px; line-height: 1.6; }
-    .voz-list { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
-    .voz-item { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,107,53,0.2); border-radius: 12px; padding: 14px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s; text-align: left; }
-    .voz-item:hover { border-color: #FF6B35; background: rgba(255,107,53,0.1); }
-    .voz-item.selected { border-color: #FF6B35; background: rgba(255,107,53,0.15); }
-    .voz-item .voz-name { font-size: 14px; font-weight: 500; }
-    .voz-item .voz-lang { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-    .voz-preview-btn { font-size: 20px; background: none; border: none; cursor: pointer; flex-shrink: 0; }
-
-    /* TRANSICION */
     .transition-screen { flex: 1; justify-content: center; align-items: center; padding: 40px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%); }
     .moki-transition { width: 180px; height: 180px; object-fit: contain; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 30px rgba(255,107,53,0.4)); }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -83,8 +61,6 @@
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes dotbounce { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-
-    /* ONBOARDING CHAT */
     .onboarding-screen { flex: 1; display: flex; flex-direction: column; background: radial-gradient(ellipse at bottom, #1a0a00 0%, #0a0a0a 60%); }
     .ob-header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,107,53,0.1); }
     .ob-moki-img { width: 44px; height: 44px; object-fit: contain; }
@@ -100,7 +76,6 @@
     .ob-bubble { max-width: 78%; padding: 11px 15px; border-radius: 18px; font-size: 14px; line-height: 1.6; word-break: break-word; }
     .ob-bubble.moki { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,107,53,0.2); border-bottom-left-radius: 4px; }
     .ob-bubble.user { background: linear-gradient(135deg, #FF6B35, #FF8C42); border-bottom-right-radius: 4px; }
-    .ob-bubble.typing { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); font-style: italic; border-bottom-left-radius: 4px; }
     .ob-chip { background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.2); border-radius: 12px; padding: 8px 14px; font-size: 12px; color: #FF8C42; text-align: center; margin: 0 auto; }
     .ob-ready-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 14px 28px; font-size: 16px; font-weight: 600; cursor: pointer; margin: 8px auto; display: block; }
     .ob-input-area { padding: 12px 16px 28px; background: rgba(0,0,0,0.3); display: flex; gap: 8px; align-items: center; border-top: 1px solid rgba(255,107,53,0.1); }
@@ -109,8 +84,6 @@
     .ob-input:focus { border-color: #FF6B35; }
     .ob-send { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .ob-send:disabled { opacity: 0.4; }
-
-    /* DASHBOARD */
     .dashboard-body { flex: 1; overflow-y: auto; background: #0a0a0a; padding-bottom: 90px; }
     .dash-greeting { padding: 20px 20px 8px; }
     .dash-greeting h2 { font-size: 22px; font-weight: 800; }
@@ -124,7 +97,7 @@
     .section-header h3 { font-size: 17px; font-weight: 700; }
     .temas-row { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 8px; scrollbar-width: none; }
     .temas-row::-webkit-scrollbar { display: none; }
-    .tema-card { flex-shrink: 0; width: 140px; height: 160px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: transform 0.2s; position: relative; overflow: hidden; }
+    .tema-card { flex-shrink: 0; width: 140px; height: 160px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: transform 0.2s; }
     .tema-card:hover { transform: scale(1.03); }
     .tema-emoji { font-size: 36px; }
     .tema-card h4 { font-size: 13px; font-weight: 700; text-align: center; padding: 0 8px; }
@@ -137,26 +110,20 @@
     .opcion-card p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
     .chat-fab { position: fixed; bottom: 74px; right: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 28px; padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(255,107,53,0.5); z-index: 10; }
     .chat-fab img { width: 24px; height: 24px; object-fit: contain; }
-
-    /* LECCION INMERSIVA */
     .leccion-screen { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
     .lec-close { position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.4); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; }
     .lec-badge { position: absolute; top: 16px; left: 16px; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; z-index: 20; background: rgba(255,255,255,0.15); color: white; letter-spacing: 0.5px; }
     .lec-progreso { height: 3px; position: relative; z-index: 5; background: rgba(255,255,255,0.1); }
     .lec-progreso-fill { height: 100%; border-radius: 3px; transition: width 0.5s; width: 0%; background: rgba(255,255,255,0.6); }
-
-    /* INTRO ANIMADA */
-    .lec-intro { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px 40px; text-align: center; gap: 0; }
+    .lec-intro { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px 40px; text-align: center; gap: 0; position: relative; }
     .lec-intro-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
     .particle { position: absolute; border-radius: 50%; animation: floatParticle linear infinite; opacity: 0.15; }
     @keyframes floatParticle { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.15; } 90% { opacity: 0.15; } 100% { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
-    .lec-intro-moki { width: 100px; height: 100px; object-fit: contain; animation: bounce 1.5s infinite; margin-bottom: 16px; filter: drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+    .lec-intro-moki { width: 100px; height: 100px; object-fit: contain; animation: bounce 1.5s infinite; margin-bottom: 16px; }
     .lec-intro-emoji { font-size: 48px; margin-bottom: 8px; animation: bounce 2s infinite; }
     .lec-intro-titulo { font-size: 26px; font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
     .lec-intro-texto { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 280px; margin-bottom: 24px; min-height: 60px; }
     .lec-start-btn { background: white; color: #0a0a0a; border: none; border-radius: 14px; padding: 14px 36px; font-size: 16px; font-weight: 800; cursor: pointer; }
-
-    /* CHAT LECCION */
     .lec-chat-wrap { flex: 1; display: none; flex-direction: column; }
     .lec-moki-area { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .lec-moki-img { width: 80px; height: 80px; object-fit: contain; }
@@ -186,17 +153,12 @@
     @keyframes micpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); } 50% { box-shadow: 0 0 0 12px rgba(239,68,68,0); } }
     .toggle-kbd { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 20px; cursor: pointer; padding: 8px; }
     .gramatica-btn { margin: 4px 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 8px 14px; font-size: 12px; color: rgba(255,255,255,0.6); cursor: pointer; text-align: center; }
-    .gramatica-btn:hover { background: rgba(255,255,255,0.12); }
-
-    /* SITUACIONES */
     .situaciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 20px; }
     .sit-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,107,53,0.2); border-radius: 14px; padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s; }
     .sit-card:hover { border-color: #FF6B35; background: rgba(255,107,53,0.1); }
     .sit-emoji { font-size: 28px; margin-bottom: 8px; }
     .sit-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
     .sit-card p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
-
-    /* TRADUCTOR */
     .traductor-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; background: #0a0a0a; overflow-y: auto; padding-bottom: 90px; }
     .lang-toggle { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 16px; border: 1px solid rgba(255,107,53,0.2); }
     .lang-label { flex: 1; text-align: center; font-size: 15px; font-weight: 600; }
@@ -212,8 +174,6 @@
     .trad-btn { background: linear-gradient(135deg, #FF6B35, #FF8C42); color: white; border: none; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
     .trad-btn:disabled { opacity: 0.5; }
     .trad-speak-btn { background: rgba(255,107,53,0.15); border: 1px solid rgba(255,107,53,0.3); border-radius: 10px; padding: 8px 16px; font-size: 13px; color: #FF8C42; cursor: pointer; margin-top: 8px; }
-
-    /* BOTTOM NAV */
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.97); border-top: 1px solid rgba(255,107,53,0.15); display: flex; padding: 8px 0 18px; z-index: 20; }
     .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 0; }
     .nav-item .nav-icon { font-size: 22px; }
@@ -268,7 +228,7 @@
     <h2>Entrar a MokiTalk</h2>
     <p class="subtitle">Continúa donde lo dejaste</p>
     <div class="error-msg" id="login-error"></div>
-    <button class="btn-google" onclick="irAVozSelector()">
+    <button class="btn-google" onclick="iniciarOnboarding()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Continuar con Google
     </button>
@@ -287,7 +247,7 @@
     <h2>Únete a MokiTalk</h2>
     <p class="subtitle">Es gratis, siempre</p>
     <div class="error-msg" id="register-error"></div>
-    <button class="btn-google" onclick="irAVozSelector()">
+    <button class="btn-google" onclick="iniciarOnboarding()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Registrarse con Google
     </button>
@@ -300,18 +260,7 @@
   </div>
 </div>
 
-<!-- PANTALLA 5: SELECTOR DE VOZ -->
-<div class="screen" id="screen-voz">
-  <div class="voz-screen">
-    <img src="moki.png" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(255,107,53,0.4));" alt="Moki" />
-    <h2>¿Cómo quieres que suene Moki?</h2>
-    <p>Elige la voz que más te guste — puedes cambiarla después en ajustes.</p>
-    <div class="voz-list" id="voz-list"></div>
-    <button class="btn-primary" style="max-width:300px;margin-top:8px;" onclick="confirmarVoz()">Listo, así me gusta</button>
-  </div>
-</div>
-
-<!-- PANTALLA 6: TRANSICIÓN -->
+<!-- PANTALLA 5: TRANSICIÓN -->
 <div class="screen" id="screen-transicion">
   <div class="transition-screen">
     <img src="moki.png" class="moki-transition" alt="Moki" />
@@ -321,7 +270,7 @@
   </div>
 </div>
 
-<!-- PANTALLA 7: ONBOARDING CHAT -->
+<!-- PANTALLA 6: ONBOARDING -->
 <div class="screen" id="screen-onboarding">
   <div class="onboarding-screen">
     <div class="ob-header">
@@ -338,7 +287,7 @@
   </div>
 </div>
 
-<!-- PANTALLA 8: DASHBOARD -->
+<!-- PANTALLA 7: DASHBOARD -->
 <div class="screen" id="screen-dashboard">
   <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">MokiTalk</span></div>
   <div class="dashboard-body">
@@ -356,7 +305,7 @@
     <div style="margin-top:16px;">
       <div class="section-header"><h3>¿Qué quieres hacer?</h3></div>
       <div class="opciones-grid">
-        <div class="opcion-card" onclick="abrirChat('chat')"><div class="opcion-icon">💬</div><h4>Charlar con Moki</h4><p>Conversación libre</p></div>
+        <div class="opcion-card" onclick="abrirChat()"><div class="opcion-icon">💬</div><h4>Charlar con Moki</h4><p>Conversación libre</p></div>
         <div class="opcion-card" onclick="showScreen('screen-situaciones')"><div class="opcion-icon">🎯</div><h4>Situación real</h4><p>Hotel, café, Uber...</p></div>
         <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4>Traducir</h4><p>Contextual y coloquial</p></div>
         <div class="opcion-card" onclick="abrirSorpresa()"><div class="opcion-icon">🎲</div><h4>Sorpréndeme</h4><p>Deja que Moki elija</p></div>
@@ -367,20 +316,20 @@
       <div style="padding:0 20px;">
         <div class="opcion-card" style="flex-direction:row;gap:12px;text-align:left;" onclick="abrirGramatica()">
           <div class="opcion-icon">📖</div>
-          <div><h4>Lección de gramática</h4><p style="font-size:12px;">Aprende las reglas de forma natural, con ejemplos de tus propias conversaciones</p></div>
+          <div><h4>Lección de gramática</h4><p style="font-size:12px;">Aprende las reglas de forma natural, con ejemplos de tus conversaciones</p></div>
         </div>
       </div>
     </div>
   </div>
-  <button class="chat-fab" onclick="abrirChat('chat')"><img src="moki.png" alt="Moki" />Hablar con Moki</button>
+  <button class="chat-fab" onclick="abrirChat()"><img src="moki.png" alt="Moki" />Hablar con Moki</button>
   <div class="bottom-nav">
     <div class="nav-item active" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
     <div class="nav-item" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
-    <div class="nav-item" onclick="abrirChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
+    <div class="nav-item" onclick="abrirChat()"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
   </div>
 </div>
 
-<!-- PANTALLA 9: SITUACIONES -->
+<!-- PANTALLA 8: SITUACIONES -->
 <div class="screen" id="screen-situaciones">
   <div class="header">
     <button onclick="showScreen('screen-dashboard')" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;margin-right:8px;">←</button>
@@ -389,19 +338,19 @@
   <div style="padding:16px 0;overflow-y:auto;flex:1;background:#0a0a0a;padding-bottom:20px;">
     <div style="padding:0 20px 12px;font-size:13px;color:rgba(255,255,255,0.5);">Elige una situación y practica como si fuera real</div>
     <div class="situaciones-grid">
-      <div class="sit-card" onclick="abrirSituacion('restaurante en Nueva York','Eres cliente en un restaurante americano. El mesero no habla español.')"><div class="sit-emoji">🍔</div><h4>Restaurante NY</h4><p>Ordena tu comida en inglés</p></div>
+      <div class="sit-card" onclick="abrirSituacion('restaurante en Nueva York','Eres cliente en un restaurante americano. El mesero no habla español.')"><div class="sit-emoji">🍔</div><h4>Restaurante NY</h4><p>Ordena tu comida</p></div>
       <div class="sit-card" onclick="abrirSituacion('hotel en Miami','Estás haciendo check-in en un hotel en Miami. La recepcionista solo habla inglés.')"><div class="sit-emoji">🏨</div><h4>Hotel Miami</h4><p>Check-in y preguntas</p></div>
       <div class="sit-card" onclick="abrirSituacion('Uber en Los Ángeles','Tomaste un Uber en LA. El conductor es amigable y quiere charlar.')"><div class="sit-emoji">🚗</div><h4>Uber en LA</h4><p>Conversación casual</p></div>
-      <div class="sit-card" onclick="abrirSituacion('reunión de trabajo con cliente americano','Estás en una videollamada con un cliente americano. Es tu primera reunión.')"><div class="sit-emoji">💻</div><h4>Reunión de trabajo</h4><p>Primera llamada con cliente</p></div>
-      <div class="sit-card" onclick="abrirSituacion('aeropuerto internacional','Estás en el aeropuerto y necesitas encontrar tu vuelo, hacer check-in y pasar migración.')"><div class="sit-emoji">✈️</div><h4>Aeropuerto</h4><p>Check-in y migración</p></div>
+      <div class="sit-card" onclick="abrirSituacion('reunión de trabajo con cliente americano','Estás en una videollamada con un cliente americano. Es tu primera reunión.')"><div class="sit-emoji">💻</div><h4>Reunión de trabajo</h4><p>Primera llamada</p></div>
+      <div class="sit-card" onclick="abrirSituacion('aeropuerto internacional','Estás en el aeropuerto y necesitas check-in y pasar migración.')"><div class="sit-emoji">✈️</div><h4>Aeropuerto</h4><p>Check-in y migración</p></div>
       <div class="sit-card" onclick="abrirSituacion('tienda de ropa en USA','Estás comprando ropa en una tienda americana. La vendedora quiere ayudarte.')"><div class="sit-emoji">🛍️</div><h4>Tienda de ropa</h4><p>Compras en inglés</p></div>
       <div class="sit-card" onclick="abrirSituacion('médico en Estados Unidos','Tienes cita con un médico americano. Necesitas explicar tus síntomas.')"><div class="sit-emoji">🏥</div><h4>Médico</h4><p>Explicar síntomas</p></div>
-      <div class="sit-card" onclick="abrirSituacion('amigo americano que quiere conocer Colombia','Un amigo americano te pregunta sobre Colombia, la comida, los lugares, la cultura.')"><div class="sit-emoji">🇨🇴</div><h4>Hablar de Colombia</h4><p>Cuéntale a un amigo</p></div>
+      <div class="sit-card" onclick="abrirSituacion('amigo americano curioso sobre Colombia','Un amigo americano te pregunta sobre Colombia, la comida y la cultura.')"><div class="sit-emoji">🇨🇴</div><h4>Hablar de Colombia</h4><p>Cuéntale a un amigo</p></div>
     </div>
   </div>
 </div>
 
-<!-- PANTALLA 10: LECCION INMERSIVA -->
+<!-- PANTALLA 9: LECCION -->
 <div class="screen" id="screen-leccion">
   <div class="leccion-screen" id="leccion-screen">
     <div class="lec-progreso"><div class="lec-progreso-fill" id="lec-progreso-fill"></div></div>
@@ -422,7 +371,7 @@
       </div>
       <div class="lec-subtitulo" id="lec-subtitulo"></div>
       <div class="lec-chat" id="lec-chat"></div>
-      <button class="gramatica-btn" onclick="pedirGramatica()">¿Cómo se dice esto correctamente? — Pregúntale a Moki sobre gramática</button>
+      <button class="gramatica-btn" onclick="pedirGramatica()">¿Cómo se dice esto correctamente? — Pregúntale a Moki</button>
       <div class="lec-input-area">
         <button class="toggle-kbd" onclick="toggleKbd()">⌨️</button>
         <input type="text" class="lec-text-input" id="lec-text-input" placeholder="Escribe tu respuesta..." />
@@ -433,7 +382,7 @@
   </div>
 </div>
 
-<!-- PANTALLA 11: TRADUCTOR -->
+<!-- PANTALLA 10: TRADUCTOR -->
 <div class="screen" id="screen-traductor">
   <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">MokiTalk</span></div>
   <div class="traductor-body">
@@ -457,17 +406,18 @@
   <div class="bottom-nav">
     <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
     <div class="nav-item active"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
-    <div class="nav-item" onclick="abrirChat('chat')"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
+    <div class="nav-item" onclick="abrirChat()"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
   </div>
 </div>
 
 <script>
   var BACKEND = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
+  var TRADUCTOR_URL = 'https://script.google.com/macros/s/AKfycbzVv_xqYq5Ci8-4qJAm2rR61INSouUlidoeAvJbICgSWOGYYJ9GKWlMPnokARROOgyN3Q/exec';
+  var ELEVEN_KEY = 'sk_493d73a54f51ba38cb11e9d4c30bcd1c273ba17143f3c450';
+  var ELEVEN_VOICE = 'NGuczaxV7CJACyG07XxA';
+
   var perfil = {};
   var usuarios = {};
-  var vozSeleccionada = null;
-  var synth = window.speechSynthesis;
-  var vocesDisponibles = [];
   var obHistorial = [];
   var obTyping = false;
   var lecHistorial = [];
@@ -481,6 +431,7 @@
   var isRecording = false;
   var langFrom = 'es';
   var langTo = 'en';
+  var synth = window.speechSynthesis;
 
   var PALETA = [
     'linear-gradient(160deg,#2D1B69 0%,#11998e 100%)',
@@ -502,99 +453,59 @@
   }
 
   function limpiarEmojis(texto) {
-    return texto.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').replace(/[🎮🎵💻⚽💼✈️🎬🍳🏃🎨📚💪👗🌿🎯🌍💬🎲📖🔥🚀]/g, '').trim();
-  }
-
-  function cargarVoces() {
-    var voices = synth.getVoices();
-    vocesDisponibles = voices.filter(function(v) {
-      return v.lang.startsWith('en') || v.lang.startsWith('es');
-    });
-    return vocesDisponibles;
+    return texto.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').replace(/[🎮🎵💻⚽💼✈️🎬🍳🏃🎨📚💪👗🌿🎯🌍💬🎲📖🔥🚀🇨🇴🏨🚗🍔🛍️🏥]/g, '').trim();
   }
 
   function hablar(texto, idioma) {
-    if (!synth || !texto) return;
-    synth.cancel();
+    if (!texto) return;
     var textoLimpio = limpiarEmojis(texto);
     if (!textoLimpio) return;
-    var utter = new SpeechSynthesisUtterance(textoLimpio);
-    if (vozSeleccionada) {
-      utter.voice = vozSeleccionada;
-      utter.lang = vozSeleccionada.lang;
-    } else {
-      var esIngles = idioma === 'en';
-      var voz = vocesDisponibles.find(function(v) { return esIngles ? v.lang.startsWith('en') : v.lang.startsWith('es'); });
-      if (voz) { utter.voice = voz; utter.lang = voz.lang; }
-    }
-    utter.rate = 0.88;
-    utter.pitch = 1.2;
-    synth.speak(utter);
-  }
 
-  function irAVozSelector() {
-    var voices = cargarVoces();
-    if (voices.length === 0) {
-      setTimeout(function() {
-        voices = cargarVoces();
-        mostrarVozSelector(voices);
-      }, 500);
-    } else {
-      mostrarVozSelector(voices);
-    }
-    showScreen('screen-voz');
-  }
-
-  function mostrarVozSelector(voices) {
-    var list = document.getElementById('voz-list');
-    list.innerHTML = '';
-    if (voices.length === 0) {
-      list.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:13px;">No se encontraron voces en tu dispositivo. Continuaremos con la voz predeterminada.</p>';
-      return;
-    }
-    voices.forEach(function(v, i) {
-      var item = document.createElement('div');
-      item.className = 'voz-item';
-      item.dataset.index = i;
-      var esIngles = v.lang.startsWith('en');
-      item.innerHTML = '<button class="voz-preview-btn" onclick="previewVoz(' + i + ')">▶</button>' +
-        '<div><div class="voz-name">' + (v.name || 'Voz ' + (i+1)) + '</div>' +
-        '<div class="voz-lang">' + (esIngles ? 'Inglés' : 'Español') + ' · ' + v.lang + '</div></div>';
-      item.onclick = function(e) {
-        if (e.target.classList.contains('voz-preview-btn')) return;
-        document.querySelectorAll('.voz-item').forEach(function(el) { el.classList.remove('selected'); });
-        item.classList.add('selected');
-        vozSeleccionada = voices[i];
+    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + ELEVEN_VOICE, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': ELEVEN_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: textoLimpio,
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.75,
+          style: 0.3,
+          use_speaker_boost: true
+        }
+      })
+    })
+    .then(function(r) { return r.blob(); })
+    .then(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var audio = new Audio(url);
+      var obImg = document.getElementById('ob-moki-img');
+      var lecImg = document.getElementById('lec-moki-img');
+      var ondas = document.getElementById('lec-ondas');
+      if (obImg) obImg.classList.add('hablando');
+      if (lecImg) lecImg.classList.add('hablando');
+      if (ondas) ondas.classList.add('activo');
+      audio.onended = function() {
+        URL.revokeObjectURL(url);
+        if (obImg) obImg.classList.remove('hablando');
+        if (lecImg) lecImg.classList.remove('hablando');
+        if (ondas) ondas.classList.remove('activo');
       };
-      list.appendChild(item);
+      audio.play();
+    })
+    .catch(function() {
+      if (synth) {
+        var utter = new SpeechSynthesisUtterance(textoLimpio);
+        utter.rate = 0.88; utter.pitch = 1.1;
+        synth.speak(utter);
+      }
     });
-    if (voices.length > 0 && !vozSeleccionada) {
-      vozSeleccionada = voices[0];
-      list.children[0].classList.add('selected');
-    }
-  }
-
-  function previewVoz(index) {
-    var v = vocesDisponibles[index];
-    if (!v) return;
-    synth.cancel();
-    var utter = new SpeechSynthesisUtterance("Hi! I'm Moki, nice to meet you!");
-    utter.voice = v;
-    utter.lang = v.lang;
-    utter.rate = 0.88;
-    utter.pitch = 1.2;
-    synth.speak(utter);
-  }
-
-  function confirmarVoz() {
-    iniciarOnboarding();
   }
 
   window.onload = function() {
-    if (synth) {
-      cargarVoces();
-      synth.onvoiceschanged = cargarVoces;
-    }
     var params = new URLSearchParams(window.location.search);
     if (params.get('dev') === 'true') {
       perfil = { nombre: 'Sebastian', motivacion: 'trabajo y desarrollo personal', confianza: 'intermedio', intereses: 'videojuegos, música, tecnología, fútbol', meta: 'hablar con fluidez en reuniones', lang: 'es' };
@@ -618,7 +529,7 @@
     if (!u || u.password !== password) { err.style.display='block'; err.innerText='Correo o contraseña incorrectos.'; return; }
     err.style.display = 'none';
     perfil.nombre = u.nombre;
-    irAVozSelector();
+    iniciarOnboarding();
   }
 
   function registrar() {
@@ -756,7 +667,7 @@
     var intereses = (perfil.intereses || 'inglés').split(',')[0].trim();
     var retos = [
       { titulo: 'Habla 2 minutos sobre ' + intereses, desc: 'Sin parar, sin pensar demasiado. Solo habla con Moki sobre lo que más te apasiona.' },
-      { titulo: 'Describe tu día en inglés', desc: 'Cuéntale a Moki cómo fue tu día — en inglés, en español, en spanglish. Lo que salga.' },
+      { titulo: 'Describe tu día en inglés', desc: 'Cuéntale a Moki cómo fue tu día — en inglés, español o spanglish. Lo que salga.' },
       { titulo: '5 preguntas en inglés', desc: 'Hazle 5 preguntas a Moki sobre cualquier tema. Practica el arte de preguntar.' }
     ];
     var reto = retos[new Date().getDay() % retos.length];
@@ -770,14 +681,14 @@
     document.getElementById('leccion-screen').style.background = PALETA[indice % PALETA.length];
     document.getElementById('lec-badge').innerText = getEmoji(tema) + ' ' + tema.toUpperCase();
     document.getElementById('lec-intro-emoji').innerText = getEmoji(tema);
-    document.getElementById('lec-intro-titulo').innerText = 'Cargando...';
+    document.getElementById('lec-intro-titulo').innerText = '¡Hablemos de ' + tema + '!';
     document.getElementById('lec-intro-texto').innerText = 'Preparando tu sesión...';
     document.getElementById('lec-intro').style.display = 'flex';
     document.getElementById('lec-chat-wrap').style.display = 'none';
     document.getElementById('lec-chat').innerHTML = '';
     document.getElementById('lec-progreso-fill').style.width = '0%';
     document.getElementById('lec-subtitulo').innerText = '';
-    generarParticulas(indice);
+    generarParticulas();
     showScreen('screen-leccion');
     fetch(BACKEND, {
       method: 'POST',
@@ -787,18 +698,16 @@
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.ok) {
-        document.getElementById('lec-intro-titulo').innerText = '¡Hablemos de ' + tema + '!';
         document.getElementById('lec-intro-texto').innerText = data.resultado;
         hablar(data.resultado, 'es');
       }
     })
     .catch(function() {
-      document.getElementById('lec-intro-titulo').innerText = '¡Hablemos de ' + tema + '!';
       document.getElementById('lec-intro-texto').innerText = 'Moki está listo para practicar ' + tema + ' contigo. ¡Será divertido!';
     });
   }
 
-  function generarParticulas(indice) {
+  function generarParticulas() {
     var container = document.getElementById('lec-particles');
     container.innerHTML = '';
     var colors = ['#FF6B35','#FF8C42','white','#FFD700'];
@@ -816,11 +725,33 @@
     document.getElementById('lec-chat-wrap').style.display = 'flex';
     document.getElementById('lec-chat-wrap').style.flexDirection = 'column';
     document.getElementById('lec-chat-wrap').style.flex = '1';
-    var primerMsg = "Okay, let's go! Tell me everything about " + temaActual + " — what do you love most? Don't worry about grammar, just talk!";
-    mostrarMsgLec('moki', primerMsg);
-    hablar(primerMsg, 'en');
-    lecHistorial.push({ role: 'assistant', content: primerMsg });
     document.getElementById('lec-text-input').onkeypress = function(e) { if (e.key === 'Enter') enviarTextoLec(); };
+
+    fetch(BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        tipo: 'primer_mensaje',
+        tema: temaActual,
+        modo: modoLeccion === 'gramatica' ? 'gramatica_inicio' : modoLeccion === 'situacion' ? 'situacion_inicio' : 'leccion_inicio',
+        situacion: situacionActual,
+        perfil: perfil
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        mostrarMsgLec('moki', data.resultado);
+        hablar(data.resultado, modoLeccion === 'gramatica' ? 'es' : 'en');
+        lecHistorial.push({ role: 'assistant', content: data.resultado });
+      }
+    })
+    .catch(function() {
+      var fallback = "¡Hola! Vamos a hablar de " + temaActual + " — cuéntame todo lo que quieras.";
+      mostrarMsgLec('moki', fallback);
+      hablar(fallback, 'es');
+      lecHistorial.push({ role: 'assistant', content: fallback });
+    });
   }
 
   function mostrarMsgLec(tipo, texto) {
@@ -848,17 +779,18 @@
     mostrarMsgLec('usuario', texto);
     lecHistorial.push({ role: 'user', content: texto });
     lecTyping = true;
+    var tipoLlamada = modoLeccion === 'situacion' ? 'situacion' : modoLeccion === 'gramatica' ? 'gramatica' : 'leccion';
     fetch(BACKEND, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: modoLeccion === 'situacion' ? 'situacion' : 'leccion', historial: lecHistorial, tema: temaActual, situacion: situacionActual, perfil: perfil })
+      body: JSON.stringify({ tipo: tipoLlamada, historial: lecHistorial, tema: temaActual, situacion: situacionActual, perfil: perfil })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       lecTyping = false;
       if (data.ok) {
         mostrarMsgLec('moki', data.resultado);
-        hablar(data.resultado, 'en');
+        hablar(data.resultado, modoLeccion === 'gramatica' ? 'es' : 'en');
         lecHistorial.push({ role: 'assistant', content: data.resultado });
       }
     })
@@ -870,7 +802,7 @@
 
   function pedirGramatica() {
     if (lecTyping) return;
-    var msg = 'Oye Moki, explícame una regla de gramática relacionada con lo que hemos hablado';
+    var msg = 'Explícame una regla de gramática relacionada con lo que hemos hablado';
     mostrarMsgLec('usuario', msg);
     lecHistorial.push({ role: 'user', content: msg });
     lecTyping = true;
@@ -931,7 +863,7 @@
   }
 
   function cerrarLeccion() {
-    synth && synth.cancel();
+    if (synth) synth.cancel();
     pararGrabacion();
     showScreen('screen-dashboard');
   }
@@ -948,15 +880,25 @@
     abrirLeccion(temaAleatorio, indiceAleatorio, 'conversacion');
   }
 
-  function abrirChat(modo) {
-    abrirLeccion('charla libre', 0, modo);
+  function abrirChat() {
+    abrirLeccion('charla libre', 0, 'conversacion');
   }
 
   function abrirGramatica() {
-    lecHistorial = [];
-    modoLeccion = 'gramatica';
     temaActual = 'gramática';
-    abrirLeccion('gramática', 5, 'gramatica');
+    modoLeccion = 'gramatica';
+    lecHistorial = []; progreso = 0;
+    document.getElementById('leccion-screen').style.background = PALETA[5];
+    document.getElementById('lec-badge').innerText = '📖 GRAMÁTICA';
+    document.getElementById('lec-intro-emoji').innerText = '📖';
+    document.getElementById('lec-intro-titulo').innerText = 'Gramática con Moki';
+    document.getElementById('lec-intro-texto').innerText = 'No es un examen — Moki te explica las reglas de forma natural, con ejemplos de la vida real.';
+    document.getElementById('lec-intro').style.display = 'flex';
+    document.getElementById('lec-chat-wrap').style.display = 'none';
+    document.getElementById('lec-chat').innerHTML = '';
+    document.getElementById('lec-progreso-fill').style.width = '0%';
+    generarParticulas();
+    showScreen('screen-leccion');
   }
 
   function swapLangs() {
@@ -975,14 +917,10 @@
     var btn = document.getElementById('trad-btn');
     btn.disabled = true; btn.innerText = 'Traduciendo...';
     document.getElementById('trad-result').style.display = 'none';
-
-    var TRADUCTOR_URL = 'https://script.google.com/macros/s/AKfycbzVv_xqYq5Ci8-4qJAm2rR61INSouUlidoeAvJbICgSWOGYYJ9GKWlMPnokARROOgyN3Q/exec';
     var callbackName = 'mokiCallback_' + Date.now();
-    
     window[callbackName] = function(data) {
       delete window[callbackName];
-      document.getElementById('trad-btn').disabled = false;
-      document.getElementById('trad-btn').innerText = 'Traducir con Moki';
+      btn.disabled = false; btn.innerText = 'Traducir con Moki';
       if (data.ok) {
         try {
           var res = JSON.parse(data.resultado);
@@ -995,13 +933,11 @@
         document.getElementById('trad-result').style.display = 'block';
       }
     };
-
     var script = document.createElement('script');
     script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
     script.onerror = function() {
       delete window[callbackName];
-      document.getElementById('trad-btn').disabled = false;
-      document.getElementById('trad-btn').innerText = 'Traducir con Moki';
+      btn.disabled = false; btn.innerText = 'Traducir con Moki';
       document.getElementById('trad-traduccion').innerText = 'Error al traducir. Intenta de nuevo.';
       document.getElementById('trad-result').style.display = 'block';
     };
