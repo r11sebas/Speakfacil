@@ -975,12 +975,10 @@
     var btn = document.getElementById('trad-btn');
     btn.disabled = true; btn.innerText = 'Traduciendo...';
     document.getElementById('trad-result').style.display = 'none';
-    fetch(BACKEND, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ tipo: 'traduccion', texto: texto, deLang: langFrom, aLang: langTo })
-    })
+
+    var url = BACKEND + '?tipo=traduccion&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
+
+    fetch(url)
     .then(function(r) { return r.json(); })
     .then(function(data) {
       btn.disabled = false; btn.innerText = 'Traducir con Moki';
