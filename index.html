@@ -869,25 +869,65 @@
 
   function toggleMic() {
     if (isRecording) { pararGrabacion(); return; }
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { toggleKbd(); return; }
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      document.getElementById('lec-subtitulo').innerText = 'Tu navegador no soporta el micrófono. Usa el teclado ⌨️';
+      toggleKbd();
+      return;
+    }
     detenerAudio();
     var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
     recognition.lang = 'en-US';
     recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.onresult = function(e) { procesarRespuestaLec(e.results[0][0].transcript); };
-    recognition.onerror = function() { pararGrabacion(); };
-    recognition.onend = function() { pararGrabacion(); };
-    recognition.start();
-    isRecording = true;
-    document.getElementById('mic-btn').classList.add('recording');
-    document.getElementById('mic-btn').innerText = '⏹️';
+    recognition.interimResults = true;
+
+    recognition.onstart = function() {
+      document.getElementById('lec-subtitulo').innerText = '🎙️ Listening...';
+    };
+
+    recognition.onresult = function(e) {
+      var interim = '';
+      var final = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) { final += e.results[i][0].transcript; }
+        else { interim += e.results[i][0].transcript; }
+      }
+      document.getElementById('lec-subtitulo').innerText = '🎙️ ' + (final || interim);
+      if (final.trim()) {
+        pararGrabacion();
+        procesarRespuestaLec(final.trim());
+      }
+    };
+
+    recognition.onerror = function(ev) {
+      pararGrabacion();
+      var msgs = {
+        'not-allowed': 'Permiso de micrófono denegado. Ve a ajustes del navegador y permite el acceso.',
+        'no-speech':   'No te escuché. Toca el micrófono e intenta de nuevo.',
+        'audio-capture': 'No se encontró micrófono. Verifica que tu dispositivo lo tenga habilitado.',
+        'network':     'Error de red al procesar tu voz. Revisa tu conexión.'
+      };
+      document.getElementById('lec-subtitulo').innerText = msgs[ev.error] || ('Error de micrófono: ' + ev.error);
+    };
+
+    recognition.onend = function() {
+      if (isRecording) pararGrabacion();
+    };
+
+    try {
+      recognition.start();
+      isRecording = true;
+      document.getElementById('mic-btn').classList.add('recording');
+      document.getElementById('mic-btn').innerText = '⏹️';
+    } catch(e) {
+      pararGrabacion();
+      document.getElementById('lec-subtitulo').innerText = 'No se pudo iniciar el micrófono. Intenta de nuevo.';
+    }
   }
 
   function pararGrabacion() {
     isRecording = false;
-    if (recognition) { try { recognition.stop(); } catch(e) {} }
+    if (recognition) { try { recognition.stop(); } catch(e) {} recognition = null; }
     document.getElementById('mic-btn').classList.remove('recording');
     document.getElementById('mic-btn').innerText = '🎙️';
   }
