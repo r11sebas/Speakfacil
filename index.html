@@ -694,7 +694,13 @@
     .then(function(data) {
       if (data.ok) {
         document.getElementById('lec-intro-texto').innerText = data.resultado;
-        hablar(data.resultado, 'es');
+        var startBtn = document.querySelector('.lec-start-btn');
+        startBtn.disabled = true;
+        startBtn.innerText = 'Moki está hablando...';
+        hablarConCallback(data.resultado, 'es', function() {
+          startBtn.disabled = false;
+          startBtn.innerText = '¡Empezar!';
+        });
       }
     })
     .catch(function() {
