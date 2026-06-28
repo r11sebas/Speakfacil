@@ -460,8 +460,6 @@
     if (!texto) return;
     var textoLimpio = limpiarEmojis(texto);
     if (!textoLimpio) return;
-    console.log('TTS llamando con:', textoLimpio);
-
     fetch(BACKEND, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
@@ -476,18 +474,8 @@
         var blob = new Blob([bytes], { type: 'audio/mpeg' });
         var url = URL.createObjectURL(blob);
         var audio = new Audio(url);
-        var obImg = document.getElementById('ob-moki-img');
-        var lecImg = document.getElementById('lec-moki-img');
-        var ondas = document.getElementById('lec-ondas');
-        if (obImg) obImg.classList.add('hablando');
-        if (lecImg) lecImg.classList.add('hablando');
-        if (ondas) ondas.classList.add('activo');
-        audio.onended = function() {
-          URL.revokeObjectURL(url);
-          if (obImg) obImg.classList.remove('hablando');
-          if (lecImg) lecImg.classList.remove('hablando');
-          if (ondas) ondas.classList.remove('activo');
-        };
+        audioActivo = audio;
+        audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; };
         audio.play();
       }
     })
@@ -685,6 +673,7 @@
     document.getElementById('lec-subtitulo').innerText = '';
     generarParticulas();
     showScreen('screen-leccion');
+    document.querySelector('.lec-start-btn').style.display = 'none';
     fetch(BACKEND, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
