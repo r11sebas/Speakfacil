@@ -951,7 +951,7 @@
   }
 
   if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }
-</script>
+
   function hablarConCallback(texto, idioma, callback) {
     if (!texto) { if (callback) callback(); return; }
     var textoLimpio = limpiarEmojis(texto);
@@ -976,5 +976,6 @@
     })
     .catch(function() { if (callback) callback(); });
   }
+</script>
 </body>
 </html>
