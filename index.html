@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MokiTalk</title>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="/manifest.json"><
   <meta name="theme-color" content="#FF6B35">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MokiTalk">
@@ -976,12 +976,13 @@
     btn.disabled = true; btn.innerText = 'Traduciendo...';
     document.getElementById('trad-result').style.display = 'none';
 
-    var url = BACKEND + '?tipo=traduccion&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
-
-    fetch(url)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      btn.disabled = false; btn.innerText = 'Traducir con Moki';
+    var TRADUCTOR_URL = 'https://script.google.com/macros/s/AKfycbzVv_xqYq5Ci8-4qJAm2rR61INSouUlidoeAvJbICgSWOGYYJ9GKWlMPnokARROOgyN3Q/exec';
+    var callbackName = 'mokiCallback_' + Date.now();
+    
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      document.getElementById('trad-btn').disabled = false;
+      document.getElementById('trad-btn').innerText = 'Traducir con Moki';
       if (data.ok) {
         try {
           var res = JSON.parse(data.resultado);
@@ -993,12 +994,18 @@
         }
         document.getElementById('trad-result').style.display = 'block';
       }
-    })
-    .catch(function() {
-      btn.disabled = false; btn.innerText = 'Traducir con Moki';
+    };
+
+    var script = document.createElement('script');
+    script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
+    script.onerror = function() {
+      delete window[callbackName];
+      document.getElementById('trad-btn').disabled = false;
+      document.getElementById('trad-btn').innerText = 'Traducir con Moki';
       document.getElementById('trad-traduccion').innerText = 'Error al traducir. Intenta de nuevo.';
       document.getElementById('trad-result').style.display = 'block';
-    });
+    };
+    document.head.appendChild(script);
   }
 
   function escucharTraduccion() {
