@@ -179,6 +179,72 @@
     .nav-item .nav-icon { font-size: 22px; }
     .nav-item .nav-label { font-size: 10px; color: rgba(255,255,255,0.4); }
     .nav-item.active .nav-label { color: #FF6B35; }
+    /* ── STREAMING UI ── */
+    .section-header { padding: 18px 20px 10px; display: flex; align-items: center; justify-content: space-between; }
+    .section-header h3 { font-size: 17px; font-weight: 700; }
+    .ver-mas-btn { font-size: 12px; color: #FF6B35; cursor: pointer; font-weight: 600; background: none; border: none; }
+    .series-row { display: flex; gap: 12px; overflow-x: auto; padding: 0 20px 12px; scrollbar-width: none; }
+    .series-row::-webkit-scrollbar { display: none; }
+    .serie-card { flex-shrink: 0; width: 210px; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.18s; position: relative; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,107,53,0.15); }
+    .serie-card:active { transform: scale(0.97); }
+    .serie-card-top { height: 110px; display: flex; align-items: flex-end; padding: 10px 12px; position: relative; }
+    .serie-card-top::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,transparent 20%,rgba(0,0,0,0.7)); }
+    .serie-emoji { position:absolute; top:10px; right:12px; font-size:36px; z-index:1; }
+    .serie-nombre { position:relative; z-index:1; font-size:13px; font-weight:800; line-height:1.2; }
+    .serie-card-body { padding:10px 12px 12px; }
+    .serie-tagline { font-size:11px; color:rgba(255,255,255,0.5); line-height:1.4; margin-bottom:8px; }
+    .serie-meta { display:flex; gap:6px; align-items:center; }
+    .badge-nivel { font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; background:rgba(255,107,53,0.2); color:#FF8C42; }
+    .badge-eps { font-size:10px; color:rgba(255,255,255,0.4); }
+    .podcast-mini-row { display:flex; gap:10px; overflow-x:auto; padding:0 20px 12px; scrollbar-width:none; }
+    .podcast-mini-row::-webkit-scrollbar { display:none; }
+    .podcast-mini-card { flex-shrink:0; width:148px; border-radius:14px; overflow:hidden; cursor:pointer; transition:transform 0.18s; background:rgba(255,255,255,0.06); border:1px solid rgba(255,107,53,0.12); }
+    .podcast-mini-card:active { transform:scale(0.97); }
+    .podcast-mini-banner { height:88px; display:flex; align-items:center; justify-content:center; font-size:38px; }
+    .podcast-mini-body { padding:8px 10px 10px; }
+    .podcast-mini-body h4 { font-size:12px; font-weight:700; line-height:1.3; margin-bottom:5px; }
+    .podcast-mini-meta { display:flex; gap:5px; align-items:center; }
+    /* Explorar */
+    .explorar-body { flex:1; display:flex; flex-direction:column; background:#0a0a0a; overflow:hidden; }
+    .explorar-tabs { display:flex; gap:8px; padding:10px 16px; border-bottom:1px solid rgba(255,107,53,0.1); flex-shrink:0; overflow-x:auto; scrollbar-width:none; }
+    .explorar-tabs::-webkit-scrollbar { display:none; }
+    .explorar-tab { flex-shrink:0; padding:7px 16px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:1.5px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.5); background:transparent; transition:all 0.2s; }
+    .explorar-tab.active { background:#FF6B35; border-color:#FF6B35; color:white; }
+    .explorar-scroll { flex:1; overflow-y:auto; padding:12px 0 90px; }
+    .serie-list-card { margin:0 16px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,107,53,0.15); border-radius:16px; overflow:hidden; }
+    .serie-list-header { display:flex; gap:12px; padding:14px 16px; align-items:center; cursor:pointer; }
+    .serie-list-emoji { font-size:34px; flex-shrink:0; }
+    .serie-list-info { flex:1; }
+    .serie-list-info h4 { font-size:15px; font-weight:700; margin-bottom:3px; }
+    .serie-list-info p { font-size:12px; color:rgba(255,255,255,0.5); }
+    .serie-list-meta { display:flex; gap:6px; margin-top:5px; align-items:center; }
+    .chevron { font-size:16px; color:rgba(255,255,255,0.3); transition:transform 0.2s; flex-shrink:0; }
+    .chevron.abierto { transform:rotate(90deg); }
+    .ep-list { display:none; border-top:1px solid rgba(255,255,255,0.06); }
+    .ep-list.abierto { display:block; }
+    .ep-row { display:flex; align-items:center; gap:12px; padding:11px 16px; border-bottom:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:background 0.15s; }
+    .ep-row:hover, .ep-row:active { background:rgba(255,107,53,0.08); }
+    .ep-row:last-child { border-bottom:none; }
+    .ep-num-lbl { font-size:12px; color:rgba(255,255,255,0.3); width:22px; text-align:center; flex-shrink:0; }
+    .ep-row-info { flex:1; }
+    .ep-row-info h5 { font-size:13px; font-weight:600; margin-bottom:2px; }
+    .ep-row-info span { font-size:11px; color:rgba(255,255,255,0.4); }
+    .ep-play-ico { font-size:20px; color:#FF6B35; flex-shrink:0; }
+    .ep-done .ep-play-ico { color:rgba(255,255,255,0.25); font-size:14px; }
+    .podcast-list-card { margin:0 16px 10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,107,53,0.12); border-radius:14px; display:flex; gap:12px; padding:12px 14px; align-items:center; cursor:pointer; transition:all 0.2s; }
+    .podcast-list-card:hover, .podcast-list-card:active { border-color:#FF6B35; background:rgba(255,107,53,0.07); }
+    .podcast-list-emoji { font-size:32px; flex-shrink:0; }
+    .podcast-list-info { flex:1; }
+    .podcast-list-info h4 { font-size:14px; font-weight:700; margin-bottom:3px; }
+    .podcast-list-info p { font-size:12px; color:rgba(255,255,255,0.5); line-height:1.4; }
+    .podcast-list-meta { display:flex; gap:6px; margin-top:5px; align-items:center; }
+    .continuar-card { margin:0 16px 4px; background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(255,140,66,0.08)); border:1px solid rgba(255,107,53,0.3); border-radius:16px; padding:14px 16px; display:flex; gap:12px; align-items:center; cursor:pointer; }
+    .continuar-thumb { font-size:32px; flex-shrink:0; }
+    .continuar-info { flex:1; }
+    .continuar-info p { font-size:11px; color:#FF8C42; font-weight:700; letter-spacing:0.5px; margin-bottom:3px; }
+    .continuar-info h4 { font-size:14px; font-weight:700; margin-bottom:2px; }
+    .continuar-info span { font-size:11px; color:rgba(255,255,255,0.45); }
+    .continuar-play { font-size:28px; color:#FF6B35; flex-shrink:0; }
   </style>
 </head>
 <body>
@@ -295,6 +361,7 @@
       <h2 id="dash-saludo">¡Hola!</h2>
       <p id="dash-sub">Elige qué quieres hacer hoy</p>
     </div>
+    <div id="dash-continuar" style="display:none"></div>
     <div class="reto-card">
       <div class="reto-badge">🔥 RETO DEL DÍA</div>
       <h4 id="reto-titulo">Cargando tu reto...</h4>
@@ -302,34 +369,51 @@
       <button class="reto-btn" onclick="abrirSorpresa()">Aceptar reto</button>
     </div>
     <div><div class="section-header"><h3>Tus temas</h3></div><div class="temas-row" id="temas-row"></div></div>
-    <div style="margin-top:16px;">
-      <div class="section-header"><h3>¿Qué quieres hacer?</h3></div>
-      <div class="opciones-grid">
-        <div class="opcion-card" onclick="abrirChat()"><div class="opcion-icon">💬</div><h4>Charlar con Moki</h4><p>Conversación libre</p></div>
-        <div class="opcion-card" onclick="showScreen('screen-situaciones')"><div class="opcion-icon">🎯</div><h4>Situación real</h4><p>Hotel, café, Uber...</p></div>
-        <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4>Traducir</h4><p>Contextual y coloquial</p></div>
-        <div class="opcion-card" onclick="abrirSorpresa()"><div class="opcion-icon">🎲</div><h4>Sorpréndeme</h4><p>Deja que Moki elija</p></div>
-      </div>
+    <div>
+      <div class="section-header"><h3>🎬 Series</h3><button class="ver-mas-btn" onclick="abrirExplorar('series')">Ver todo</button></div>
+      <div class="series-row" id="dash-series-row"></div>
     </div>
-    <div style="margin-top:16px;padding-bottom:16px;">
-      <div class="section-header"><h3>Gramática con Moki</h3></div>
-      <div style="padding:0 20px;">
-        <div class="opcion-card" style="flex-direction:row;gap:12px;text-align:left;" onclick="abrirGramatica()">
-          <div class="opcion-icon">📖</div>
-          <div><h4>Lección de gramática</h4><p style="font-size:12px;">Aprende las reglas de forma natural, con ejemplos de tus conversaciones</p></div>
-        </div>
+    <div>
+      <div class="section-header"><h3>🎧 Podcasts</h3><button class="ver-mas-btn" onclick="abrirExplorar('podcasts')">Ver todo</button></div>
+      <div class="podcast-mini-row" id="dash-podcast-row"></div>
+    </div>
+    <div style="padding-bottom:16px;">
+      <div class="section-header"><h3>🎯 Acceso rápido</h3></div>
+      <div class="opciones-grid" style="padding:0 20px;">
+        <div class="opcion-card" onclick="showScreen('screen-situaciones')"><div class="opcion-icon">🎭</div><h4>Situaciones</h4><p>Hotel, café, Uber...</p></div>
+        <div class="opcion-card" onclick="abrirGramatica()"><div class="opcion-icon">📖</div><h4>Gramática</h4><p>Con Moki, sin estrés</p></div>
+        <div class="opcion-card" onclick="showTab('traductor')"><div class="opcion-icon">🌍</div><h4>Traducir</h4><p>Coloquial y natural</p></div>
+        <div class="opcion-card" onclick="abrirSorpresa()"><div class="opcion-icon">🎲</div><h4>Sorpréndeme</h4><p>Deja que Moki elija</p></div>
       </div>
     </div>
   </div>
   <button class="chat-fab" onclick="abrirChat()"><img src="moki.png" alt="Moki" />Hablar con Moki</button>
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
-    <div class="nav-item" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
-    <div class="nav-item" onclick="abrirChat()"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
+    <div class="nav-item active" id="nav-inicio" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" id="nav-explorar" onclick="abrirExplorar('series')"><div class="nav-icon">🎬</div><div class="nav-label">Explorar</div></div>
+    <div class="nav-item" id="nav-traducir" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
   </div>
 </div>
 
-<!-- PANTALLA 8: SITUACIONES -->
+<!-- PANTALLA 8: EXPLORAR -->
+<div class="screen" id="screen-explorar">
+  <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">Explorar</span></div>
+  <div class="explorar-body">
+    <div class="explorar-tabs">
+      <button class="explorar-tab active" id="etab-series" onclick="cambiarTabExplorar('series',this)">🎬 Series</button>
+      <button class="explorar-tab" id="etab-podcasts" onclick="cambiarTabExplorar('podcasts',this)">🎧 Podcasts</button>
+      <button class="explorar-tab" id="etab-situaciones" onclick="cambiarTabExplorar('situaciones',this)">🎭 Situaciones</button>
+    </div>
+    <div class="explorar-scroll" id="explorar-scroll"></div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item active" onclick="abrirExplorar('series')"><div class="nav-icon">🎬</div><div class="nav-label">Explorar</div></div>
+    <div class="nav-item" onclick="showTab('traductor')"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
+  </div>
+</div>
+
+<!-- PANTALLA 9: SITUACIONES -->
 <div class="screen" id="screen-situaciones">
   <div class="header">
     <button onclick="showScreen('screen-dashboard')" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;margin-right:8px;">←</button>
@@ -408,8 +492,8 @@
   </div>
   <div class="bottom-nav">
     <div class="nav-item" onclick="showTab('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="abrirExplorar('series')"><div class="nav-icon">🎬</div><div class="nav-label">Explorar</div></div>
     <div class="nav-item active"><div class="nav-icon">🌍</div><div class="nav-label">Traducir</div></div>
-    <div class="nav-item" onclick="abrirChat()"><div class="nav-icon">🐒</div><div class="nav-label">Moki</div></div>
   </div>
 </div>
 
@@ -436,6 +520,62 @@
   var langTo = 'en';
   var synth = window.speechSynthesis;
   var audioActivo = null;
+
+  var progresoSeries = {};
+  try { progresoSeries = JSON.parse(localStorage.getItem('mokiSeriesProgress') || '{}'); } catch(e) {}
+
+  var SERIES = [
+    { id:'s1', titulo:'La Colonia en NYC', tagline:'Un colombiano, una ciudad, cero excusas', nivel:'A1', emoji:'🗽',
+      gradient:'linear-gradient(160deg,#0F4C1E 0%,#1A7A3A 100%)',
+      episodios:[
+        { num:1, titulo:'JFK — El primer aterrizaje', dur:6, prompt:'You are a friendly English podcast narrator. Tell a vivid story about a young Colombian named Mateo arriving at JFK airport for the first time. He navigates immigration, finds his luggage, and haggles with a taxi driver to his Manhattan hotel. Use simple A1 English, short sentences, lots of useful phrases Mateo hears and says. Engaging and educational. 260 words.' },
+        { num:2, titulo:'Hotel en Times Square', dur:5, prompt:'Continue Mateo\'s NYC story. He checks into his Times Square hotel. He asks about Wi-Fi, breakfast hours, the gym, and getting a room upgrade. Use A1 English, 250 words, include useful hotel phrases and vocabulary.' },
+        { num:3, titulo:'Su primer Uber', dur:5, prompt:'Continue Mateo\'s story. He takes his first Uber in NYC. The driver Darnell is chatty — they talk about Colombia, NYC neighborhoods, and the best spots to eat. A1-A2 English, 250 words, casual conversation phrases.' },
+        { num:4, titulo:'Desayuno en un diner americano', dur:6, prompt:'Mateo goes to a classic American diner for breakfast. He reads the menu, orders eggs and pancakes, asks about allergens, and tips the server. A2 English, 270 words, food and restaurant vocabulary in context.' },
+        { num:5, titulo:'Perdido en el subway', dur:6, prompt:'Mateo gets completely lost on the NYC subway, ends up in Brooklyn instead of Midtown. He asks a local for help, reads signs, and eventually finds his way. A2 English, 270 words, directions and transport vocabulary.' },
+        { num:6, titulo:'Primera noche: el rooftop bar', dur:7, prompt:'Mateo\'s first night out in NYC at a rooftop bar. He orders drinks, makes small talk with Americans, and navigates a social situation in English. A2 English, 280 words, social vocabulary and small talk phrases.' }
+      ]
+    },
+    { id:'s2', titulo:'Working in English', tagline:'De las reuniones al afterwork en inglés', nivel:'B1', emoji:'💼',
+      gradient:'linear-gradient(160deg,#0D1B4B 0%,#1A3A8F 100%)',
+      episodios:[
+        { num:1, titulo:'Primera semana en la empresa', dur:7, prompt:'Podcast episode: a Latin American professional\'s first week at a US tech company. Meeting the team, understanding the culture — direct feedback, 1:1 meetings, Slack norms, PTO. B1 English, 290 words, professional but conversational.' },
+        { num:2, titulo:'Sobrevivir una reunión de equipo', dur:7, prompt:'How to participate confidently in an American team meeting. How to interrupt politely, ask for clarification, share your opinion, and take action items. B1 English, 290 words, practical meeting phrases.' },
+        { num:3, titulo:'Email y Slack en inglés', dur:6, prompt:'Guide to professional email and Slack communication in US companies. Tone, format, when to use @channel, common phrases, email etiquette. B1 English, 270 words.' },
+        { num:4, titulo:'Performance review: brillar bajo presión', dur:8, prompt:'How to ace an American performance review. Talk about your wins with impact, handle critical feedback gracefully, negotiate a raise. B1-B2 English, 300 words, performance and career vocabulary.' },
+        { num:5, titulo:'Happy hour y networking real', dur:7, prompt:'How to network authentically at American company events, happy hours, and conferences. Topics that work, topics to avoid, how to follow up on LinkedIn. B1 English, 280 words.' }
+      ]
+    },
+    { id:'s3', titulo:'American Slang 101', tagline:'El inglés que no te enseñaron en el colegio', nivel:'B1', emoji:'😎',
+      gradient:'linear-gradient(160deg,#2D0845 0%,#7B1FA2 100%)',
+      episodios:[
+        { num:1, titulo:'Office slang — la oficina en americano', dur:6, prompt:'Podcast: 8-10 essential American office slang terms with real examples. Circle back, bandwidth, on my radar, low-hanging fruit, take it offline, move the needle, boil the ocean. Fun and engaging, B1 English, 270 words.' },
+        { num:2, titulo:'Party & Social — sal a rumbear en inglés', dur:6, prompt:'Social and party slang: lit, FOMO, ghosting, lowkey, salty, vibe, sus, flex, no cap, it\'s giving. Real examples from conversations. B1 English, 270 words.' },
+        { num:3, titulo:'Dating slang — el amor en inglés', dur:7, prompt:'Modern American dating slang: ghosting, situationship, rizz, red flag, green flag, DTR, bread-crumbing, talking stage, soft launch. Humorous and educational, 280 words, B1.' },
+        { num:4, titulo:'Internet & Gen Z slang', dur:6, prompt:'Internet and Gen Z slang used by Americans: no cap, slay, goat, mid, ratio, rent free, understood the assignment, main character, delulu, it\'s giving. 270 words, B1.' },
+        { num:5, titulo:'Sports slang — el juego en inglés', dur:6, prompt:'American sports slang used in everyday life: ballpark figure, slam dunk, on the ball, game changer, touch base, drop the ball, level playing field, curveball. 270 words, B1.' }
+      ]
+    },
+    { id:'s4', titulo:'The Interview', tagline:'Consigue el trabajo de tus sueños en inglés', nivel:'B2', emoji:'🎯',
+      gradient:'linear-gradient(160deg,#3E1000 0%,#BF360C 100%)',
+      episodios:[
+        { num:1, titulo:'Tu LinkedIn en inglés', dur:7, prompt:'Guide to creating a powerful LinkedIn profile in English for a Latin American professional. Headline formula, summary storytelling, experience with impact metrics, skills. B2 English, 290 words.' },
+        { num:2, titulo:'El cover letter perfecto', dur:6, prompt:'How to write a compelling cover letter in English. Structure, tone, hook opening, company research, call to action. Common mistakes by Spanish speakers. B2 English, 280 words.' },
+        { num:3, titulo:'Las preguntas más temidas', dur:8, prompt:'Mastering the toughest American job interview questions. Tell me about yourself, strengths/weaknesses, why this company, where do you see yourself. STAR method with examples. B2 English, 310 words.' },
+        { num:4, titulo:'Negociar tu salario sin miedo', dur:8, prompt:'How to negotiate salary and benefits in US job offers. When and how to negotiate, countering a lowball offer, negotiating equity, PTO, remote work. Confident B2 English, 300 words.' },
+        { num:5, titulo:'El primer día — protocolo americano', dur:7, prompt:'How to nail your first day at an American company. What to wear, how to introduce yourself, office protocols, what NOT to do. B2 English, 280 words.' }
+      ]
+    }
+  ];
+
+  var PODCASTS_SUELTOS = [
+    { id:'ps1', titulo:'Thanksgiving: la guía del colombiano', nivel:'A2', dur:5, emoji:'🦃', gradient:'linear-gradient(160deg,#3E2000 0%,#795548 100%)', prompt:'Podcast guide for a Colombian attending their first American Thanksgiving. What to bring, what to talk about, the turkey tradition, watching football, dealing with American family dynamics. Warm and funny. A2 English, 250 words.' },
+    { id:'ps2', titulo:'Tip culture — cuánto dejar de propina', nivel:'A2', dur:4, emoji:'💵', gradient:'linear-gradient(160deg,#1A3A00 0%,#388E3C 100%)', prompt:'Podcast explaining American tipping culture to a Latin American. When to tip, how much, restaurants (15-20-25%), Uber, hotels, haircuts, coffee shops, food delivery. Practical and clear. A2 English, 240 words.' },
+    { id:'ps3', titulo:'Small talk: el arte de hablar de nada', nivel:'B1', dur:6, emoji:'☀️', gradient:'linear-gradient(160deg,#1A1500 0%,#F57F17 100%)', prompt:'Mastering American small talk. Topics that work (weather, weekend plans, sports, food), topics to avoid (politics, salary), how to transition to real conversation, how to exit gracefully. B1 English, 270 words.' },
+    { id:'ps4', titulo:'10 cosas que nunca debes decir en inglés', nivel:'B1', dur:6, emoji:'🚫', gradient:'linear-gradient(160deg,#3B0000 0%,#C62828 100%)', prompt:'10 phrases that sound rude or wrong when literally translated from Spanish to English by Colombians. Common mistakes and how to say it correctly. Funny but educational. B1 English, 270 words.' },
+    { id:'ps5', titulo:'Super Bowl Sunday — entiende el hype', nivel:'B1', dur:7, emoji:'🏈', gradient:'linear-gradient(160deg,#0D0D3B 0%,#1565C0 100%)', prompt:'Explaining the Super Bowl and American football culture to a Latin American. The game basics, the commercials, the halftime show, Super Bowl parties, the betting culture. B1 English, 280 words.' },
+    { id:'ps6', titulo:'El sueño americano en 2025', nivel:'B2', dur:8, emoji:'🇺🇸', gradient:'linear-gradient(160deg,#0D1B4B 0%,#BF360C 100%)', prompt:'The American Dream in 2025 — is it still real? Cost of living, opportunities vs barriers, immigration realities, success stories from Latin Americans. Thoughtful and balanced. B2 English, 310 words.' }
+  ];
 
   var PALETA = [
     'linear-gradient(160deg,#2D1B69 0%,#11998e 100%)',
@@ -668,6 +808,7 @@
     document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 ' + perfil.meta : 'Elige qué quieres hacer hoy';
     generarTemas();
     generarReto();
+    renderDashboardStreaming();
     showScreen('screen-dashboard');
   }
 
@@ -748,20 +889,23 @@
 
   function empezarLeccion() {
     document.querySelectorAll('audio').forEach(function(a) { a.pause(); a.currentTime = 0; });
-    console.log('empezarLeccion llamado');
+    document.querySelector('.lec-start-btn').innerText = '¡Empezar!';
     document.getElementById('lec-intro').style.display = 'none';
     document.getElementById('lec-chat-wrap').style.display = 'flex';
     document.getElementById('lec-chat-wrap').style.flexDirection = 'column';
     document.getElementById('lec-chat-wrap').style.flex = '1';
     document.getElementById('lec-text-input').onkeypress = function(e) { if (e.key === 'Enter') enviarTextoLec(); };
 
+    var modoEnviar = modoLeccion === 'gramatica' ? 'gramatica_inicio'
+                   : (modoLeccion === 'situacion' || modoLeccion === 'episodio') ? 'situacion_inicio'
+                   : 'leccion_inicio';
     fetch(BACKEND, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
         tipo: 'primer_mensaje',
         tema: temaActual,
-        modo: modoLeccion === 'gramatica' ? 'gramatica_inicio' : modoLeccion === 'situacion' ? 'situacion_inicio' : 'leccion_inicio',
+        modo: modoEnviar,
         situacion: situacionActual,
         perfil: perfil
       })
@@ -1048,6 +1192,247 @@
   }
 
   if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }
+
+  /* ── STREAMING ── */
+
+  function guardarProgresoSerie(serieId, epNum) {
+    if (!progresoSeries[serieId]) progresoSeries[serieId] = {};
+    progresoSeries[serieId][epNum] = true;
+    try { localStorage.setItem('mokiSeriesProgress', JSON.stringify(progresoSeries)); } catch(e) {}
+  }
+
+  function epCompletado(serieId, epNum) {
+    return progresoSeries[serieId] && progresoSeries[serieId][epNum];
+  }
+
+  function getUltimoEpisodio(serieId) {
+    var prog = progresoSeries[serieId] || {};
+    var ultimo = 0;
+    for (var k in prog) { if (prog[k] && parseInt(k) > ultimo) ultimo = parseInt(k); }
+    return ultimo;
+  }
+
+  function renderDashboardStreaming() {
+    renderSeriesRow();
+    renderPodcastRow();
+    renderContinuar();
+  }
+
+  function renderSeriesRow() {
+    var row = document.getElementById('dash-series-row');
+    if (!row) return;
+    row.innerHTML = '';
+    SERIES.forEach(function(s) {
+      var card = document.createElement('div');
+      card.className = 'serie-card';
+      var ep1 = getUltimoEpisodio(s.id);
+      var progLabel = ep1 > 0 ? (ep1 + '/' + s.episodios.length + ' eps') : s.episodios.length + ' episodios';
+      card.innerHTML =
+        '<div class="serie-card-top" style="background:' + s.gradient + '">' +
+          '<div class="serie-emoji">' + s.emoji + '</div>' +
+          '<div class="serie-nombre">' + s.titulo + '</div>' +
+        '</div>' +
+        '<div class="serie-card-body">' +
+          '<div class="serie-tagline">' + s.tagline + '</div>' +
+          '<div class="serie-meta"><span class="badge-nivel">' + s.nivel + '</span><span class="badge-eps">' + progLabel + '</span></div>' +
+        '</div>';
+      card.onclick = function() { abrirSerie(s.id); };
+      row.appendChild(card);
+    });
+  }
+
+  function renderPodcastRow() {
+    var row = document.getElementById('dash-podcast-row');
+    if (!row) return;
+    row.innerHTML = '';
+    PODCASTS_SUELTOS.forEach(function(p) {
+      var card = document.createElement('div');
+      card.className = 'podcast-mini-card';
+      card.innerHTML =
+        '<div class="podcast-mini-banner" style="background:' + p.gradient + '">' + p.emoji + '</div>' +
+        '<div class="podcast-mini-body">' +
+          '<h4>' + p.titulo + '</h4>' +
+          '<div class="podcast-mini-meta"><span class="badge-nivel">' + p.nivel + '</span><span style="font-size:10px;color:rgba(255,255,255,0.35);">🎧 ' + p.dur + ' min</span></div>' +
+        '</div>';
+      card.onclick = function() { abrirPodcastSuelto(p.id); };
+      row.appendChild(card);
+    });
+  }
+
+  function renderContinuar() {
+    var cont = document.getElementById('dash-continuar');
+    if (!cont) return;
+    for (var i = 0; i < SERIES.length; i++) {
+      var s = SERIES[i];
+      var ultimo = getUltimoEpisodio(s.id);
+      var siguiente = ultimo + 1;
+      if (ultimo > 0 && siguiente <= s.episodios.length) {
+        var ep = s.episodios[siguiente - 1];
+        cont.style.display = 'block';
+        cont.innerHTML =
+          '<div class="continuar-card" onclick="abrirEpisodio(\'' + s.id + '\',' + siguiente + ')">' +
+            '<div class="continuar-thumb">' + s.emoji + '</div>' +
+            '<div class="continuar-info">' +
+              '<p>▶ CONTINUAR · ' + s.titulo + '</p>' +
+              '<h4>Ep.' + siguiente + ': ' + ep.titulo + '</h4>' +
+              '<span>' + ep.dur + ' min · ' + s.nivel + '</span>' +
+            '</div>' +
+            '<div class="continuar-play">▶</div>' +
+          '</div>';
+        return;
+      }
+    }
+    cont.style.display = 'none';
+  }
+
+  function abrirExplorar(tab) {
+    showScreen('screen-explorar');
+    cambiarTabExplorar(tab, document.getElementById('etab-' + tab));
+  }
+
+  function cambiarTabExplorar(tab, btnEl) {
+    document.querySelectorAll('.explorar-tab').forEach(function(b) { b.classList.remove('active'); });
+    if (btnEl) btnEl.classList.add('active');
+    var scroll = document.getElementById('explorar-scroll');
+    if (!scroll) return;
+    scroll.innerHTML = '';
+    if (tab === 'series') {
+      SERIES.forEach(function(s) {
+        var card = document.createElement('div');
+        card.className = 'serie-list-card';
+        var ultimo = getUltimoEpisodio(s.id);
+        var epsDone = ultimo > 0 ? '· ' + ultimo + '/' + s.episodios.length + ' completados' : '';
+        card.innerHTML =
+          '<div class="serie-list-header" onclick="toggleSerieEps(\'' + s.id + '\')">' +
+            '<div class="serie-list-emoji">' + s.emoji + '</div>' +
+            '<div class="serie-list-info">' +
+              '<h4>' + s.titulo + '</h4>' +
+              '<p>' + s.tagline + '</p>' +
+              '<div class="serie-list-meta"><span class="badge-nivel">' + s.nivel + '</span><span class="badge-eps">' + s.episodios.length + ' episodios ' + epsDone + '</span></div>' +
+            '</div>' +
+            '<div class="chevron" id="chev-' + s.id + '">›</div>' +
+          '</div>' +
+          '<div class="ep-list" id="eps-' + s.id + '">' + renderEpisodios(s) + '</div>';
+        scroll.appendChild(card);
+      });
+    } else if (tab === 'podcasts') {
+      PODCASTS_SUELTOS.forEach(function(p) {
+        var card = document.createElement('div');
+        card.className = 'podcast-list-card';
+        card.innerHTML =
+          '<div class="podcast-list-emoji">' + p.emoji + '</div>' +
+          '<div class="podcast-list-info">' +
+            '<h4>' + p.titulo + '</h4>' +
+            '<p>' + (p.descripcion || '') + '</p>' +
+            '<div class="podcast-list-meta"><span class="badge-nivel">' + p.nivel + '</span><span class="badge-eps">🎧 ' + p.dur + ' min</span></div>' +
+          '</div>';
+        card.onclick = function() { abrirPodcastSuelto(p.id); };
+        scroll.appendChild(card);
+      });
+    } else if (tab === 'situaciones') {
+      scroll.innerHTML =
+        '<div class="situaciones-grid" style="padding:16px 16px 0;">' +
+          '<div class="sit-card" onclick="abrirSituacion(\'restaurante en Nueva York\',\'Eres cliente en un restaurante americano. El mesero no habla español.\')"><div class="sit-emoji">🍔</div><h4>Restaurante NY</h4><p>Ordena tu comida</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'hotel en Miami\',\'Estás haciendo check-in en un hotel en Miami. La recepcionista solo habla inglés.\')"><div class="sit-emoji">🏨</div><h4>Hotel Miami</h4><p>Check-in y preguntas</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'Uber en Los Ángeles\',\'Tomaste un Uber en LA. El conductor es amigable y quiere charlar.\')"><div class="sit-emoji">🚗</div><h4>Uber en LA</h4><p>Conversación casual</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'reunión de trabajo con cliente americano\',\'Estás en una videollamada con un cliente americano. Es tu primera reunión.\')"><div class="sit-emoji">💻</div><h4>Reunión de trabajo</h4><p>Primera llamada</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'aeropuerto internacional\',\'Estás en el aeropuerto y necesitas check-in y pasar migración.\')"><div class="sit-emoji">✈️</div><h4>Aeropuerto</h4><p>Check-in y migración</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'tienda de ropa en USA\',\'Estás comprando ropa en una tienda americana. La vendedora quiere ayudarte.\')"><div class="sit-emoji">🛍️</div><h4>Tienda de ropa</h4><p>Compras en inglés</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'médico en Estados Unidos\',\'Tienes cita con un médico americano. Necesitas explicar tus síntomas.\')"><div class="sit-emoji">🏥</div><h4>Médico</h4><p>Explicar síntomas</p></div>' +
+          '<div class="sit-card" onclick="abrirSituacion(\'amigo americano curioso sobre Colombia\',\'Un amigo americano te pregunta sobre Colombia, la comida y la cultura.\')"><div class="sit-emoji">🇨🇴</div><h4>Hablar de Colombia</h4><p>Cuéntale a un amigo</p></div>' +
+        '</div>';
+    }
+  }
+
+  function renderEpisodios(serie) {
+    var html = '';
+    serie.episodios.forEach(function(ep) {
+      var done = epCompletado(serie.id, ep.num);
+      html += '<div class="ep-row' + (done ? ' ep-done' : '') + '" onclick="abrirEpisodio(\'' + serie.id + '\',' + ep.num + ')">' +
+        '<div class="ep-num-lbl">' + ep.num + '</div>' +
+        '<div class="ep-row-info"><h5>' + ep.titulo + '</h5><span>🎧 ' + ep.dur + ' min</span></div>' +
+        '<div class="ep-play-ico">' + (done ? '✓' : '▶') + '</div>' +
+      '</div>';
+    });
+    return html;
+  }
+
+  function toggleSerieEps(serieId) {
+    var lista = document.getElementById('eps-' + serieId);
+    var chev = document.getElementById('chev-' + serieId);
+    if (!lista) return;
+    lista.classList.toggle('abierto');
+    if (chev) chev.classList.toggle('abierto');
+  }
+
+  function abrirSerie(serieId) {
+    abrirExplorar('series');
+    setTimeout(function() { toggleSerieEps(serieId); }, 80);
+  }
+
+  function abrirEpisodio(serieId, epNum) {
+    var serie = SERIES.find(function(s) { return s.id === serieId; });
+    if (!serie) return;
+    var ep = serie.episodios.find(function(e) { return e.num === epNum; });
+    if (!ep) return;
+    guardarProgresoSerie(serieId, epNum);
+    situacionActual = ep.prompt;
+    modoLeccion = 'episodio';
+    var indice = SERIES.indexOf(serie);
+    lecHistorial = []; progreso = 0;
+    document.getElementById('leccion-screen').style.background = serie.gradient;
+    document.getElementById('lec-badge').innerText = serie.emoji + ' Ep.' + ep.num + ' · ' + serie.nivel;
+    document.getElementById('lec-intro-emoji').innerText = serie.emoji;
+    document.getElementById('lec-intro-titulo').innerText = 'Ep.' + ep.num + ': ' + ep.titulo;
+    document.getElementById('lec-intro-texto').innerText = '🎧 ' + ep.dur + ' min · ' + serie.titulo;
+    document.querySelector('.lec-start-btn').innerText = '▶ Escuchar episodio';
+    document.querySelector('.lec-start-btn').style.display = 'none';
+    document.getElementById('lec-intro').style.display = 'flex';
+    document.getElementById('lec-chat-wrap').style.display = 'none';
+    document.getElementById('lec-chat').innerHTML = '';
+    document.getElementById('lec-progreso-fill').style.width = '0%';
+    document.getElementById('lec-subtitulo').innerText = '';
+    generarParticulas();
+    showScreen('screen-leccion');
+    fetch(BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'intro', tema: ep.titulo, perfil: perfil })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        document.getElementById('lec-intro-texto').innerText = data.resultado;
+      }
+      document.querySelector('.lec-start-btn').style.display = 'block';
+    })
+    .catch(function() {
+      document.querySelector('.lec-start-btn').style.display = 'block';
+    });
+  }
+
+  function abrirPodcastSuelto(podcastId) {
+    var p = PODCASTS_SUELTOS.find(function(x) { return x.id === podcastId; });
+    if (!p) return;
+    situacionActual = p.prompt;
+    modoLeccion = 'episodio';
+    lecHistorial = []; progreso = 0;
+    var gradients = ['linear-gradient(160deg,#2D1B69 0%,#11998e 100%)','linear-gradient(160deg,#6D1B3B 0%,#e91e8c 100%)'];
+    document.getElementById('leccion-screen').style.background = p.gradient || gradients[0];
+    document.getElementById('lec-badge').innerText = p.emoji + ' PODCAST · ' + p.nivel;
+    document.getElementById('lec-intro-emoji').innerText = p.emoji;
+    document.getElementById('lec-intro-titulo').innerText = p.titulo;
+    document.getElementById('lec-intro-texto').innerText = '🎧 ' + p.dur + ' min · Generado por IA';
+    document.querySelector('.lec-start-btn').innerText = '▶ Escuchar podcast';
+    document.querySelector('.lec-start-btn').style.display = 'block';
+    document.getElementById('lec-intro').style.display = 'flex';
+    document.getElementById('lec-chat-wrap').style.display = 'none';
+    document.getElementById('lec-chat').innerHTML = '';
+    document.getElementById('lec-progreso-fill').style.width = '0%';
+    document.getElementById('lec-subtitulo').innerText = '';
+    generarParticulas();
+    showScreen('screen-leccion');
+  }
 
   function hablarConCallback(texto, idioma, callback) {
     if (!texto) { if (callback) callback(); return; }
