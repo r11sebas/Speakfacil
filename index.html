@@ -461,40 +461,34 @@
     var textoLimpio = limpiarEmojis(texto);
     if (!textoLimpio) return;
 
-    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + ELEVEN_VOICE, {
+    fetch(BACKEND, {
       method: 'POST',
-      headers: {
-        'xi-api-key': ELEVEN_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        text: textoLimpio,
-        model_id: 'eleven_multilingual_v2',
-        voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.75,
-          style: 0.3,
-          use_speaker_boost: true
-        }
-      })
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'tts', texto: textoLimpio })
     })
-    .then(function(r) { return r.blob(); })
-    .then(function(blob) {
-      var url = URL.createObjectURL(blob);
-      var audio = new Audio(url);
-      var obImg = document.getElementById('ob-moki-img');
-      var lecImg = document.getElementById('lec-moki-img');
-      var ondas = document.getElementById('lec-ondas');
-      if (obImg) obImg.classList.add('hablando');
-      if (lecImg) lecImg.classList.add('hablando');
-      if (ondas) ondas.classList.add('activo');
-      audio.onended = function() {
-        URL.revokeObjectURL(url);
-        if (obImg) obImg.classList.remove('hablando');
-        if (lecImg) lecImg.classList.remove('hablando');
-        if (ondas) ondas.classList.remove('activo');
-      };
-      audio.play();
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok && data.audio) {
+        var binary = atob(data.audio);
+        var bytes = new Uint8Array(binary.length);
+        for (var i = 0; i < binary.length; i++) { bytes[i] = binary.charCodeAt(i); }
+        var blob = new Blob([bytes], { type: 'audio/mpeg' });
+        var url = URL.createObjectURL(blob);
+        var audio = new Audio(url);
+        var obImg = document.getElementById('ob-moki-img');
+        var lecImg = document.getElementById('lec-moki-img');
+        var ondas = document.getElementById('lec-ondas');
+        if (obImg) obImg.classList.add('hablando');
+        if (lecImg) lecImg.classList.add('hablando');
+        if (ondas) ondas.classList.add('activo');
+        audio.onended = function() {
+          URL.revokeObjectURL(url);
+          if (obImg) obImg.classList.remove('hablando');
+          if (lecImg) lecImg.classList.remove('hablando');
+          if (ondas) ondas.classList.remove('activo');
+        };
+        audio.play();
+      }
     })
     .catch(function() {
       if (synth) {
