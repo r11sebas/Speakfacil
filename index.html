@@ -953,40 +953,10 @@
     var btn = document.getElementById('trad-btn');
     btn.disabled = true; btn.innerText = 'Traduciendo...';
     document.getElementById('trad-result').style.display = 'none';
-    var dirStr = langFrom === 'es' ? 'del español al inglés americano' : 'del inglés al español colombiano';
-    fetch(BACKEND, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        tipo: 'traduccion',
-        texto: texto,
-        deLang: langFrom,
-        aLang: langTo,
-        instruccion: 'Traduce ' + dirStr + ' de forma coloquial y natural, como lo diría un nativo en una conversación real. Evita traducciones literales. Responde SOLO en formato JSON: {"traduccion":"...","nota":"..."}. La nota debe explicar brevemente por qué esta versión suena más natural.'
-      })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      btn.disabled = false; btn.innerText = 'Traducir con Moki';
-      if (data.ok && data.resultado) {
-        try {
-          var res = JSON.parse(data.resultado);
-          mostrarTraduccion(res.traduccion, res.nota);
-        } catch(e) {
-          mostrarTraduccion(data.resultado, '');
-        }
-      } else {
-        traducirFallback(texto, btn);
-      }
-    })
-    .catch(function() { traducirFallback(texto, btn); });
-  }
-
-  function traducirFallback(texto, btn) {
     var callbackName = 'mokiCallback_' + Date.now();
     window[callbackName] = function(data) {
       delete window[callbackName];
-      if (btn) { btn.disabled = false; btn.innerText = 'Traducir con Moki'; }
+      btn.disabled = false; btn.innerText = 'Traducir con Moki';
       if (data.ok) {
         try {
           var res = JSON.parse(data.resultado);
@@ -999,10 +969,10 @@
       }
     };
     var script = document.createElement('script');
-    script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo + '&modo=contextual';
+    script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
     script.onerror = function() {
       delete window[callbackName];
-      if (btn) { btn.disabled = false; btn.innerText = 'Traducir con Moki'; }
+      btn.disabled = false; btn.innerText = 'Traducir con Moki';
       mostrarTraduccion('Error al traducir. Intenta de nuevo.', '');
     };
     document.head.appendChild(script);
