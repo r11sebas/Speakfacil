@@ -1,9 +1,5 @@
 // MokiTalk Backend — Cloudflare Worker
-// Secrets needed (set via: wrangler secret put <NAME>):
-//   CLAUDE_KEY   — Anthropic API key
-//   ELEVEN_KEY   — ElevenLabs API key
-// Var (in wrangler.toml):
-//   ELEVEN_VOICE — ElevenLabs voice ID
+// Secrets: CLAUDE_KEY, ELEVEN_KEY  |  Var: ELEVEN_VOICE
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -18,37 +14,25 @@ export default {
     }
 
     let body;
-    try {
-      body = await request.json();
-    } catch {
-      return jsonError('Invalid JSON body', 400);
-    }
+    try { body = await request.json(); }
+    catch { return jsonError('Invalid JSON body', 400); }
 
     try {
-      if (body.tipo === 'tts') {
-        return await handleTTS(body, env);
-      }
-      const resultado = await handleClaude(body, env);
-      return jsonOk({ resultado });
+      if (body.tipo === 'tts') return await handleTTS(body, env);
+      return await handleClaude(body, env);
     } catch (e) {
       return jsonError(e.message || 'Internal error', 500);
     }
   },
 };
 
-// ─── TTS ────────────────────────────────────────────────────────────────────
+// ─── AUDIO GENERATION ────────────────────────────────────────────────────────
 
-async function handleTTS(body, env) {
-  const text = (body.texto || '').trim();
-  if (!text) return jsonError('Empty text', 400);
-
+async function generateAudio(text, env) {
   const voiceId = env.ELEVEN_VOICE || 'NGuczaxV7CJACyG07XxA';
   const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'xi-api-key': env.ELEVEN_KEY,
-    },
+    headers: { 'Content-Type': 'application/json', 'xi-api-key': env.ELEVEN_KEY },
     body: JSON.stringify({
       text,
       model_id: 'eleven_turbo_v2_5',
@@ -58,22 +42,33 @@ async function handleTTS(body, env) {
 
   if (!res.ok) {
     const err = await res.text();
-    // Parse ElevenLabs error for clearer message
     let msg = 'ElevenLabs ' + res.status;
-    try { const j = JSON.parse(err); msg += ': ' + (j.detail?.message || j.detail || err); } catch { msg += ': ' + err.slice(0, 200); }
-    return jsonError(msg, 502);
+    try { const j = JSON.parse(err); msg += ': ' + (j.detail?.message || j.detail || err); }
+    catch { msg += ': ' + err.slice(0, 200); }
+    throw new Error(msg);
   }
 
   const buffer = await res.arrayBuffer();
   const bytes = new Uint8Array(buffer);
   let binary = '';
   for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-  const audio = btoa(binary);
-
-  return jsonOk({ audio });
+  return btoa(binary);
 }
 
-// ─── CLAUDE ─────────────────────────────────────────────────────────────────
+// ─── TTS ENDPOINT (direct, still used for translator playback) ───────────────
+
+async function handleTTS(body, env) {
+  const text = (body.texto || '').trim();
+  if (!text) return jsonError('Empty text', 400);
+  try {
+    const audio = await generateAudio(text, env);
+    return jsonOk({ audio });
+  } catch (e) {
+    return jsonError(e.message, 502);
+  }
+}
+
+// ─── CLAUDE + TTS COMBINED ───────────────────────────────────────────────────
 
 async function handleClaude(body, env) {
   const { tipo, perfil = {}, historial = [], tema = '', situacion = '', modo = '', texto = '', deLang = 'es', aLang = 'en' } = body;
@@ -85,8 +80,8 @@ async function handleClaude(body, env) {
   if (SINGLE_SHOT.includes(tipo)) {
     const trigger =
       tipo === 'traduccion' ? texto :
-      tipo === 'intro'       ? `Genera la introducción para: ${tema}` :
-                               'Empieza la sesión';
+      tipo === 'intro'      ? `Genera la introducción para: ${tema}` :
+                              'Empieza la sesión';
     messages = [{ role: 'user', content: trigger }];
   } else {
     messages = historial.length > 0 ? historial : [{ role: 'user', content: 'Hola' }];
@@ -94,7 +89,7 @@ async function handleClaude(body, env) {
 
   const maxTokens =
     tipo === 'intro'          ? 200  :
-    tipo === 'primer_mensaje' ? 400  :
+    tipo === 'primer_mensaje' ? 500  :
     tipo === 'traduccion'     ? 300  :
     tipo === 'gramatica'      ? 900  :
     tipo === 'onboarding'     ? 700  :
@@ -107,12 +102,7 @@ async function handleClaude(body, env) {
       'x-api-key': env.CLAUDE_KEY,
       'anthropic-version': '2023-06-01',
     },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: maxTokens,
-      system: systemPrompt,
-      messages,
-    }),
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: maxTokens, system: systemPrompt, messages }),
   });
 
   if (!res.ok) {
@@ -121,7 +111,25 @@ async function handleClaude(body, env) {
   }
 
   const data = await res.json();
-  return data.content[0].text;
+  const resultado = data.content[0].text;
+
+  // Generate TTS alongside the text — audio returns with the same response
+  // so the frontend only needs 1 round-trip (fixes iOS autoplay window issue)
+  const ttsLang = getTTSLang(tipo, modo);
+  let audio = null;
+  if (ttsLang) {
+    try { audio = await generateAudio(resultado, env); }
+    catch (e) { /* TTS failure is non-fatal — text still returns */ }
+  }
+
+  return jsonOk({ resultado, audio });
+}
+
+function getTTSLang(tipo, modo) {
+  if (tipo === 'traduccion' || tipo === 'intro') return null;
+  if (tipo === 'onboarding' || tipo === 'gramatica') return 'es';
+  if (tipo === 'primer_mensaje' && modo === 'gramatica_inicio') return 'es';
+  return 'en';
 }
 
 // ─── SYSTEM PROMPTS ──────────────────────────────────────────────────────────
@@ -157,20 +165,14 @@ Habla en español. Sé específico y motivador. Sin listas, solo texto fluido.`;
 
     case 'primer_mensaje':
       if (modo === 'situacion_inicio') {
-        // If it's a detailed episode/podcast prompt, use it directly
-        if (situacion.length > 200) {
-          return situacion;
-        }
-        return `${situacion}
-
-Empieza la escena naturalmente en 1-2 oraciones. Quédate en el personaje. Solo inglés.`;
+        if (situacion.length > 200) return situacion;
+        return `${situacion}\n\nEmpieza la escena naturalmente en 1-2 oraciones. Quédate en el personaje. Solo inglés.`;
       }
       if (modo === 'gramatica_inicio') {
         return `Eres Moki iniciando una sesión de gramática inglesa.
-Saluda brevemente en español y pregunta qué aspecto del inglés le gustaría practicar hoy, o si tiene dudas de su última conversación.
+Saluda brevemente en español y pregunta qué aspecto del inglés le gustaría practicar hoy.
 Amigable, sin presión. Máximo 2-3 oraciones.`;
       }
-      // leccion_inicio (default)
       return `You are Moki, a fun and encouraging English tutor.
 Start a conversation about: "${tema}"
 User level: ${nivel}. Their interests: ${intereses}.
@@ -213,30 +215,28 @@ Nunca uses términos gramaticales complejos sin explicarlos.`;
 Translate naturally and colloquially — how a native American English speaker would actually say it.
 NEVER translate word-for-word.
 
-Examples of natural translation:
+Examples:
 - "Qué pena con usted" → "I'm so sorry to bother you"
 - "Estar mamado" → "To be wiped out / exhausted"
 - "¿Qué más?" → "What's up?"
 - "Parce" → "Buddy / bro"
 - "Hacer conejo" → "To ditch / skip out on"
-- "Estar en las nubes" → "To have your head in the clouds"
 
-Respond ONLY with valid JSON (no backticks, no markdown):
-{"traduccion":"the natural American English translation","nota":"one-line note on why this phrasing is more natural, or empty string"}`;
+Respond ONLY with valid JSON (no backticks):
+{"traduccion":"the natural American English translation","nota":"one-line note, or empty string"}`;
       }
       return `Eres un experto en traducción de inglés americano al español colombiano coloquial.
 Traduce de forma natural, como lo diría un colombiano en conversación casual.
 NUNCA traduzcas palabra por palabra.
 
-Ejemplos de traducción natural:
+Ejemplos:
 - "What's up?" → "¿Qué más?" o "¿Quiubo?"
 - "I'm beat" → "Estoy muerto / reventado"
 - "It's a long shot" → "Es muy difícil que funcione"
-- "To hang out" → "Salir / rumbear / parchar" según contexto
 - "Ghosting" → "Dejar en visto / desaparecer"
 
-Responde SOLO con JSON válido (sin backticks ni markdown):
-{"traduccion":"la traducción natural en español colombiano","nota":"nota de una línea sobre el uso, o cadena vacía"}`;
+Responde SOLO con JSON válido (sin backticks):
+{"traduccion":"la traducción natural en español colombiano","nota":"nota de una línea, o cadena vacía"}`;
 
     default:
       return `You are Moki, a friendly English tutor. Help the user practice English. Keep responses short and encouraging.`;

@@ -626,6 +626,31 @@
     if (synth) synth.cancel();
   }
 
+  function playAudioBase64(base64, onEnded) {
+    detenerAudio();
+    try {
+      var binary = atob(base64);
+      var bytes = new Uint8Array(binary.length);
+      for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      var blob = new Blob([bytes], { type: 'audio/mpeg' });
+      var url = URL.createObjectURL(blob);
+      var audio = new Audio(url);
+      audioActivo = audio;
+      audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); };
+      audio.play().catch(function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); });
+    } catch(e) { if (onEnded) onEnded(); }
+  }
+
+  function playOrFallback(data, idiomaFallback) {
+    if (data.audio) {
+      playAudioBase64(data.audio);
+    } else if (data.resultado) {
+      var sub = document.getElementById('lec-subtitulo');
+      if (sub && data.error) sub.innerText = '🔇 ' + (data.error || 'Sin audio');
+      if (synth) { var u = new SpeechSynthesisUtterance(limpiarEmojis(data.resultado)); u.lang = idiomaFallback === 'es' ? 'es-CO' : 'en-US'; synth.speak(u); }
+    }
+  }
+
   function hablar(texto, idioma) {
     if (!texto) return;
     var textoLimpio = limpiarEmojis(texto);
@@ -801,7 +826,7 @@
         showBtn = true;
       }
       agregarMsgOB('moki', respuesta, showBtn);
-      hablar(respuesta, 'es');
+      playOrFallback({ audio: data.audio, resultado: respuesta }, 'es');
       obHistorial.push({ role: 'assistant', content: respuesta });
     })
     .catch(function() {
@@ -924,14 +949,13 @@
     .then(function(data) {
       if (data.ok) {
         mostrarMsgLec('moki', data.resultado);
-        hablar(data.resultado, modoLeccion === 'gramatica' ? 'es' : 'en');
+        playOrFallback(data, modoLeccion === 'gramatica' ? 'es' : 'en');
         lecHistorial.push({ role: 'assistant', content: data.resultado });
       }
     })
     .catch(function() {
       var fallback = "¡Hola! Vamos a hablar de " + temaActual + " — cuéntame todo lo que quieras.";
       mostrarMsgLec('moki', fallback);
-      hablar(fallback, 'es');
       lecHistorial.push({ role: 'assistant', content: fallback });
     });
   }
@@ -972,7 +996,7 @@
       lecTyping = false;
       if (data.ok) {
         mostrarMsgLec('moki', data.resultado);
-        hablar(data.resultado, modoLeccion === 'gramatica' ? 'es' : 'en');
+        playOrFallback(data, modoLeccion === 'gramatica' ? 'es' : 'en');
         lecHistorial.push({ role: 'assistant', content: data.resultado });
       }
     })
@@ -997,7 +1021,7 @@
     .then(function(r) { return r.json(); })
     .then(function(data) {
       lecTyping = false;
-      if (data.ok) { mostrarMsgLec('moki', data.resultado); hablar(data.resultado, 'es'); lecHistorial.push({ role: 'assistant', content: data.resultado }); }
+      if (data.ok) { mostrarMsgLec('moki', data.resultado); playOrFallback(data, 'es'); lecHistorial.push({ role: 'assistant', content: data.resultado }); }
     })
     .catch(function() { lecTyping = false; });
   }
