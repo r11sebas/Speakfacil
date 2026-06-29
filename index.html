@@ -647,7 +647,11 @@
         var audio = new Audio(url);
         audioActivo = audio;
         audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; };
-        audio.play();
+        audio.play().catch(function() { URL.revokeObjectURL(url); });
+      } else {
+        var utter = new SpeechSynthesisUtterance(textoLimpio);
+        utter.lang = idioma === 'es' ? 'es-CO' : 'en-US';
+        synth.speak(utter);
       }
     })
     .catch(function() {
@@ -1458,8 +1462,13 @@
         var url = URL.createObjectURL(blob);
         var audio = new Audio(url); audioActivo = audio;
         audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; if (callback) callback(); };
-        audio.play();
-      } else { if (callback) callback(); }
+        audio.play().catch(function() { URL.revokeObjectURL(url); if (callback) callback(); });
+      } else {
+        var utter = new SpeechSynthesisUtterance(textoLimpio);
+        utter.lang = idioma === 'es' ? 'es-CO' : 'en-US';
+        synth.speak(utter);
+        if (callback) callback();
+      }
     })
     .catch(function() { if (callback) callback(); });
   }
