@@ -777,7 +777,10 @@
       obTyping = false;
       document.getElementById('ob-send').disabled = false;
       document.getElementById('ob-status').innerText = 'En línea';
-      if (!data.ok) return;
+      if (!data.ok) {
+        agregarMsgOB('moki', '⚠️ Error: ' + (data.error || 'algo falló. Revisa las API keys en Cloudflare.'));
+        return;
+      }
       var respuesta = data.resultado;
       var marker = 'ONBOARDING_COMPLETO:';
       var idx = respuesta.indexOf(marker);
