@@ -645,6 +645,7 @@
       var blob = new Blob([bytes], { type: 'audio/mpeg' });
       var url = URL.createObjectURL(blob);
       var audio = new Audio(url);
+      audio.playbackRate = 1.2;
       audioActivo = audio;
       audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); };
       audio.play().catch(function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); });
