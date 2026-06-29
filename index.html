@@ -498,10 +498,11 @@
 </div>
 
 <script>
-  var BACKEND = 'https://script.google.com/macros/s/AKfycbw1W4WGZgycKAukKjpITgNojWrZ1F0syB5mA2jzsWsI6vqi0hVA-2ETbc6qt3KdMwDL/exec';
-  var TRADUCTOR_URL = 'https://script.google.com/macros/s/AKfycbzVv_xqYq5Ci8-4qJAm2rR61INSouUlidoeAvJbICgSWOGYYJ9GKWlMPnokARROOgyN3Q/exec';
-  var ELEVEN_KEY = 'sk_493d73a54f51ba38cb11e9d4c30bcd1c273ba17143f3c450';
-  var ELEVEN_VOICE = 'NGuczaxV7CJACyG07XxA';
+  // ⚠️ Reemplaza esta URL por tu Worker URL después de hacer deploy:
+  // wrangler deploy  →  https://mokitalk-backend.<tu-usuario>.workers.dev
+  var BACKEND = 'https://mokitalk-backend.r11jsebas.workers.dev';
+  var ELEVEN_KEY = '';  // ya no se usa desde el frontend — está en el Worker
+  var ELEVEN_VOICE = '';
 
   var perfil = {};
   var usuarios = {};
@@ -1137,11 +1138,15 @@
     var btn = document.getElementById('trad-btn');
     btn.disabled = true; btn.innerText = 'Traduciendo...';
     document.getElementById('trad-result').style.display = 'none';
-    var callbackName = 'mokiCallback_' + Date.now();
-    window[callbackName] = function(data) {
-      delete window[callbackName];
+    fetch(BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ tipo: 'traduccion', texto: texto, deLang: langFrom, aLang: langTo })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
       btn.disabled = false; btn.innerText = 'Traducir con Moki';
-      if (data.ok) {
+      if (data.ok && data.resultado) {
         try {
           var res = JSON.parse(data.resultado);
           mostrarTraduccion(res.traduccion, res.nota);
@@ -1151,15 +1156,11 @@
       } else {
         mostrarTraduccion('Error al traducir. Intenta de nuevo.', '');
       }
-    };
-    var script = document.createElement('script');
-    script.src = TRADUCTOR_URL + '?callback=' + callbackName + '&texto=' + encodeURIComponent(texto) + '&deLang=' + langFrom + '&aLang=' + langTo;
-    script.onerror = function() {
-      delete window[callbackName];
+    })
+    .catch(function() {
       btn.disabled = false; btn.innerText = 'Traducir con Moki';
-      mostrarTraduccion('Error al traducir. Intenta de nuevo.', '');
-    };
-    document.head.appendChild(script);
+      mostrarTraduccion('Error de conexión. Intenta de nuevo.', '');
+    });
   }
 
   function escucharTraduccion() {
