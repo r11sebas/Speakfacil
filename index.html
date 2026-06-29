@@ -626,17 +626,18 @@
     if (synth) synth.cancel();
   }
 
-  // Unlock iOS audio context on user gesture so async audio.play() works later
-  var _audioUnlocked = false;
+  // Keep AudioContext alive across user gestures so async audio.play() works on iOS
+  var _audioCtx = null;
   function desbloquearAudio() {
-    if (_audioUnlocked) return;
-    _audioUnlocked = true;
+    try {
+      if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (_audioCtx.state !== 'running') _audioCtx.resume().catch(function(){});
+    } catch(e) {}
     var s = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
-    s.volume = 0.001;
-    s.play().catch(function() {});
+    s.play().catch(function(){});
   }
 
-  function playAudioBase64(base64, onEnded) {
+  function playAudioBase64(base64, onEnded, fallbackText, fallbackLang) {
     detenerAudio();
     try {
       var binary = atob(base64);
@@ -648,8 +649,15 @@
       audio.playbackRate = 1.35;
       audioActivo = audio;
       audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); };
-      audio.play().catch(function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); });
-    } catch(e) { if (onEnded) onEnded(); }
+      audio.play().catch(function() {
+        URL.revokeObjectURL(url); audioActivo = null;
+        if (fallbackText) mokiVoz(fallbackText, fallbackLang || 'en');
+        if (onEnded) onEnded();
+      });
+    } catch(e) {
+      if (fallbackText) mokiVoz(fallbackText, fallbackLang || 'en');
+      if (onEnded) onEnded();
+    }
   }
 
   function mokiVoz(texto, idioma) {
@@ -677,7 +685,7 @@
 
   function playOrFallback(data, idiomaFallback) {
     if (data.audio) {
-      playAudioBase64(data.audio);
+      playAudioBase64(data.audio, null, data.resultado, idiomaFallback);
     } else if (data.resultado) {
       mokiVoz(data.resultado, idiomaFallback);
     }
@@ -1065,6 +1073,7 @@
   }
 
   function enviarTextoLec() {
+    desbloquearAudio();
     var input = document.getElementById('lec-text-input');
     var texto = input.value.trim();
     if (!texto || lecTyping) return;
@@ -1073,6 +1082,7 @@
   }
 
   function toggleMic() {
+    desbloquearAudio();
     if (isRecording) { pararGrabacion(); return; }
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       document.getElementById('lec-subtitulo').innerText = 'Tu navegador no soporta el micrófono. Usa el teclado ⌨️';
