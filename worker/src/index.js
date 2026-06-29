@@ -113,16 +113,7 @@ async function handleClaude(body, env) {
   const data = await res.json();
   const resultado = data.content[0].text;
 
-  // Generate TTS alongside the text — audio returns with the same response
-  // so the frontend only needs 1 round-trip (fixes iOS autoplay window issue)
-  const ttsLang = getTTSLang(tipo, modo);
-  let audio = null;
-  if (ttsLang) {
-    try { audio = await generateAudio(resultado, env); }
-    catch (e) { /* TTS failure is non-fatal — text still returns */ }
-  }
-
-  return jsonOk({ resultado, audio });
+  return jsonOk({ resultado });
 }
 
 function getTTSLang(tipo, modo) {

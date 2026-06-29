@@ -641,13 +641,34 @@
     } catch(e) { if (onEnded) onEnded(); }
   }
 
+  function mokiVoz(texto, idioma) {
+    if (!synth || !texto) return;
+    synth.cancel();
+    var textoLimpio = limpiarEmojis(texto);
+    if (!textoLimpio) return;
+    var utter = new SpeechSynthesisUtterance(textoLimpio);
+    utter.lang = idioma === 'es' ? 'es-ES' : 'en-US';
+    utter.pitch = 1.35;
+    utter.rate  = 1.08;
+    utter.volume = 1;
+    // Pick best available voice for the language
+    var voices = synth.getVoices();
+    var langPrefix = idioma === 'es' ? 'es' : 'en';
+    var preferidos = ['Google', 'Samantha', 'Karen', 'Moira', 'Daniel', 'Alex'];
+    var voz = null;
+    for (var i = 0; i < preferidos.length && !voz; i++) {
+      voz = voices.find(function(v) { return v.lang.startsWith(langPrefix) && v.name.includes(preferidos[i]); });
+    }
+    if (!voz) voz = voices.find(function(v) { return v.lang.startsWith(langPrefix); });
+    if (voz) utter.voice = voz;
+    synth.speak(utter);
+  }
+
   function playOrFallback(data, idiomaFallback) {
     if (data.audio) {
       playAudioBase64(data.audio);
     } else if (data.resultado) {
-      var sub = document.getElementById('lec-subtitulo');
-      if (sub && data.error) sub.innerText = '🔇 ' + (data.error || 'Sin audio');
-      if (synth) { var u = new SpeechSynthesisUtterance(limpiarEmojis(data.resultado)); u.lang = idiomaFallback === 'es' ? 'es-CO' : 'en-US'; synth.speak(u); }
+      mokiVoz(data.resultado, idiomaFallback);
     }
   }
 
@@ -674,19 +695,11 @@
         audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; };
         audio.play().catch(function() { URL.revokeObjectURL(url); });
       } else {
-        var errMsg = data.error || 'TTS no disponible';
-        var sub = document.getElementById('lec-subtitulo');
-        if (sub) sub.innerText = '🔇 ' + errMsg;
-        if (synth) { var utter = new SpeechSynthesisUtterance(textoLimpio); utter.lang = idioma === 'es' ? 'es-CO' : 'en-US'; synth.speak(utter); }
+        mokiVoz(textoLimpio, idioma);
       }
     })
     .catch(function() {
-      if (synth) {
-        var utter = new SpeechSynthesisUtterance(textoLimpio);
-        utter.lang = idioma === 'es' ? 'es-CO' : 'en-US';
-        utter.rate = 0.88; utter.pitch = 1.1;
-        synth.speak(utter);
-      }
+      mokiVoz(textoLimpio, idioma);
     });
   }
 
