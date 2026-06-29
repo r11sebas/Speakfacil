@@ -626,6 +626,16 @@
     if (synth) synth.cancel();
   }
 
+  // Unlock iOS audio context on user gesture so async audio.play() works later
+  var _audioUnlocked = false;
+  function desbloquearAudio() {
+    if (_audioUnlocked) return;
+    _audioUnlocked = true;
+    var s = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
+    s.volume = 0.001;
+    s.play().catch(function() {});
+  }
+
   function playAudioBase64(base64, onEnded) {
     detenerAudio();
     try {
@@ -755,6 +765,7 @@
   }
 
   function iniciarOnboarding() {
+    desbloquearAudio();
     obHistorial = [];
     document.getElementById('ob-chat').innerHTML = '<div class="ob-chip">Sin presión, sin juicios — solo práctica real</div>';
     document.getElementById('ob-input-area').style.display = 'flex';
@@ -794,6 +805,7 @@
 
   function enviarOB() {
     if (obTyping) return;
+    desbloquearAudio();
     var input = document.getElementById('ob-input');
     var texto = input.value.trim();
     if (!texto) return;
@@ -936,6 +948,7 @@
   }
 
   function empezarLeccion() {
+    desbloquearAudio();
     document.querySelectorAll('audio').forEach(function(a) { a.pause(); a.currentTime = 0; });
     document.querySelector('.lec-start-btn').innerText = '¡Empezar!';
     document.getElementById('lec-intro').style.display = 'none';
