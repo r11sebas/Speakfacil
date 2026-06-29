@@ -117,8 +117,16 @@ async function handleClaude(body, env) {
   const ttsLang = getTTSLang(tipo, modo);
   let audio = null;
   if (ttsLang) {
-    try { audio = await generateAudio(resultado, env); }
-    catch (e) { /* TTS failure is non-fatal */ }
+    // For onboarding, strip the ONBOARDING_COMPLETO:{...} marker before TTS
+    let ttsText = resultado;
+    if (tipo === 'onboarding') {
+      const mIdx = resultado.indexOf('ONBOARDING_COMPLETO:');
+      if (mIdx !== -1) ttsText = resultado.substring(0, mIdx).trim();
+    }
+    if (ttsText) {
+      try { audio = await generateAudio(ttsText, env); }
+      catch (e) { /* TTS failure is non-fatal */ }
+    }
   }
 
   return jsonOk({ resultado, audio });
