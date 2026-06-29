@@ -3,7 +3,7 @@ main = "src/index.js"
 compatibility_date = "2024-09-23"
 
 [vars]
-ELEVEN_VOICE = "NGuczaxV7CJACyG07XxA"
+ELEVEN_VOICE = "cQIBhnciTWugZAxX52uW"
 
 # Secrets (never put values here — set them with the commands below):
 # wrangler secret put CLAUDE_KEY

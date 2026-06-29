@@ -113,7 +113,15 @@ async function handleClaude(body, env) {
   const data = await res.json();
   const resultado = data.content[0].text;
 
-  return jsonOk({ resultado });
+  // Generate TTS alongside text in one round-trip (fixes iOS autoplay window)
+  const ttsLang = getTTSLang(tipo, modo);
+  let audio = null;
+  if (ttsLang) {
+    try { audio = await generateAudio(resultado, env); }
+    catch (e) { /* TTS failure is non-fatal */ }
+  }
+
+  return jsonOk({ resultado, audio });
 }
 
 function getTTSLang(tipo, modo) {
