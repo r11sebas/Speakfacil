@@ -51,14 +51,17 @@ async function handleTTS(body, env) {
     },
     body: JSON.stringify({
       text,
-      model_id: 'eleven_multilingual_v2',
+      model_id: 'eleven_turbo_v2_5',
       voice_settings: { stability: 0.5, similarity_boost: 0.75 },
     }),
   });
 
   if (!res.ok) {
     const err = await res.text();
-    return jsonError('ElevenLabs error: ' + err, 502);
+    // Parse ElevenLabs error for clearer message
+    let msg = 'ElevenLabs ' + res.status;
+    try { const j = JSON.parse(err); msg += ': ' + (j.detail?.message || j.detail || err); } catch { msg += ': ' + err.slice(0, 200); }
+    return jsonError(msg, 502);
   }
 
   const buffer = await res.arrayBuffer();
