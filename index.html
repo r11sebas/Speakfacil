@@ -323,6 +323,20 @@
     .voice-exit-btn { background:none; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); border-radius:20px; padding:8px 20px; font-size:13px; cursor:pointer; }
     .voice-mode-toggle { position:absolute; top:16px; right:60px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:20px; padding:5px 12px; font-size:12px; color:rgba(255,255,255,0.7); font-weight:600; cursor:pointer; z-index:21; }
 
+    /* ── STREAK CELEBRATION ── */
+    .racha-celebracion { position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:300; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; cursor:pointer; }
+    .racha-celebracion { animation:celebFadeIn 0.35s ease; }
+    @keyframes celebFadeIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
+    .racha-celeb-fuego { font-size:80px; animation:fuegoBig 0.6s infinite alternate; display:block; }
+    @keyframes fuegoBig { 0%{transform:scale(1) rotate(-6deg)} 100%{transform:scale(1.18) rotate(6deg)} }
+    .racha-celeb-titulo { font-size:34px; font-weight:900; color:#FF8C42; text-align:center; }
+    .racha-celeb-desc { font-size:15px; color:rgba(255,255,255,0.65); text-align:center; max-width:240px; line-height:1.6; }
+    .racha-celeb-fires { display:flex; gap:4px; }
+    .racha-celeb-tap { font-size:12px; color:rgba(255,255,255,0.3); margin-top:8px; }
+
+    /* ── DASHBOARD GUIDE ── */
+    .guia-highlight { outline:3px solid #FF6B35 !important; outline-offset:4px; border-radius:14px; position:relative; z-index:201; transition:outline 0.3s; }
+
     /* ── LEVEL BADGES ── */
     .badge-a1 { background:rgba(34,197,94,0.2); color:#86efac; }
     .badge-a2 { background:rgba(59,130,246,0.2); color:#93c5fd; }
@@ -984,6 +998,9 @@
   }
 
   function mostrarRacha() {
+    var hoy = new Date().toISOString().split('T')[0];
+    var prev = {};
+    try { prev = JSON.parse(localStorage.getItem('mokiRacha') || '{}'); } catch(e) {}
     var r = obtenerRacha();
     var strip = document.getElementById('dash-racha');
     if (r.count >= 1) {
@@ -991,6 +1008,80 @@
       document.getElementById('dash-racha-num').innerText = r.count + (r.count === 1 ? ' día' : ' días');
       document.getElementById('dash-racha-xp').innerText = '+' + (r.count * 10) + ' XP';
     }
+    // Celebrate when it's a new day (streak just incremented)
+    if (prev.last !== hoy) {
+      setTimeout(function() { mostrarCelebracionRacha(r.count); }, 700);
+    }
+  }
+
+  function mostrarCelebracionRacha(count) {
+    var overlay = document.createElement('div');
+    overlay.className = 'racha-celebracion';
+    var fires = '';
+    for (var i = 0; i < Math.min(count, 7); i++) fires += '<span style="font-size:24px">🔥</span>';
+    overlay.innerHTML = '<span class="racha-celeb-fuego">🔥</span>'
+      + '<div class="racha-celeb-titulo">' + (count === 1 ? '¡Racha iniciada!' : '¡' + count + ' días seguidos!') + '</div>'
+      + '<p class="racha-celeb-desc">' + (count === 1 ? 'Practica cada día para construir tu racha' : count < 7 ? '¡Imparable! Sigue así' : '¡Una semana entera! Eres una máquina') + '</p>'
+      + '<div class="racha-celeb-fires">' + fires + '</div>'
+      + '<p class="racha-celeb-tap">Toca para continuar</p>';
+    overlay.onclick = function() { overlay.style.animation = 'none'; overlay.style.opacity = '0'; overlay.style.transition = 'opacity 0.25s'; setTimeout(function() { overlay.remove(); }, 250); };
+    document.body.appendChild(overlay);
+    setTimeout(function() { if (overlay.parentNode) overlay.click(); }, 3000);
+  }
+
+  function iniciarGuiaDashboard() {
+    if (localStorage.getItem('mokiGuiaVista')) return;
+    var pasos = [
+      { icon:'👋', titulo:'Bienvenido a tu espacio', desc:'Moki preparó todo según tus intereses. Te doy un tour rápido de 30 segundos.', highlight:null },
+      { icon:'🔥', titulo:'Tu racha diaria', desc:'Practica cada día para mantenerla encendida. Entre más días seguidos, más XP ganas.', highlight:'dash-racha' },
+      { icon:'🎯', titulo:'Tus temas personalizados', desc:'Moki los eligió basado en lo que te gusta. Toca uno y practica una conversación real.', highlight:'temas-row' },
+      { icon:'🎬', titulo:'Series y podcasts con audio', desc:'Episodios narrados por IA. Escúchalos como un podcast y practica después.', highlight:'dash-series-row' },
+      { icon:'🚀', titulo:'¡Todo listo!', desc:'Practica un poco cada día — 10 minutos son suficientes. ¡Moki siempre está aquí!', highlight:null }
+    ];
+    var idx = 0;
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:250;display:flex;align-items:flex-end;justify-content:center;padding:20px 20px 32px;';
+    document.body.appendChild(overlay);
+
+    function render() {
+      var p = pasos[idx];
+      document.querySelectorAll('.guia-highlight').forEach(function(el) { el.classList.remove('guia-highlight'); });
+      if (p.highlight) {
+        var el = document.getElementById(p.highlight);
+        if (el) { el.classList.add('guia-highlight'); el.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+      }
+      var dots = pasos.map(function(_, i) {
+        return '<div style="width:7px;height:7px;border-radius:50%;background:' + (i === idx ? '#FF6B35' : 'rgba(255,255,255,0.2)') + '"></div>';
+      }).join('');
+      var btn = idx < pasos.length - 1
+        ? '<button id="guia-next-btn" style="flex:1;background:linear-gradient(135deg,#FF6B35,#FF8C42);color:white;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer">Siguiente →</button>'
+          + '<button id="guia-skip-btn" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:13px;cursor:pointer;padding:8px">Saltar</button>'
+        : '<button id="guia-next-btn" style="flex:1;background:linear-gradient(135deg,#FF6B35,#FF8C42);color:white;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer">¡Empezar con Moki! 🚀</button>';
+      overlay.innerHTML = '<div style="background:#1c1c1c;border:1px solid rgba(255,107,53,0.25);border-radius:20px;padding:22px 24px;max-width:380px;width:100%;animation:screenIn 0.25s ease">'
+        + '<div style="display:flex;gap:6px;margin-bottom:18px;justify-content:center">' + dots + '</div>'
+        + '<div style="text-align:center;margin-bottom:20px">'
+        + '<div style="font-size:48px;margin-bottom:10px">' + p.icon + '</div>'
+        + '<h3 style="font-size:18px;font-weight:800;margin-bottom:8px;color:white">' + p.titulo + '</h3>'
+        + '<p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.65">' + p.desc + '</p>'
+        + '</div>'
+        + '<div style="display:flex;gap:8px;align-items:center">' + btn + '</div>'
+        + '</div>';
+      document.getElementById('guia-next-btn').onclick = function() {
+        idx++;
+        if (idx >= pasos.length) { cerrarGuia(); return; }
+        render();
+      };
+      var skip = document.getElementById('guia-skip-btn');
+      if (skip) skip.onclick = cerrarGuia;
+    }
+
+    function cerrarGuia() {
+      document.querySelectorAll('.guia-highlight').forEach(function(el) { el.classList.remove('guia-highlight'); });
+      overlay.remove();
+      localStorage.setItem('mokiGuiaVista', '1');
+    }
+
+    render();
   }
 
   // ─── CONTINUAR SIN CUENTA ───────────────────────────────────────────────────
@@ -1139,6 +1230,7 @@
     mostrarRacha();
     generarRutaRecomendada();
     showScreen('screen-dashboard');
+    setTimeout(iniciarGuiaDashboard, 600);
   }
 
   function generarRutaRecomendada() {
