@@ -50,8 +50,12 @@ async function generateAudio(text, env) {
 
   const buffer = await res.arrayBuffer();
   const bytes = new Uint8Array(buffer);
+  // Chunked apply avoids O(n²) string concat — critical for long episode audio (1-3 MB)
   let binary = '';
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  const CHUNK = 0x8000;
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  }
   return btoa(binary);
 }
 
