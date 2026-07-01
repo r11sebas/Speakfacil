@@ -1129,6 +1129,7 @@
   function showTab(tab) { showScreen('screen-' + tab); }
 
   async function loginEmail() {
+    desbloquearAudio(); // antes del await — mantiene el contexto de gesto del usuario
     var email = document.getElementById('login-email').value.trim();
     var password = document.getElementById('login-password').value;
     var err = document.getElementById('login-error');
@@ -1150,6 +1151,7 @@
   }
 
   async function registrar() {
+    desbloquearAudio(); // antes del await — mantiene el contexto de gesto del usuario
     var nombre = document.getElementById('nombre').value.trim();
     var email = document.getElementById('register-email').value.trim();
     var password = document.getElementById('register-password').value;
