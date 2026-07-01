@@ -926,6 +926,7 @@
   }
 
   function playOrFallback(data, idiomaFallback) {
+    if (data.audioError) console.warn('[MokiTalk TTS]', data.audioError);
     if (data.audio) {
       playAudioBase64(data.audio, null, data.resultado, idiomaFallback);
     } else if (data.resultado) {
@@ -1945,13 +1946,13 @@
       playerData = {
         texto: data.resultado,
         audio: data.audio,
-        oraciones: data.resultado.split(/(?<=[.!?])\s+/).filter(function(s) { return s.trim().length > 3; }),
+        oraciones: (data.resultado.match(/[^.!?]+[.!?]+/g) || [data.resultado]).map(function(s){return s.trim();}).filter(function(s){return s.length>3;}),
         gradient: cfg.gradient,
         idioma: cfg.idioma
       };
       document.getElementById('player-subtitulo-text').innerText = playerData.oraciones[0] || data.resultado;
       _playerShowState('main');
-      // Decode audio into buffer for instant play
+      if (data.audioError) console.warn('[MokiTalk TTS]', data.audioError);
       if (playerData.audio && _audioCtx) {
         var bin = atob(playerData.audio);
         var bytes = new Uint8Array(bin.length);
@@ -1959,7 +1960,14 @@
         _audioCtx.decodeAudioData(bytes.buffer, function(buf) {
           playerBuffer = buf;
           document.getElementById('player-time-dur').innerText = _fmtTime(buf.duration / 1.35);
+          // Auto-play as soon as buffer is ready — AudioContext was unlocked by the card tap
+          if (document.getElementById('screen-player').classList.contains('active') && !playerIsPlaying) {
+            _playerPlay();
+          }
         }, function() {});
+      } else {
+        // No TTS audio (ElevenLabs unavailable) — use WebSpeech synthesis on play
+        document.getElementById('player-time-dur').innerText = '🔇';
       }
     })
     .catch(function(e) {
@@ -2006,11 +2014,13 @@
         _playHTMLFallback();
       });
     } else if (playerData && playerData.texto) {
-      // No audio at all — use speech synthesis
+      // No TTS audio — use WebSpeech synthesis
       mokiVoz(playerData.texto, playerData.idioma || 'en');
       playerIsPlaying = true;
       _setPlayingUI(true);
-      _startKaraoke(playerData.oraciones, 8000);
+      // Estimate duration: ~150 wpm × rate 1.08 ≈ 162 wpm → ~370ms per word
+      var wordCount = (playerData.texto || '').split(/\s+/).length;
+      _startKaraoke(playerData.oraciones, Math.max(10000, wordCount * 370));
     }
   }
 

@@ -120,8 +120,8 @@ async function handleClaude(body, env) {
   // Generate TTS alongside text in one round-trip (fixes iOS autoplay window)
   const ttsLang = getTTSLang(tipo, modo);
   let audio = null;
+  let audioError = null;
   if (ttsLang) {
-    // For onboarding, strip the ONBOARDING_COMPLETO:{...} marker before TTS
     let ttsText = resultado;
     if (tipo === 'onboarding') {
       const mIdx = resultado.indexOf('ONBOARDING_COMPLETO:');
@@ -129,11 +129,11 @@ async function handleClaude(body, env) {
     }
     if (ttsText) {
       try { audio = await generateAudio(ttsText, env); }
-      catch (e) { /* TTS failure is non-fatal */ }
+      catch (e) { audioError = e.message; }
     }
   }
 
-  return jsonOk({ resultado, audio });
+  return jsonOk({ resultado, audio, audioError });
 }
 
 function getTTSLang(tipo, modo) {
