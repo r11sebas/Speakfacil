@@ -9,6 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MokiTalk">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; flex-direction: column; color: white; }
@@ -391,7 +392,7 @@
     <h2>Entrar a MokiTalk</h2>
     <p class="subtitle">Continúa donde lo dejaste</p>
     <div class="error-msg" id="login-error"></div>
-    <button class="btn-google" onclick="iniciarOnboarding()">
+    <button class="btn-google" onclick="loginGoogle()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Continuar con Google
     </button>
@@ -411,7 +412,7 @@
     <h2>Únete a MokiTalk</h2>
     <p class="subtitle">Es gratis, siempre</p>
     <div class="error-msg" id="register-error"></div>
-    <button class="btn-google" onclick="iniciarOnboarding()">
+    <button class="btn-google" onclick="loginGoogle()">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
       Registrarse con Google
     </button>
@@ -678,8 +679,13 @@
   var ELEVEN_KEY = '';  // ya no se usa desde el frontend — está en el Worker
   var ELEVEN_VOICE = '';
 
+  var SUPABASE_URL  = 'https://cbuyajccwxoepwtmptzg.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNidXlhamNjd3hvZXB3dG1wdHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4Njc4NzMsImV4cCI6MjA5ODQ0Mzg3M30.QWrVD2U7izSVTYJ-iBJxTx8jDIEVf2sNZLfRS2UeIEY';
+  var sb = null;
+  var sbUser = null;
+  var esInvitado = false;
+
   var perfil = {};
-  var usuarios = {};
   var obHistorial = [];
   var obTyping = false;
   var lecHistorial = [];
@@ -957,20 +963,42 @@
     });
   }
 
-  window.onload = function() {
+  window.onload = async function() {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
     var params = new URLSearchParams(window.location.search);
     if (params.get('dev') === 'true') {
       perfil = { nombre: 'Sebastian', motivacion: 'trabajo y desarrollo personal', confianza: 'intermedio', intereses: 'videojuegos, música, tecnología, fútbol', meta: 'hablar con fluidez en reuniones', lang: 'es' };
-      mostrarDashboard();
-      return;
+      mostrarDashboard(); return;
     }
+
+    // Sesión activa (incluyendo callback de OAuth Google)
+    try {
+      var sessionRes = await sb.auth.getSession();
+      var session = sessionRes.data && sessionRes.data.session;
+      if (session) {
+        sbUser = session.user;
+        esInvitado = false;
+        var loaded = await cargarPerfilSupabase();
+        if (loaded) { mostrarDashboard(); return; }
+        // Cuenta nueva — hacer onboarding
+        perfil.nombre = (session.user.user_metadata && session.user.user_metadata.full_name)
+          ? session.user.user_metadata.full_name.split(' ')[0] : session.user.email.split('@')[0];
+        showScreen('screen-transicion');
+        setTimeout(iniciarOnboarding, 2000);
+        return;
+      }
+    } catch(e) {}
+
+    // Sin sesión — revisar localStorage (modo invitado)
     try {
       var saved = localStorage.getItem('mokiPerfil');
       if (saved) {
         var p = JSON.parse(saved);
-        if (p && p.nombre && p.intereses) { perfil = p; mostrarDashboard(); return; }
+        if (p && p.nombre && p.intereses) { perfil = p; esInvitado = true; mostrarDashboard(); return; }
       }
     } catch(e) {}
+    // Pantalla de entrada
   };
 
   function showScreen(id) {
@@ -995,6 +1023,10 @@
     data.count = data.last === ayer ? data.count + 1 : 1;
     data.last = hoy;
     try { localStorage.setItem('mokiRacha', JSON.stringify(data)); } catch(e) {}
+    // Sincronizar con Supabase en background
+    if (sbUser && !esInvitado) {
+      sb.from('streaks').upsert({ user_id: sbUser.id, count: data.count, last_date: hoy, updated_at: new Date().toISOString() }).then(function() {});
+    }
     return data;
   }
 
@@ -1088,6 +1120,7 @@
   // ─── CONTINUAR SIN CUENTA ───────────────────────────────────────────────────
 
   function continuarSinCuenta() {
+    esInvitado = true; sbUser = null;
     perfil.nombre = 'Viajero';
     perfil.motivacion = 'explorar';
     iniciarOnboarding();
@@ -1095,32 +1128,52 @@
 
   function showTab(tab) { showScreen('screen-' + tab); }
 
-  function loginEmail() {
+  async function loginEmail() {
     var email = document.getElementById('login-email').value.trim();
     var password = document.getElementById('login-password').value;
     var err = document.getElementById('login-error');
     if (!email || !password) { err.style.display='block'; err.innerText='Completa todos los campos.'; return; }
-    var u = usuarios[email];
-    if (!u || u.password !== password) { err.style.display='block'; err.innerText='Correo o contraseña incorrectos.'; return; }
-    err.style.display = 'none';
-    perfil.nombre = u.nombre;
+    var btn = document.querySelector('#screen-login .btn-primary');
+    btn.disabled = true; btn.innerText = 'Entrando...';
+    var res = await sb.auth.signInWithPassword({ email: email, password: password });
+    btn.disabled = false; btn.innerText = 'Entrar';
+    if (res.error) {
+      err.style.display = 'block';
+      err.innerText = res.error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : res.error.message;
+      return;
+    }
+    sbUser = res.data.user; esInvitado = false; err.style.display = 'none';
+    var loaded = await cargarPerfilSupabase();
+    if (loaded) { mostrarDashboard(); return; }
+    perfil.nombre = res.data.user.email.split('@')[0];
     iniciarOnboarding();
   }
 
-  function registrar() {
+  async function registrar() {
     var nombre = document.getElementById('nombre').value.trim();
     var email = document.getElementById('register-email').value.trim();
     var password = document.getElementById('register-password').value;
     var err = document.getElementById('register-error');
     if (!nombre || !email || !password) { err.style.display='block'; err.innerText='Completa todos los campos.'; return; }
     if (password.length < 6) { err.style.display='block'; err.innerText='Contraseña mínimo 6 caracteres.'; return; }
-    if (usuarios[email]) { err.style.display='block'; err.innerText='Este correo ya está registrado.'; return; }
-    err.style.display = 'none';
-    usuarios[email] = { nombre: nombre, email: email, password: password };
+    var btn = document.querySelector('#screen-register .btn-primary');
+    btn.disabled = true; btn.innerText = 'Creando cuenta...';
+    var res = await sb.auth.signUp({ email: email, password: password, options: { data: { full_name: nombre } } });
+    btn.disabled = false; btn.innerText = 'Crear cuenta y conocer a Moki';
+    if (res.error) { err.style.display='block'; err.innerText = res.error.message; return; }
+    sbUser = res.data.user; esInvitado = false; err.style.display = 'none';
     perfil.nombre = nombre;
     document.getElementById('transicion-titulo').innerText = '¡Hola, ' + nombre + '!';
     showScreen('screen-transicion');
-    setTimeout(function() { iniciarOnboarding(); }, 2500);
+    setTimeout(iniciarOnboarding, 2500);
+  }
+
+  async function loginGoogle() {
+    var { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin + window.location.pathname }
+    });
+    if (error) console.error('Google login error:', error.message);
   }
 
   function iniciarOnboarding() {
@@ -1221,7 +1274,39 @@
     });
   }
 
+  async function cargarPerfilSupabase() {
+    if (!sbUser) return false;
+    var res = await sb.from('profiles').select('*').eq('id', sbUser.id).maybeSingle();
+    if (!res.data) return false;
+    var d = res.data;
+    perfil.nombre = d.nombre; perfil.confianza = d.nivel;
+    perfil.intereses = d.intereses; perfil.meta = d.meta; perfil.motivacion = d.motivacion;
+    // Cargar racha en localStorage para que obtenerRacha() la use sync
+    var sr = await sb.from('streaks').select('count,last_date').eq('user_id', sbUser.id).maybeSingle();
+    if (sr.data) {
+      try { localStorage.setItem('mokiRacha', JSON.stringify({ count: sr.data.count, last: sr.data.last_date })); } catch(e) {}
+    }
+    // Cargar progreso de series
+    var pr = await sb.from('progress').select('serie_id,ep_num').eq('user_id', sbUser.id);
+    if (pr.data && pr.data.length) {
+      pr.data.forEach(function(row) {
+        if (!progresoSeries[row.serie_id]) progresoSeries[row.serie_id] = {};
+        progresoSeries[row.serie_id][row.ep_num] = true;
+      });
+      try { localStorage.setItem('mokiSeriesProgress', JSON.stringify(progresoSeries)); } catch(e) {}
+    }
+    return true;
+  }
+
   function mostrarDashboard() {
+    // Guardar perfil en Supabase (fire-and-forget) y en localStorage como caché
+    if (sbUser && !esInvitado) {
+      sb.from('profiles').upsert({
+        id: sbUser.id, nombre: perfil.nombre, nivel: perfil.confianza || 'intermedio',
+        intereses: perfil.intereses || '', meta: perfil.meta || '', motivacion: perfil.motivacion || '',
+        updated_at: new Date().toISOString()
+      }).then(function() {});
+    }
     try { localStorage.setItem('mokiPerfil', JSON.stringify(perfil)); } catch(e) {}
     document.getElementById('dash-saludo').innerText = '¡Hola, ' + (perfil.nombre || 'amigo') + '!';
     document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 ' + perfil.meta : 'Elige qué quieres hacer hoy';
@@ -1645,9 +1730,12 @@
     hablar(texto, langTo);
   }
 
-  function cerrarSesion() {
-    try { localStorage.removeItem('mokiPerfil'); } catch(e) {}
+  async function cerrarSesion() {
+    if (sbUser) await sb.auth.signOut();
+    sbUser = null; esInvitado = false;
     perfil = {}; obHistorial = []; lecHistorial = [];
+    try { localStorage.removeItem('mokiPerfil'); localStorage.removeItem('mokiRacha'); localStorage.removeItem('mokiSeriesProgress'); } catch(e) {}
+    progresoSeries = {};
     showScreen('screen-know');
   }
 
@@ -1677,6 +1765,9 @@
     if (!progresoSeries[serieId]) progresoSeries[serieId] = {};
     progresoSeries[serieId][epNum] = true;
     try { localStorage.setItem('mokiSeriesProgress', JSON.stringify(progresoSeries)); } catch(e) {}
+    if (sbUser && !esInvitado) {
+      sb.from('progress').upsert({ user_id: sbUser.id, serie_id: serieId, ep_num: epNum }).then(function() {});
+    }
   }
 
   function epCompletado(serieId, epNum) {
