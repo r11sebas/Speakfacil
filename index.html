@@ -324,6 +324,31 @@
     .voice-exit-btn { background:none; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); border-radius:20px; padding:8px 20px; font-size:13px; cursor:pointer; }
     .voice-mode-toggle { position:absolute; top:16px; right:60px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:20px; padding:5px 12px; font-size:12px; color:rgba(255,255,255,0.7); font-weight:600; cursor:pointer; z-index:21; }
 
+    /* ── PERFIL MODAL (bottom sheet) ── */
+    .perfil-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:400; display:none; align-items:flex-end; }
+    .perfil-overlay.visible { display:flex; }
+    .perfil-sheet { background:#111; border-radius:20px 20px 0 0; width:100%; padding:24px 24px 40px; animation:slideUp 0.3s ease; }
+    @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+    .perfil-handle { width:36px; height:4px; background:rgba(255,255,255,0.15); border-radius:2px; margin:0 auto 20px; }
+    .perfil-avatar { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#FF6B35,#FF8C42); display:flex; align-items:center; justify-content:center; font-size:28px; margin:0 auto 12px; }
+    .perfil-nombre { font-size:18px; font-weight:800; text-align:center; margin-bottom:4px; }
+    .perfil-email { font-size:13px; color:rgba(255,255,255,0.4); text-align:center; margin-bottom:20px; }
+    .perfil-plan-row { background:rgba(255,255,255,0.05); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .perfil-plan-info { flex:1; }
+    .perfil-plan-info h4 { font-size:14px; font-weight:700; margin-bottom:2px; }
+    .perfil-plan-info p { font-size:12px; color:rgba(255,255,255,0.4); }
+    .perfil-input-row { background:rgba(255,255,255,0.05); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .perfil-input { flex:1; background:none; border:none; color:white; font-size:15px; outline:none; }
+    .perfil-save-btn { background:#FF6B35; color:white; border:none; border-radius:8px; padding:6px 14px; font-size:13px; font-weight:600; cursor:pointer; }
+    .perfil-logout { width:100%; background:rgba(255,50,50,0.1); border:1px solid rgba(255,50,50,0.2); color:#ff6b6b; border-radius:12px; padding:13px; font-size:14px; font-weight:600; cursor:pointer; margin-top:8px; }
+
+    /* ── RESET PASSWORD MODAL ── */
+    .reset-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:450; display:none; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; }
+    .reset-overlay.visible { display:flex; }
+    .reset-box { background:#1a1a1a; border-radius:20px; padding:28px 24px; width:100%; max-width:340px; }
+    .reset-box h3 { font-size:18px; font-weight:800; margin-bottom:8px; }
+    .reset-box p { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:20px; line-height:1.6; }
+
     /* ── PLAN STRIP ── */
     .plan-strip { margin:0 20px 12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:10px 14px; display:flex; align-items:center; gap:10px; }
     .plan-badge { font-size:11px; font-weight:700; letter-spacing:0.5px; padding:3px 8px; border-radius:6px; background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5); }
@@ -428,7 +453,8 @@
     <input class="input-field" id="login-email" type="email" placeholder="correo@ejemplo.com" />
     <input class="input-field" id="login-password" type="password" placeholder="Contraseña" />
     <button class="btn-primary" onclick="loginEmail()">Entrar</button>
-    <div class="switch-auth">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
+    <div class="switch-auth" style="margin-bottom:6px">¿No tienes cuenta? <span onclick="showScreen('screen-register')">Regístrate gratis</span></div>
+    <div class="switch-auth"><span onclick="abrirResetPassword()" style="color:rgba(255,255,255,0.35);font-weight:400">¿Olvidaste tu contraseña?</span></div>
     <button class="btn-invitado" onclick="continuarSinCuenta()">Continuar sin cuenta →</button>
   </div>
 </div>
@@ -483,7 +509,7 @@
 
 <!-- PANTALLA 7: DASHBOARD -->
 <div class="screen" id="screen-dashboard">
-  <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">MokiTalk</span><button onclick="cerrarSesion()" style="background:none;border:none;color:rgba(255,255,255,0.35);font-size:12px;cursor:pointer;margin-left:auto;padding:4px 8px;">Salir</button></div>
+  <div class="header"><img src="moki.png" class="moki-header-img" alt="Moki" /><span class="header-logo">MokiTalk</span><button onclick="abrirPerfil()" style="background:none;border:none;color:rgba(255,255,255,0.55);font-size:12px;cursor:pointer;margin-left:auto;padding:4px 8px;" id="header-perfil-btn">👤 Mi cuenta</button></div>
   <div class="dashboard-body">
     <div class="dash-greeting">
       <h2 id="dash-saludo">¡Hola!</h2>
@@ -716,6 +742,8 @@
   var LIMITE_EPISODIOS = 1;
   var LIMITE_MENSAJES  = 10;
   var dailyUsage = { episodes: 0, messages: 0 };
+  var isPremiumUser = false;
+  var WOMPI_PUBLIC_KEY = 'pub_prod_REEMPLAZA_CON_TU_CLAVE_WOMPI';
 
   var SUPABASE_URL  = 'https://cbuyajccwxoepwtmptzg.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNidXlhamNjd3hvZXB3dG1wdHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4Njc4NzMsImV4cCI6MjA5ODQ0Mzg3M30.QWrVD2U7izSVTYJ-iBJxTx8jDIEVf2sNZLfRS2UeIEY';
@@ -1010,6 +1038,12 @@
       mostrarDashboard(); return;
     }
 
+    // Callback de pago Wompi
+    var paymentRef = params.get('payment_ref');
+    if (paymentRef && paymentRef.startsWith('MOKI-')) {
+      history.replaceState({}, document.title, window.location.pathname);
+    }
+
     // Sesión activa (incluyendo callback de OAuth Google)
     try {
       var sessionRes = await sb.auth.getSession();
@@ -1018,7 +1052,19 @@
         sbUser = session.user;
         esInvitado = false;
         var loaded = await cargarPerfilSupabase();
-        if (loaded) { mostrarDashboard(); return; }
+        if (loaded) {
+          mostrarDashboard();
+          if (paymentRef) {
+            setTimeout(function() {
+              var t = document.createElement('div');
+              t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:14px 20px;border-radius:14px;font-size:14px;font-weight:600;z-index:600;text-align:center;max-width:300px;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+              t.innerText = esPremium() ? '¡Bienvenido a MokiTalk Premium! 🎉 Ya tienes acceso ilimitado.' : '¡Pago recibido! Tu cuenta Premium se activará en segundos.';
+              document.body.appendChild(t);
+              setTimeout(function() { if (t.parentNode) t.remove(); }, 6000);
+            }, 800);
+          }
+          return;
+        }
         // Cuenta nueva — hacer onboarding
         perfil.nombre = (session.user.user_metadata && session.user.user_metadata.full_name)
           ? session.user.user_metadata.full_name.split(' ')[0] : session.user.email.split('@')[0];
@@ -1160,7 +1206,7 @@
   // ─── FREEMIUM ────────────────────────────────────────────────────────────────
 
   function esPremium() {
-    return localStorage.getItem('mokiPremium') === '1' || !!perfil.premium;
+    return isPremiumUser || localStorage.getItem('mokiPremium') === '1' || !!perfil.premium;
   }
 
   function cargarUsoDiarioLocal() {
@@ -1213,12 +1259,61 @@
 
   function clicarPremium() {
     cerrarPaywall();
-    // Toast temporal hasta que Wompi esté activo
-    var t = document.createElement('div');
-    t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#FF6B35;color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:600;max-width:290px;text-align:center;';
-    t.innerText = '¡Próximamente! Escríbenos a @MokiTalk en Instagram y te damos 7 días Premium gratis por ser early adopter 🙌';
-    document.body.appendChild(t);
-    setTimeout(function() { if (t.parentNode) t.remove(); }, 5000);
+    mostrarWompiPlanes();
+  }
+
+  function mostrarWompiPlanes() {
+    if (document.getElementById('wompi-planes-overlay')) return;
+    var overlay = document.createElement('div');
+    overlay.id = 'wompi-planes-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;display:flex;align-items:flex-end;justify-content:center;';
+    overlay.innerHTML = '<div style="background:#111;border-radius:24px 24px 0 0;padding:28px 20px 44px;max-width:420px;width:100%;">'
+      + '<div style="width:40px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:0 auto 20px;"></div>'
+      + '<h3 style="font-size:20px;font-weight:800;text-align:center;margin-bottom:6px;">Hazte Premium 🚀</h3>'
+      + '<p style="text-align:center;color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:20px;">Episodios y mensajes ilimitados · Voz HD</p>'
+      + '<div onclick="iniciarPagoWompi(\'mensual\')" style="background:rgba(255,107,53,0.1);border:2px solid #FF6B35;border-radius:16px;padding:16px;margin-bottom:12px;cursor:pointer;">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;">'
+      + '<div><div style="font-weight:700;font-size:16px;">Mensual</div><div style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:2px;">Cancela cuando quieras</div></div>'
+      + '<div style="text-align:right;"><div style="font-size:20px;font-weight:800;color:#FF6B35;">$19.900</div><div style="color:rgba(255,255,255,0.4);font-size:11px;">COP / mes</div></div>'
+      + '</div></div>'
+      + '<div onclick="iniciarPagoWompi(\'anual\')" style="background:rgba(34,197,94,0.08);border:2px solid #22c55e;border-radius:16px;padding:16px;margin-bottom:20px;cursor:pointer;position:relative;">'
+      + '<div style="position:absolute;top:-10px;right:16px;background:#22c55e;color:white;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;">AHORRA 37%</div>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;">'
+      + '<div><div style="font-weight:700;font-size:16px;">Anual</div><div style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:2px;">$12.491/mes · El más popular</div></div>'
+      + '<div style="text-align:right;"><div style="font-size:20px;font-weight:800;color:#22c55e;">$149.900</div><div style="color:rgba(255,255,255,0.4);font-size:11px;">COP / año</div></div>'
+      + '</div></div>'
+      + '<button onclick="document.getElementById(\'wompi-planes-overlay\').remove()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:13px;cursor:pointer;width:100%;padding:8px;">Cancelar</button>'
+      + '</div>';
+    document.body.appendChild(overlay);
+  }
+
+  async function iniciarPagoWompi(plan) {
+    var overlay = document.getElementById('wompi-planes-overlay');
+    if (overlay) overlay.remove();
+    if (!sbUser) {
+      var t = document.createElement('div');
+      t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#FF6B35;color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:600;max-width:290px;text-align:center;';
+      t.innerText = 'Crea una cuenta gratis primero para suscribirte 😊';
+      document.body.appendChild(t);
+      setTimeout(function() { if (t.parentNode) t.remove(); }, 4000);
+      return;
+    }
+    try {
+      var res = await fetch(BACKEND, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tipo: 'wompi_checkout', userId: sbUser.id, plan: plan, email: sbUser.email })
+      });
+      var data = await res.json();
+      if (data.checkoutUrl) { window.location.href = data.checkoutUrl; return; }
+      throw new Error('No checkout URL');
+    } catch(e) {
+      var t = document.createElement('div');
+      t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#ef4444;color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:600;max-width:290px;text-align:center;';
+      t.innerText = 'Error al iniciar el pago. Intenta de nuevo.';
+      document.body.appendChild(t);
+      setTimeout(function() { if (t.parentNode) t.remove(); }, 3000);
+    }
   }
 
   function actualizarPlanStrip() {
@@ -1423,6 +1518,14 @@
     var hoy = new Date().toISOString().split('T')[0];
     var ur = await sb.from('daily_usage').select('episodes_opened,messages_sent').eq('user_id', sbUser.id).eq('date', hoy).maybeSingle();
     if (ur.data) dailyUsage = { episodes: ur.data.episodes_opened, messages: ur.data.messages_sent };
+    // Verificar suscripción premium
+    var subr = await sb.from('subscriptions').select('plan,valid_until').eq('user_id', sbUser.id).maybeSingle();
+    if (subr.data && subr.data.plan === 'premium' && subr.data.valid_until) {
+      if (new Date(subr.data.valid_until) > new Date()) {
+        isPremiumUser = true;
+        perfil.premium = true;
+      }
+    }
     return true;
   }
 
@@ -1864,11 +1967,77 @@
 
   async function cerrarSesion() {
     if (sbUser) await sb.auth.signOut();
-    sbUser = null; esInvitado = false;
+    sbUser = null; esInvitado = false; isPremiumUser = false;
     perfil = {}; obHistorial = []; lecHistorial = [];
     try { localStorage.removeItem('mokiPerfil'); localStorage.removeItem('mokiRacha'); localStorage.removeItem('mokiSeriesProgress'); } catch(e) {}
     progresoSeries = {};
     showScreen('screen-know');
+  }
+
+  // ─── PERFIL ──────────────────────────────────────────────────────────────────
+
+  function abrirPerfil() {
+    document.getElementById('perfil-nombre-lbl').innerText = perfil.nombre || 'Usuario';
+    document.getElementById('perfil-email-lbl').innerText = sbUser ? sbUser.email : (esInvitado ? 'Modo invitado' : '');
+    document.getElementById('perfil-nombre-input').value = perfil.nombre || '';
+    if (esPremium()) {
+      document.getElementById('perfil-plan-icon').innerText = '⭐';
+      document.getElementById('perfil-plan-titulo').innerText = 'Plan Premium';
+      document.getElementById('perfil-plan-desc').innerText = 'Acceso ilimitado a todo';
+      document.getElementById('perfil-upgrade-btn').style.display = 'none';
+    } else {
+      document.getElementById('perfil-plan-icon').innerText = '🆓';
+      document.getElementById('perfil-plan-titulo').innerText = 'Plan Gratis';
+      document.getElementById('perfil-plan-desc').innerText = '1 episodio · 10 mensajes por día';
+      document.getElementById('perfil-upgrade-btn').style.display = 'block';
+    }
+    document.getElementById('perfil-modal').classList.add('visible');
+  }
+
+  function cerrarPerfil(e) {
+    if (e && e.target !== document.getElementById('perfil-modal')) return;
+    document.getElementById('perfil-modal').classList.remove('visible');
+  }
+
+  async function guardarNombrePerfil() {
+    var nombre = document.getElementById('perfil-nombre-input').value.trim();
+    if (!nombre) return;
+    perfil.nombre = nombre;
+    document.getElementById('perfil-nombre-lbl').innerText = nombre;
+    document.getElementById('dash-saludo').innerText = '¡Hola, ' + nombre + '!';
+    try { localStorage.setItem('mokiPerfil', JSON.stringify(perfil)); } catch(e) {}
+    if (sbUser && !esInvitado) {
+      sb.from('profiles').upsert({ id: sbUser.id, nombre: nombre, updated_at: new Date().toISOString() }).then(function() {});
+    }
+    var btn = document.querySelector('.perfil-save-btn');
+    if (btn) { var orig = btn.innerText; btn.innerText = '✓ Listo'; setTimeout(function() { btn.innerText = orig; }, 1500); }
+  }
+
+  // ─── RESET PASSWORD ──────────────────────────────────────────────────────────
+
+  function abrirResetPassword() {
+    document.getElementById('reset-email').value = '';
+    document.getElementById('reset-error').style.display = 'none';
+    document.getElementById('reset-modal').classList.add('visible');
+  }
+
+  function cerrarResetPassword() {
+    document.getElementById('reset-modal').classList.remove('visible');
+  }
+
+  async function enviarResetPassword() {
+    var email = document.getElementById('reset-email').value.trim();
+    var errEl = document.getElementById('reset-error');
+    if (!email || !email.includes('@')) {
+      errEl.innerText = 'Ingresa un correo válido.'; errEl.style.display = 'block'; return;
+    }
+    var res = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+    cerrarResetPassword();
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:' + (res.error ? '#ef4444' : '#22c55e') + ';color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:600;max-width:300px;text-align:center;';
+    t.innerText = res.error ? 'Error: ' + res.error.message : '¡Listo! Revisa tu correo 📧';
+    document.body.appendChild(t);
+    setTimeout(function() { if (t.parentNode) t.remove(); }, 5000);
   }
 
   function copiarTraduccion() {
@@ -2443,6 +2612,43 @@
 
 
 </script>
+
+<!-- PERFIL MODAL -->
+<div class="perfil-overlay" id="perfil-modal" onclick="cerrarPerfil(event)">
+  <div class="perfil-sheet" onclick="event.stopPropagation()">
+    <div class="perfil-handle"></div>
+    <div class="perfil-avatar" id="perfil-avatar">🐒</div>
+    <div class="perfil-nombre" id="perfil-nombre-lbl">Cargando...</div>
+    <div class="perfil-email" id="perfil-email-lbl"></div>
+    <!-- Editar nombre -->
+    <div class="perfil-input-row">
+      <input class="perfil-input" id="perfil-nombre-input" placeholder="Tu nombre" />
+      <button class="perfil-save-btn" onclick="guardarNombrePerfil()">Guardar</button>
+    </div>
+    <!-- Plan -->
+    <div class="perfil-plan-row">
+      <span style="font-size:24px" id="perfil-plan-icon">🆓</span>
+      <div class="perfil-plan-info">
+        <h4 id="perfil-plan-titulo">Plan Gratis</h4>
+        <p id="perfil-plan-desc">1 episodio · 10 mensajes por día</p>
+      </div>
+      <button class="plan-upgrade-btn" id="perfil-upgrade-btn" onclick="document.getElementById('perfil-modal').classList.remove('visible');mostrarWompiPlanes()">⭐ Upgrade</button>
+    </div>
+    <button class="perfil-logout" onclick="cerrarPerfil();cerrarSesion()">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- RESET PASSWORD MODAL -->
+<div class="reset-overlay" id="reset-modal">
+  <div class="reset-box">
+    <h3>Recuperar contraseña</h3>
+    <p>Ingresa tu correo y te enviaremos un link para crear una nueva contraseña.</p>
+    <div class="error-msg" id="reset-error" style="display:none"></div>
+    <input class="input-field" id="reset-email" type="email" placeholder="correo@ejemplo.com" />
+    <button class="btn-primary" onclick="enviarResetPassword()">Enviar link</button>
+    <button onclick="cerrarResetPassword()" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:13px;cursor:pointer;padding:8px;width:100%;margin-top:4px;">Cancelar</button>
+  </div>
+</div>
 
 <!-- PAYWALL MODAL -->
 <div class="paywall-overlay" id="paywall-modal">

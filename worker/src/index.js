@@ -20,6 +20,8 @@ export default {
     catch { return jsonError('Invalid JSON body', 400); }
 
     try {
+      if (body.event) return await handleWompiWebhook(body, request, env);
+      if (body.tipo === 'wompi_checkout') return await handleWompiCheckout(body, env);
       if (body.tipo === 'tts') return await handleTTS(body, env);
       return await handleClaude(body, env);
     } catch (e) {
@@ -27,6 +29,97 @@ export default {
     }
   },
 };
+
+// ─── WOMPI CHECKOUT ──────────────────────────────────────────────────────────
+
+async function handleWompiCheckout(body, env) {
+  const { userId, plan, email } = body;
+  if (!userId || !plan) return jsonError('Missing params', 400);
+
+  const amount = plan === 'anual' ? 14990000 : 1990000;
+  const reference = 'MOKI-' + userId.substring(0, 8) + '-' + Date.now();
+  const currency = 'COP';
+  const redirectUrl = 'https://r11sebas.github.io/Speakfacil/?payment_ref=' + reference;
+
+  let checkoutUrl = `https://checkout.wompi.co/p/?public-key=${env.WOMPI_PUBLIC_KEY}&currency=${currency}&amount-in-cents=${amount}&reference=${encodeURIComponent(reference)}&redirect-url=${encodeURIComponent(redirectUrl)}`;
+
+  if (env.WOMPI_INTEGRITY_KEY) {
+    const hash = await sha256(reference + amount + currency + env.WOMPI_INTEGRITY_KEY);
+    checkoutUrl += `&signature:integrity=${hash}`;
+  }
+
+  if (email) checkoutUrl += `&customer-data:email=${encodeURIComponent(email)}`;
+
+  return jsonOk({ checkoutUrl, reference });
+}
+
+// ─── WOMPI WEBHOOK ───────────────────────────────────────────────────────────
+
+async function handleWompiWebhook(body, request, env) {
+  const valid = await verifyWompiSignature(body, env);
+  if (!valid) return jsonError('Invalid signature', 401);
+
+  const tx = body.data && body.data.transaction;
+  if (!tx || tx.status !== 'APPROVED') return jsonOk({ received: true });
+
+  const ref = tx.reference || '';
+  if (!ref.startsWith('MOKI-')) return jsonOk({ received: true });
+
+  // reference format: MOKI-{userId8chars}-{timestamp}
+  const parts = ref.split('-');
+  const userIdPrefix = parts[1];
+  if (!userIdPrefix || !env.SUPABASE_SERVICE_KEY) return jsonOk({ received: true });
+
+  const plan = tx.amount_in_cents >= 14000000 ? 'anual' : 'mensual';
+  const months = plan === 'anual' ? 12 : 1;
+  const validUntil = new Date(Date.now() + months * 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  // Look up full user ID from ID prefix
+  const ur = await fetch(
+    `${SUPABASE_URL}/rest/v1/profiles?id=like.${encodeURIComponent(userIdPrefix)}%25&select=id&limit=1`,
+    { headers: { 'apikey': env.SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}` } }
+  );
+  const users = await ur.json();
+  if (users.length) {
+    await activateSubscription(users[0].id, validUntil, tx.id, env);
+  }
+
+  return jsonOk({ received: true });
+}
+
+async function activateSubscription(userId, validUntil, wompiId, env) {
+  await fetch(`${SUPABASE_URL}/rest/v1/subscriptions`, {
+    method: 'POST',
+    headers: {
+      'apikey': env.SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates',
+    },
+    body: JSON.stringify({
+      user_id: userId, plan: 'premium', valid_until: validUntil,
+      wompi_subscription_id: wompiId, updated_at: new Date().toISOString(),
+    }),
+  });
+}
+
+async function verifyWompiSignature(body, env) {
+  if (!env.WOMPI_EVENTS_KEY) return true;
+  try {
+    const sig = body.signature;
+    if (!sig || !sig.checksum) return false;
+    const tx = (body.data && body.data.transaction) || {};
+    // Wompi checksum: SHA256(transaction.id + status + amount_in_cents + timestamp + events_key)
+    const text = (tx.id || '') + (tx.status || '') + String(tx.amount_in_cents || '') + String(body.timestamp || '') + env.WOMPI_EVENTS_KEY;
+    const hash = await sha256(text);
+    return hash === sig.checksum;
+  } catch { return false; }
+}
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 // ─── EPISODE CACHE (Supabase) ─────────────────────────────────────────────────
 
