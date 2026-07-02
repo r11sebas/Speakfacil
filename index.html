@@ -739,8 +739,8 @@
   var ELEVEN_KEY = '';  // ya no se usa desde el frontend — está en el Worker
   var ELEVEN_VOICE = '';
 
-  var LIMITE_EPISODIOS = 1;
-  var LIMITE_MENSAJES  = 10;
+  var LIMITE_EPISODIOS = 3;
+  var LIMITE_MENSAJES  = 20;
   var dailyUsage = { episodes: 0, messages: 0 };
   var isPremiumUser = false;
   var WOMPI_PUBLIC_KEY = 'pub_prod_REEMPLAZA_CON_TU_CLAVE_WOMPI';
@@ -942,7 +942,7 @@
         _audioCtx.decodeAudioData(buf, function(decoded) {
           var src = _audioCtx.createBufferSource();
           src.buffer = decoded;
-          src.playbackRate.value = 1.35;
+          src.playbackRate.value = 1.15;
           src.connect(_audioCtx.destination);
           src.onended = function() { audioActivo = null; if (onEnded) onEnded(); };
           src.start(0);
@@ -963,7 +963,7 @@
     var blob = new Blob([bytes], { type: 'audio/mpeg' });
     var url = URL.createObjectURL(blob);
     var audio = new Audio(url);
-    audio.playbackRate = 1.35;
+    audio.playbackRate = 1.15;
     audioActivo = audio;
     audio.onended = function() { URL.revokeObjectURL(url); audioActivo = null; if (onEnded) onEnded(); };
     audio.play().catch(function() {
@@ -980,7 +980,7 @@
     var utter = new SpeechSynthesisUtterance(textoLimpio);
     // es-US = Latin American Spanish (more Colombian, avoids Castilian/Argentine accent)
     utter.lang = idioma === 'es' ? 'es-US' : 'en-US';
-    utter.pitch = 1.35;
+    utter.pitch = 1.6;
     utter.rate  = 1.08;
     utter.volume = 1;
     var voices = synth.getVoices();
@@ -2367,7 +2367,7 @@
         bufPromise.then(function(buf) {
           _audioCtx.decodeAudioData(buf, function(decoded) {
             playerBuffer = decoded;
-            document.getElementById('player-time-dur').innerText = _fmtTime(decoded.duration / 1.35);
+            document.getElementById('player-time-dur').innerText = _fmtTime(decoded.duration / 1.15);
             if (document.getElementById('screen-player').classList.contains('active') && !playerIsPlaying) {
               _playerPlay();
             }
@@ -2437,7 +2437,7 @@
     if (playerSource) { try { playerSource.stop(); } catch(e) {} }
     var src = _audioCtx.createBufferSource();
     src.buffer = playerBuffer;
-    src.playbackRate.value = 1.35;
+    src.playbackRate.value = 1.15;
     src.connect(_audioCtx.destination);
     playerStartCtx = _audioCtx.currentTime;
     playerOffset = startOffset || 0;
@@ -2455,7 +2455,7 @@
     playerIsPlaying = true;
     _setPlayingUI(true);
 
-    var durTotal = playerBuffer.duration / 1.35;
+    var durTotal = playerBuffer.duration / 1.15;
     var remaining = durTotal - playerOffset;
     _startProgressTimer(playerOffset, durTotal);
     _startKaraoke(playerData.oraciones, remaining * 1000);
@@ -2468,7 +2468,7 @@
     var blob = new Blob([bytes], { type:'audio/mpeg' });
     var url = URL.createObjectURL(blob);
     var audio = new Audio(url);
-    audio.playbackRate = 1.35;
+    audio.playbackRate = 1.15;
     audioActivo = audio;
     playerIsPlaying = true;
     _setPlayingUI(true);
@@ -2487,7 +2487,7 @@
   function _playerPause() {
     if (playerSource) {
       try {
-        playerOffset += (_audioCtx.currentTime - playerStartCtx) * 1.35;
+        playerOffset += (_audioCtx.currentTime - playerStartCtx) * 1.15;
         playerSource.onended = null;
         playerSource.stop();
       } catch(e) {}
@@ -2503,8 +2503,8 @@
 
   function playerSkip(secs) {
     if (!playerBuffer) return;
-    var durTotal = playerBuffer.duration / 1.35;
-    var newOffset = Math.max(0, Math.min(durTotal - 1, playerOffset + (playerIsPlaying ? (_audioCtx.currentTime - playerStartCtx) * 1.35 : 0) + secs));
+    var durTotal = playerBuffer.duration / 1.15;
+    var newOffset = Math.max(0, Math.min(durTotal - 1, playerOffset + (playerIsPlaying ? (_audioCtx.currentTime - playerStartCtx) * 1.15 : 0) + secs));
     if (playerIsPlaying) {
       if (playerSource) { try { playerSource.onended=null; playerSource.stop(); } catch(e) {} }
       playerIsPlaying = false; playerOffset = newOffset;
@@ -2518,7 +2518,7 @@
     clearInterval(playerProgTimer);
     playerProgTimer = setInterval(function() {
       if (!playerIsPlaying) return;
-      var elapsed = startOff + (_audioCtx.currentTime - playerStartCtx) * 1.35;
+      var elapsed = startOff + (_audioCtx.currentTime - playerStartCtx) * 1.15;
       var pct = Math.min(elapsed / durTotal * 100, 100);
       document.getElementById('player-prog-fill').style.width = pct + '%';
       document.getElementById('player-prog-bar').style.width = pct + '%';
