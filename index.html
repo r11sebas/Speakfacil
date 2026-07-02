@@ -522,10 +522,13 @@
       <button class="plan-upgrade-btn" onclick="mostrarPaywall('upgrade')" id="dash-plan-btn">⭐ Premium</button>
     </div>
     <!-- Racha diaria -->
-    <div class="racha-strip" id="dash-racha" style="display:none">
-      <span class="racha-fuego">🔥</span>
-      <div class="racha-texto"><h4 id="dash-racha-num">0 días</h4><p>racha actual</p></div>
-      <span class="racha-xp" id="dash-racha-xp">+10 XP hoy</span>
+    <div class="racha-strip" id="dash-racha">
+      <span class="racha-fuego" id="dash-racha-fuego">🔥</span>
+      <div class="racha-texto">
+        <h4 id="dash-racha-num">Activa tu racha</h4>
+        <p id="dash-racha-sub">Haz una lección hoy para empezar 💪</p>
+      </div>
+      <span class="racha-xp" id="dash-racha-xp" style="display:none">+10 XP</span>
     </div>
     <!-- Ruta recomendada -->
     <div id="dash-ruta" style="display:none">
@@ -1126,10 +1129,31 @@
 
   function _actualizarDisplayRacha(r) {
     var strip = document.getElementById('dash-racha');
-    if (!strip || r.count < 1) return;
-    strip.style.display = 'flex';
-    document.getElementById('dash-racha-num').innerText = r.count + (r.count === 1 ? ' día' : ' días');
-    document.getElementById('dash-racha-xp').innerText = '+' + (r.count * 10) + ' XP';
+    if (!strip) return;
+    var hoy = new Date().toISOString().split('T')[0];
+    var activa = r.last === hoy;
+    var fuego = document.getElementById('dash-racha-fuego');
+    var num   = document.getElementById('dash-racha-num');
+    var sub   = document.getElementById('dash-racha-sub');
+    var xp    = document.getElementById('dash-racha-xp');
+    if (activa) {
+      fuego.style.filter = '';
+      num.innerText = r.count + (r.count === 1 ? ' día' : ' días');
+      num.style.color = '#FF8C42';
+      sub.innerText = 'racha activa hoy 🔥';
+      xp.style.display = 'block';
+      xp.innerText = '+' + (r.count * 10) + ' XP';
+      strip.style.background = 'linear-gradient(135deg,rgba(255,107,53,0.12),rgba(255,140,66,0.06))';
+      strip.style.borderColor = 'rgba(255,107,53,0.25)';
+    } else {
+      fuego.style.filter = 'grayscale(1) opacity(0.45)';
+      num.innerText = r.count > 0 ? r.count + ' días — en pausa' : 'Sin racha aún';
+      num.style.color = 'rgba(255,255,255,0.5)';
+      sub.innerText = '¡Haz tu lección de hoy para activarla! 💪';
+      xp.style.display = 'none';
+      strip.style.background = 'rgba(255,255,255,0.03)';
+      strip.style.borderColor = 'rgba(255,255,255,0.08)';
+    }
   }
 
   function reproducirSonidoRacha() {
