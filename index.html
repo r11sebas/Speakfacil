@@ -324,6 +324,34 @@
     .voice-exit-btn { background:none; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); border-radius:20px; padding:8px 20px; font-size:13px; cursor:pointer; }
     .voice-mode-toggle { position:absolute; top:16px; right:60px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:20px; padding:5px 12px; font-size:12px; color:rgba(255,255,255,0.7); font-weight:600; cursor:pointer; z-index:21; }
 
+    /* ── PLAN STRIP ── */
+    .plan-strip { margin:0 20px 12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:10px 14px; display:flex; align-items:center; gap:10px; }
+    .plan-badge { font-size:11px; font-weight:700; letter-spacing:0.5px; padding:3px 8px; border-radius:6px; background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5); }
+    .plan-badge.premium { background:linear-gradient(135deg,#FF6B35,#FF8C42); color:white; }
+    .plan-uso { font-size:12px; color:rgba(255,255,255,0.4); flex:1; }
+    .plan-upgrade-btn { font-size:11px; font-weight:700; color:#FF8C42; background:none; border:1px solid rgba(255,107,53,0.3); border-radius:8px; padding:4px 10px; cursor:pointer; white-space:nowrap; }
+
+    /* ── PAYWALL MODAL ── */
+    .paywall-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.94); z-index:500; display:none; flex-direction:column; align-items:center; justify-content:center; padding:28px 24px; }
+    .paywall-overlay.visible { display:flex; }
+    .paywall-emoji { font-size:68px; margin-bottom:12px; animation:paywallBounce 1s ease; }
+    @keyframes paywallBounce { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+    .paywall-titulo { font-size:22px; font-weight:900; text-align:center; margin-bottom:8px; }
+    .paywall-sub { font-size:14px; color:rgba(255,255,255,0.55); text-align:center; max-width:290px; line-height:1.65; margin-bottom:24px; }
+    .paywall-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,107,53,0.25); border-radius:18px; padding:20px; width:100%; max-width:320px; margin-bottom:20px; }
+    .paywall-planes { display:flex; gap:0; }
+    .paywall-plan { flex:1; text-align:center; padding:0 12px; }
+    .paywall-plan + .paywall-plan { border-left:1px solid rgba(255,255,255,0.1); }
+    .paywall-plan-label { font-size:11px; font-weight:700; letter-spacing:0.5px; color:rgba(255,255,255,0.35); margin-bottom:10px; }
+    .paywall-plan-label.premium { color:#FF8C42; }
+    .paywall-plan-item { font-size:13px; color:rgba(255,255,255,0.55); margin-bottom:5px; }
+    .paywall-plan-item.ok { color:white; }
+    .paywall-precio { text-align:center; margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); }
+    .paywall-precio-monto { font-size:26px; font-weight:900; color:#FF8C42; }
+    .paywall-precio-sub { font-size:12px; color:rgba(255,255,255,0.35); margin-top:3px; }
+    .paywall-cta { background:linear-gradient(135deg,#FF6B35,#FF8C42); color:white; border:none; border-radius:14px; padding:16px; font-size:16px; font-weight:700; cursor:pointer; width:100%; max-width:320px; margin-bottom:12px; }
+    .paywall-skip { background:none; border:none; color:rgba(255,255,255,0.3); font-size:13px; cursor:pointer; padding:8px; }
+
     /* ── STREAK CELEBRATION ── */
     .racha-celebracion { position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:300; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; cursor:pointer; }
     .racha-celebracion { animation:celebFadeIn 0.35s ease; }
@@ -460,6 +488,12 @@
     <div class="dash-greeting">
       <h2 id="dash-saludo">¡Hola!</h2>
       <p id="dash-sub">Elige qué quieres hacer hoy</p>
+    </div>
+    <!-- Plan indicator -->
+    <div class="plan-strip" id="dash-plan" style="display:none">
+      <span class="plan-badge" id="dash-plan-badge">GRATIS</span>
+      <span class="plan-uso" id="dash-plan-uso"></span>
+      <button class="plan-upgrade-btn" onclick="mostrarPaywall('upgrade')" id="dash-plan-btn">⭐ Premium</button>
     </div>
     <!-- Racha diaria -->
     <div class="racha-strip" id="dash-racha" style="display:none">
@@ -678,6 +712,10 @@
   var BACKEND = 'https://mokitalk-backend.r11jsebas.workers.dev';
   var ELEVEN_KEY = '';  // ya no se usa desde el frontend — está en el Worker
   var ELEVEN_VOICE = '';
+
+  var LIMITE_EPISODIOS = 1;
+  var LIMITE_MENSAJES  = 10;
+  var dailyUsage = { episodes: 0, messages: 0 };
 
   var SUPABASE_URL  = 'https://cbuyajccwxoepwtmptzg.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNidXlhamNjd3hvZXB3dG1wdHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4Njc4NzMsImV4cCI6MjA5ODQ0Mzg3M30.QWrVD2U7izSVTYJ-iBJxTx8jDIEVf2sNZLfRS2UeIEY';
@@ -1119,6 +1157,90 @@
 
   // ─── CONTINUAR SIN CUENTA ───────────────────────────────────────────────────
 
+  // ─── FREEMIUM ────────────────────────────────────────────────────────────────
+
+  function esPremium() {
+    return localStorage.getItem('mokiPremium') === '1' || !!perfil.premium;
+  }
+
+  function cargarUsoDiarioLocal() {
+    var hoy = new Date().toISOString().split('T')[0];
+    try { dailyUsage = JSON.parse(localStorage.getItem('mokiUsage_' + hoy) || '{"episodes":0,"messages":0}'); }
+    catch(e) { dailyUsage = { episodes: 0, messages: 0 }; }
+  }
+
+  function incrementarUso(tipo) {
+    var hoy = new Date().toISOString().split('T')[0];
+    if (tipo === 'episode') dailyUsage.episodes++;
+    else dailyUsage.messages++;
+    try { localStorage.setItem('mokiUsage_' + hoy, JSON.stringify(dailyUsage)); } catch(e) {}
+    if (sbUser && !esInvitado) {
+      sb.from('daily_usage').upsert({
+        user_id: sbUser.id, date: hoy,
+        episodes_opened: dailyUsage.episodes, messages_sent: dailyUsage.messages
+      }, { onConflict: 'user_id,date' }).then(function() {});
+    }
+    actualizarPlanStrip();
+  }
+
+  function checkLimiteEpisodio() {
+    if (esPremium()) return true;
+    if (dailyUsage.episodes >= LIMITE_EPISODIOS) { mostrarPaywall('episodio'); return false; }
+    return true;
+  }
+
+  function checkLimiteMensaje() {
+    if (esPremium()) return true;
+    if (dailyUsage.messages >= LIMITE_MENSAJES) { mostrarPaywall('mensaje'); return false; }
+    return true;
+  }
+
+  function mostrarPaywall(tipo) {
+    var sub = document.getElementById('paywall-subtitulo');
+    if (tipo === 'episodio') {
+      sub.innerText = 'Ya abriste tu episodio gratuito de hoy. Vuelve mañana o hazte Premium para escuchar sin límites.';
+    } else if (tipo === 'mensaje') {
+      sub.innerText = 'Usaste tus 10 mensajes gratuitos de hoy. Vuelve mañana o hazte Premium para conversar sin límites.';
+    } else {
+      sub.innerText = 'Desbloquea episodios y mensajes ilimitados, voz HD y mucho más.';
+    }
+    document.getElementById('paywall-modal').classList.add('visible');
+  }
+
+  function cerrarPaywall() {
+    document.getElementById('paywall-modal').classList.remove('visible');
+  }
+
+  function clicarPremium() {
+    cerrarPaywall();
+    // Toast temporal hasta que Wompi esté activo
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#FF6B35;color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:600;max-width:290px;text-align:center;';
+    t.innerText = '¡Próximamente! Escríbenos a @MokiTalk en Instagram y te damos 7 días Premium gratis por ser early adopter 🙌';
+    document.body.appendChild(t);
+    setTimeout(function() { if (t.parentNode) t.remove(); }, 5000);
+  }
+
+  function actualizarPlanStrip() {
+    var strip = document.getElementById('dash-plan');
+    if (!strip) return;
+    strip.style.display = 'flex';
+    var badge = document.getElementById('dash-plan-badge');
+    var uso = document.getElementById('dash-plan-uso');
+    var btn = document.getElementById('dash-plan-btn');
+    if (esPremium()) {
+      badge.className = 'plan-badge premium'; badge.innerText = '⭐ PREMIUM';
+      uso.innerText = 'Acceso ilimitado';
+      btn.style.display = 'none';
+    } else {
+      badge.className = 'plan-badge'; badge.innerText = 'GRATIS';
+      var epLeft = Math.max(0, LIMITE_EPISODIOS - dailyUsage.episodes);
+      var msgLeft = Math.max(0, LIMITE_MENSAJES - dailyUsage.messages);
+      uso.innerText = epLeft + ' episodio' + (epLeft !== 1 ? 's' : '') + ' · ' + msgLeft + ' mensajes hoy';
+      btn.style.display = '';
+    }
+  }
+
   function continuarSinCuenta() {
     esInvitado = true; sbUser = null;
     perfil.nombre = 'Viajero';
@@ -1297,6 +1419,10 @@
       });
       try { localStorage.setItem('mokiSeriesProgress', JSON.stringify(progresoSeries)); } catch(e) {}
     }
+    // Cargar uso diario
+    var hoy = new Date().toISOString().split('T')[0];
+    var ur = await sb.from('daily_usage').select('episodes_opened,messages_sent').eq('user_id', sbUser.id).eq('date', hoy).maybeSingle();
+    if (ur.data) dailyUsage = { episodes: ur.data.episodes_opened, messages: ur.data.messages_sent };
     return true;
   }
 
@@ -1309,6 +1435,7 @@
         updated_at: new Date().toISOString()
       }).then(function() {});
     }
+    if (esInvitado) cargarUsoDiarioLocal();
     try { localStorage.setItem('mokiPerfil', JSON.stringify(perfil)); } catch(e) {}
     document.getElementById('dash-saludo').innerText = '¡Hola, ' + (perfil.nombre || 'amigo') + '!';
     document.getElementById('dash-sub').innerText = perfil.meta ? '🎯 ' + perfil.meta : 'Elige qué quieres hacer hoy';
@@ -1317,6 +1444,7 @@
     renderDashboardStreaming();
     mostrarRacha();
     generarRutaRecomendada();
+    actualizarPlanStrip();
     showScreen('screen-dashboard');
     setTimeout(iniciarGuiaDashboard, 600);
   }
@@ -1501,6 +1629,8 @@
 
   function procesarRespuestaLec(texto) {
     if (lecTyping) return;
+    if (!checkLimiteMensaje()) return;
+    incrementarUso('message');
     mostrarMsgLec('usuario', texto);
     lecHistorial.push({ role: 'user', content: texto });
     lecTyping = true;
@@ -1955,10 +2085,12 @@
   var playerSituacion = '';    // saved prompt for "practice" CTA
 
   function abrirEpisodio(serieId, epNum) {
+    if (!checkLimiteEpisodio()) return;
     var serie = SERIES.find(function(s) { return s.id === serieId; });
     if (!serie) return;
     var ep = serie.episodios.find(function(e) { return e.num === epNum; });
     if (!ep) return;
+    incrementarUso('episode');
     guardarProgresoSerie(serieId, epNum);
     playerSituacion = ep.prompt;
     desbloquearAudio();
@@ -1976,8 +2108,10 @@
   }
 
   function abrirPodcastSuelto(podcastId) {
+    if (!checkLimiteEpisodio()) return;
     var p = PODCASTS_SUELTOS.find(function(x) { return x.id === podcastId; });
     if (!p) return;
+    incrementarUso('episode');
     playerSituacion = p.prompt;
     desbloquearAudio();
     _setupPlayer({
@@ -2309,5 +2443,34 @@
 
 
 </script>
+
+<!-- PAYWALL MODAL -->
+<div class="paywall-overlay" id="paywall-modal">
+  <div class="paywall-emoji">😅</div>
+  <h2 class="paywall-titulo">Límite diario alcanzado</h2>
+  <p class="paywall-sub" id="paywall-subtitulo"></p>
+  <div class="paywall-card">
+    <div class="paywall-planes">
+      <div class="paywall-plan">
+        <div class="paywall-plan-label">GRATIS</div>
+        <div class="paywall-plan-item">1 episodio/día</div>
+        <div class="paywall-plan-item">10 mensajes/día</div>
+        <div class="paywall-plan-item">Voz estándar</div>
+      </div>
+      <div class="paywall-plan">
+        <div class="paywall-plan-label premium">⭐ PREMIUM</div>
+        <div class="paywall-plan-item ok">Episodios ilimitados</div>
+        <div class="paywall-plan-item ok">Mensajes ilimitados</div>
+        <div class="paywall-plan-item ok">Voz ElevenLabs HD</div>
+      </div>
+    </div>
+    <div class="paywall-precio">
+      <div class="paywall-precio-monto">$19.900 <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.4)">COP/mes</span></div>
+      <div class="paywall-precio-sub">o $149.900/año — ahorras el 37%</div>
+    </div>
+  </div>
+  <button class="paywall-cta" onclick="clicarPremium()">⭐ Quiero Premium</button>
+  <button class="paywall-skip" onclick="cerrarPaywall()">Volver — mañana tengo más gratis</button>
+</div>
 </body>
 </html>
