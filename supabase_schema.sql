@@ -1,4 +1,4 @@
--- MokiTalk — Schema inicial
+-- MokiTalk — Schema completo (auth + caché de episodios)
 -- Corre esto en Supabase Dashboard → SQL Editor → New query
 
 -- 1. Perfiles de usuario
@@ -61,3 +61,19 @@ CREATE POLICY "own_streaks"      ON streaks       FOR ALL USING (auth.uid() = us
 CREATE POLICY "own_progress"     ON progress      FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "own_daily_usage"  ON daily_usage   FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "own_subscription" ON subscriptions FOR ALL USING (auth.uid() = user_id);
+
+-- ─── CACHÉ DE EPISODIOS Y PODCASTS ───────────────────────────────────────────
+-- Contenido pre-generado: la primera visita genera, las demás sirven desde acá.
+-- El Worker escribe con service_role (bypassa RLS). Lectura pública.
+
+CREATE TABLE IF NOT EXISTS episode_cache (
+  key        TEXT PRIMARY KEY,   -- 'ep_s1_1' o 'ps_ps3'
+  texto      TEXT NOT NULL,
+  audio_url  TEXT NOT NULL,      -- URL pública de Supabase Storage
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE episode_cache ENABLE ROW LEVEL SECURITY;
+-- Cualquiera puede leer (contenido público)
+CREATE POLICY "public_read" ON episode_cache FOR SELECT USING (true);
+-- El Worker escribe con service_role key (bypass RLS automático)

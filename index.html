@@ -1961,7 +1961,7 @@
     if (!ep) return;
     guardarProgresoSerie(serieId, epNum);
     playerSituacion = ep.prompt;
-    desbloquearAudio(); // user gesture — unlocks AudioContext
+    desbloquearAudio();
     _setupPlayer({
       badge: serie.emoji + ' EP.' + ep.num + ' · ' + serie.nivel,
       titulo: 'Ep.' + ep.num + ': ' + ep.titulo,
@@ -1970,7 +1970,8 @@
       gradient: serie.gradient,
       prompt: ep.prompt,
       idioma: 'en',
-      nivel: serie.nivel
+      nivel: serie.nivel,
+      episodeKey: 'ep_' + serieId + '_' + epNum
     });
   }
 
@@ -1987,7 +1988,8 @@
       gradient: p.gradient || 'linear-gradient(160deg,#2D1B69 0%,#11998e 100%)',
       prompt: p.prompt,
       idioma: 'en',
-      nivel: p.nivel
+      nivel: p.nivel,
+      episodeKey: 'ps_' + podcastId
     });
   }
 
@@ -2030,7 +2032,8 @@
         modo: 'situacion_inicio',
         situacion: cfg.prompt,
         tema: cfg.titulo,
-        perfil: perfil
+        perfil: perfil,
+        episodeKey: cfg.episodeKey || null
       })
     })
     .then(function(r) { return r.json(); })
@@ -2038,7 +2041,8 @@
       if (!data.ok) throw new Error(data.error || 'Error');
       playerData = {
         texto: data.resultado,
-        audio: data.audio,
+        audio: data.audio || null,
+        audioUrl: data.audioUrl || null,
         oraciones: (data.resultado.match(/[^.!?]+[.!?]+/g) || [data.resultado]).map(function(s){return s.trim();}).filter(function(s){return s.length>3;}),
         gradient: cfg.gradient,
         idioma: cfg.idioma
@@ -2046,20 +2050,27 @@
       document.getElementById('player-subtitulo-text').innerText = playerData.oraciones[0] || data.resultado;
       _playerShowState('main');
       if (data.audioError) console.warn('[MokiTalk TTS]', data.audioError);
+      // Decode audio: base64 (fresh) o URL (desde caché)
+      var bufPromise = null;
       if (playerData.audio && _audioCtx) {
         var bin = atob(playerData.audio);
         var bytes = new Uint8Array(bin.length);
         for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-        _audioCtx.decodeAudioData(bytes.buffer, function(buf) {
-          playerBuffer = buf;
-          document.getElementById('player-time-dur').innerText = _fmtTime(buf.duration / 1.35);
-          // Auto-play as soon as buffer is ready — AudioContext was unlocked by the card tap
-          if (document.getElementById('screen-player').classList.contains('active') && !playerIsPlaying) {
-            _playerPlay();
-          }
-        }, function() {});
+        bufPromise = Promise.resolve(bytes.buffer);
+      } else if (playerData.audioUrl && _audioCtx) {
+        bufPromise = fetch(playerData.audioUrl).then(function(r) { return r.arrayBuffer(); });
+      }
+      if (bufPromise) {
+        bufPromise.then(function(buf) {
+          _audioCtx.decodeAudioData(buf, function(decoded) {
+            playerBuffer = decoded;
+            document.getElementById('player-time-dur').innerText = _fmtTime(decoded.duration / 1.35);
+            if (document.getElementById('screen-player').classList.contains('active') && !playerIsPlaying) {
+              _playerPlay();
+            }
+          }, function() {});
+        }).catch(function() {});
       } else {
-        // No TTS audio (ElevenLabs unavailable) — use WebSpeech synthesis on play
         document.getElementById('player-time-dur').innerText = '🔇';
       }
     })
@@ -2094,18 +2105,20 @@
 
     if (playerBuffer) {
       _startFromBuffer(playerOffset);
-    } else if (playerData && playerData.audio) {
-      // Buffer not yet decoded, decode now
-      var bin = atob(playerData.audio);
-      var bytes = new Uint8Array(bin.length);
-      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      _audioCtx.decodeAudioData(bytes.buffer, function(buf) {
-        playerBuffer = buf;
-        _startFromBuffer(playerOffset);
-      }, function() {
-        // AudioContext decode failed — fallback to HTMLAudioElement
-        _playHTMLFallback();
-      });
+    } else if (playerData && (playerData.audio || playerData.audioUrl)) {
+      // Buffer no decodificado aún — decodificar ahora
+      var p2 = playerData.audio
+        ? Promise.resolve((function() {
+            var b = atob(playerData.audio), by = new Uint8Array(b.length);
+            for (var i = 0; i < b.length; i++) by[i] = b.charCodeAt(i);
+            return by.buffer;
+          })())
+        : fetch(playerData.audioUrl).then(function(r) { return r.arrayBuffer(); });
+      p2.then(function(buf) {
+        _audioCtx.decodeAudioData(buf, function(decoded) {
+          playerBuffer = decoded; _startFromBuffer(playerOffset);
+        }, _playHTMLFallback);
+      }).catch(_playHTMLFallback);
     } else if (playerData && playerData.texto) {
       // No TTS audio — use WebSpeech synthesis
       mokiVoz(playerData.texto, playerData.idioma || 'en');

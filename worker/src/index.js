@@ -1,11 +1,13 @@
 // MokiTalk Backend — Cloudflare Worker
-// Secrets: CLAUDE_KEY, ELEVEN_KEY  |  Var: ELEVEN_VOICE
+// Secrets: CLAUDE_KEY, ELEVEN_KEY, SUPABASE_SERVICE_KEY  |  Var: ELEVEN_VOICE
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
+
+const SUPABASE_URL = 'https://cbuyajccwxoepwtmptzg.supabase.co';
 
 export default {
   async fetch(request, env) {
@@ -25,6 +27,53 @@ export default {
     }
   },
 };
+
+// ─── EPISODE CACHE (Supabase) ─────────────────────────────────────────────────
+
+async function checkEpisodeCache(key, env) {
+  if (!env.SUPABASE_SERVICE_KEY) return null;
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/episode_cache?key=eq.${encodeURIComponent(key)}&select=texto,audio_url&limit=1`,
+      { headers: { 'apikey': env.SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}` } }
+    );
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return rows.length ? rows[0] : null;
+  } catch { return null; }
+}
+
+async function saveEpisodeCache(key, texto, audioBase64, env) {
+  if (!env.SUPABASE_SERVICE_KEY) return;
+  // Decode base64 → bytes
+  const binary = atob(audioBase64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
+  // Upload MP3 to Supabase Storage
+  const audioUrl = `${SUPABASE_URL}/storage/v1/object/public/episode-audio/${key}.mp3`;
+  await fetch(`${SUPABASE_URL}/storage/v1/object/episode-audio/${key}.mp3`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'audio/mpeg',
+      'x-upsert': 'true',
+    },
+    body: bytes,
+  });
+
+  // Save text + URL to DB
+  await fetch(`${SUPABASE_URL}/rest/v1/episode_cache`, {
+    method: 'POST',
+    headers: {
+      'apikey': env.SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates',
+    },
+    body: JSON.stringify({ key, texto, audio_url: audioUrl }),
+  });
+}
 
 // ─── AUDIO GENERATION ────────────────────────────────────────────────────────
 
@@ -75,7 +124,19 @@ async function handleTTS(body, env) {
 // ─── CLAUDE + TTS COMBINED ───────────────────────────────────────────────────
 
 async function handleClaude(body, env) {
-  const { tipo, perfil = {}, historial = [], tema = '', situacion = '', modo = '', texto = '', deLang = 'es', aLang = 'en' } = body;
+  const {
+    tipo, perfil = {}, historial = [], tema = '', situacion = '',
+    modo = '', texto = '', deLang = 'es', aLang = 'en', episodeKey = null
+  } = body;
+
+  // ── Cache check for fixed episode/podcast content ──
+  const isEpisodeContent = episodeKey && tipo === 'primer_mensaje' && modo === 'situacion_inicio';
+  if (isEpisodeContent) {
+    const cached = await checkEpisodeCache(episodeKey, env);
+    if (cached) {
+      return jsonOk({ resultado: cached.texto, audioUrl: cached.audio_url, fromCache: true });
+    }
+  }
 
   const systemPrompt = buildSystemPrompt(tipo, { perfil, tema, situacion, modo, deLang, aLang });
 
@@ -117,7 +178,6 @@ async function handleClaude(body, env) {
   const data = await res.json();
   const resultado = data.content[0].text;
 
-  // Generate TTS alongside text in one round-trip (fixes iOS autoplay window)
   const ttsLang = getTTSLang(tipo, modo);
   let audio = null;
   let audioError = null;
@@ -131,6 +191,11 @@ async function handleClaude(body, env) {
       try { audio = await generateAudio(ttsText, env); }
       catch (e) { audioError = e.message; }
     }
+  }
+
+  // ── Save episode to cache after first generation (fire-and-forget) ──
+  if (isEpisodeContent && audio) {
+    saveEpisodeCache(episodeKey, resultado, audio, env).catch(() => {});
   }
 
   return jsonOk({ resultado, audio, audioError });
